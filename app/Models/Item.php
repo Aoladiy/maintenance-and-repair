@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Item extends Model
 {
@@ -24,8 +25,13 @@ class Item extends Model
         'parent_id',
     ];
 
-    public function children()
+    public function children(): HasMany
     {
         return $this->hasMany(Item::class, 'parent_id');
+    }
+
+    public function hasChildren(): bool
+    {
+        return $this->children()->exists();
     }
 }

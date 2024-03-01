@@ -12,9 +12,13 @@
     <ul class="list-group">
         @foreach ($items as $item)
             <li class="list-group-item">
-                <button class="btn btn-primary toggle-btn" data-id="{{ $item->id }}" aria-expanded="false">
-                    {{ $item->equipment_name }}
-                </button>
+                <div class="d-flex justify-content-start align-items-center">
+                    <button class="btn btn-primary toggle-btn {{ $item->has_children ? '' : 'disabled' }} me-2"
+                            data-id="{{ $item->id }}" aria-expanded="false">
+                        Load Children
+                    </button>
+                    <span class="ms-2">{{ $item->equipment_name }}</span>
+                </div>
                 <ul class="list-group collapse mt-2" id="item_{{ $item->id }}">
 
                 </ul>
@@ -31,7 +35,7 @@
 
 <script>
     // Добавляем обработчик события для кнопок вложенных элементов
-    $(document).on('click', '.toggle-btn', function() {
+    $(document).on('click', '.toggle-btn', function () {
         var itemId = $(this).data('id');
         var target = $('#item_' + itemId);
 
@@ -42,15 +46,18 @@
                 url: '/items/' + itemId + '/children/', // Укажите URL для загрузки дочерних элементов
                 type: 'GET',
                 dataType: 'json', // Укажите тип данных, которые ожидаете от сервера
-                success: function(response) {
+                success: function (response) {
                     if (response.length > 0) {
                         // Преобразуем данные в HTML и добавляем их во вложенный список
                         var html = '';
-                        $.each(response, function(index, item) {
+                        $.each(response, function (index, item) {
                             html += '<li class="list-group-item">';
-                            html += '<button class="btn btn-primary toggle-btn" data-id="' + item.id + '" aria-expanded="false">';
-                            html += item.equipment_name;
+                            html += '<div class="d-flex justify-content-start align-items-center">';
+                            html += '<button class="btn btn-primary toggle-btn' + (item.has_children ? '' : ' disabled') + ' me-2" data-id="' + item.id + '" aria-expanded="false">';
+                            html += 'Load Children';
                             html += '</button>';
+                            html += '<span class="ms-2">' + item.equipment_name + '</span>';
+                            html += '</div>';
                             html += '<ul class="list-group collapse mt-2" id="item_' + item.id + '">';
                             html += '</ul>';
                             html += '</li>';
@@ -62,7 +69,7 @@
                         target.html('<p>No items found.</p>');
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(error);
                 }
             });
