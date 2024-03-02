@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedInteger('mileage')->nullable();
             $table->unsignedInteger('amount')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('items');
+            $table->foreign('parent_id')->references('id')->on('items')->nullOnDelete();
             $table->timestamps();
         });
     }
