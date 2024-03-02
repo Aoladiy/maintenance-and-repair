@@ -10,7 +10,7 @@ class ItemController extends Controller
 {
     public function items(): view
     {
-        $items = Item::query()->get();
+        $items = Item::query()->where('parent_id', null)->get();
         $items->each(function ($child) {
             $child->has_children = $child->hasChildren();
         });
