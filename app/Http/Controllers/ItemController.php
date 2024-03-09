@@ -41,11 +41,19 @@ class ItemController extends Controller
 
     public function children(int $id): Collection
     {
-        $children = Item::query()->find($id)->children()->get();
-        $children->each(function ($child) {
-            $child->has_children = $child->hasChildren();
-        });
-        return $children;
+        if ($id == -1) {
+            $items = Item::query()->where('parent_id', null)->get();
+            $items->each(function ($child) {
+                $child->has_children = $child->hasChildren();
+            });
+            return $items;
+        } else {
+            $children = Item::query()->find($id)->children()->get();
+            $children->each(function ($child) {
+                $child->has_children = $child->hasChildren();
+            });
+            return $children;
+        }
     }
 
     public function create(Request $request): Item
