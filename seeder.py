@@ -30,7 +30,7 @@ for index, row in df.iterrows():
         prev_last_site_id = last_site_id
         last_equipment_id = index
         last_changed_id = 'equipment'
-    if isinstance(row['Инвентарный номер'], str):
+    if isinstance(row['Инвентарный номер'], str) or isinstance(row['Инвентарный номер'], int):
         prev_last_equipment_id = last_equipment_id
         last_inventory_id = index
         last_changed_id = 'inventory'

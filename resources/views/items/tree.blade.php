@@ -21,7 +21,21 @@
                             data-id="{{ $item->id }}" aria-expanded="false">
                         Load Children
                     </button>
-                    <span class="ms-2">{{ $item->equipment_name }}</span>
+                    <span class="ms-2">
+                        @if(isset($item->site))
+                            {{ $item->site }}
+                        @elseif(isset($item->equipment_name))
+                            {{ $item->equipment_name }}
+                        @elseif(isset($item->inventory_number))
+                            {{ $item->inventory_number }}
+                        @elseif(isset($item->node))
+                            {{ $item->node }}
+                        @elseif(isset($item->component))
+                            {{ $item->component }}
+                        @else
+                            нужно, чтобы отобразилось здесь
+                        @endif
+                    </span>
                     <button class="btn btn-success ms-auto create-item-btn"
                             data-parent-id="{{ $item->id }}"
                             data-bs-toggle="modal"
@@ -113,11 +127,14 @@
                     </div>
                     <div class="mb-3">
                         <label for="service_period_in_days_input" class="form-label">Service Period (Days)</label>
-                        <input type="number" class="form-control" id="service_period_in_days_input" name="service_period_in_days">
+                        <input type="number" class="form-control" id="service_period_in_days_input"
+                               name="service_period_in_days">
                     </div>
                     <div class="mb-3">
-                        <label for="service_period_in_engine_hours_input" class="form-label">Service Period (Engine Hours)</label>
-                        <input type="number" class="form-control" id="service_period_in_engine_hours_input" name="service_period_in_engine_hours">
+                        <label for="service_period_in_engine_hours_input" class="form-label">Service Period (Engine
+                            Hours)</label>
+                        <input type="number" class="form-control" id="service_period_in_engine_hours_input"
+                               name="service_period_in_engine_hours">
                     </div>
                     <div class="mb-3">
                         <label for="mileage_input" class="form-label">Mileage</label>
@@ -160,7 +177,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="edit_inventory_number_input" class="form-label">Inventory Number</label>
-                        <input type="text" class="form-control" id="edit_inventory_number_input" name="inventory_number">
+                        <input type="text" class="form-control" id="edit_inventory_number_input"
+                               name="inventory_number">
                     </div>
                     <div class="mb-3">
                         <label for="edit_node_input" class="form-label">Node</label>
@@ -180,11 +198,14 @@
                     </div>
                     <div class="mb-3">
                         <label for="edit_service_period_in_days_input" class="form-label">Service Period (Days)</label>
-                        <input type="number" class="form-control" id="edit_service_period_in_days_input" name="service_period_in_days">
+                        <input type="number" class="form-control" id="edit_service_period_in_days_input"
+                               name="service_period_in_days">
                     </div>
                     <div class="mb-3">
-                        <label for="edit_service_period_in_engine_hours_input" class="form-label">Service Period (Engine Hours)</label>
-                        <input type="number" class="form-control" id="edit_service_period_in_engine_hours_input" name="service_period_in_engine_hours">
+                        <label for="edit_service_period_in_engine_hours_input" class="form-label">Service Period (Engine
+                            Hours)</label>
+                        <input type="number" class="form-control" id="edit_service_period_in_engine_hours_input"
+                               name="service_period_in_engine_hours">
                     </div>
                     <div class="mb-3">
                         <label for="edit_mileage_input" class="form-label">Mileage</label>
@@ -203,8 +224,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!-- jQuery -->
@@ -299,7 +318,7 @@
 
     // Функция для загрузки дочерних элементов
     function loadChildren(itemId) {
-        if (itemId==null) {
+        if (itemId == null) {
             itemId = 0
         }
         var target = $('#item_' + itemId);
@@ -319,7 +338,12 @@
             <button class="btn btn-primary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
                 Load Children
             </button>
-            <span class="ms-2">${item.equipment_name}</span>
+            <span class="ms-2">${item.site ? item.site :
+                            item.equipment_name ? item.equipment_name :
+                                item.inventory_number ? item.inventory_number :
+                                    item.node ? item.node :
+                                        item.component ? item.component :
+                                            'нужно, чтобы отобразилось здесь'}</span>
             <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                 Add
             </button>
