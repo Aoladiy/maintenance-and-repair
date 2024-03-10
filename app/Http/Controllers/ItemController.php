@@ -103,6 +103,7 @@ class ItemController extends Controller
         $item = Item::findOrFail($id);
 
         $item->update($data);
+        $item->has_children = $item->hasChildren();
         return $item;
     }
 

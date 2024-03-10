@@ -9,7 +9,8 @@
 <body>
 
 <div class="container mt-4">
-    <button class="btn btn-success mb-2 create-item-btn" data-parent-id=null data-bs-toggle="modal" data-bs-target="#createItemModal">
+    <button class="btn btn-success mb-2 create-item-btn" data-parent-id=null data-bs-toggle="modal"
+            data-bs-target="#createItemModal">
         Create Root Item
     </button>
     <ul class="list-group" id="root">
@@ -182,7 +183,7 @@
 
 <script>
     let base = 'http://localhost:8000/';
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Вызов функции при загрузке страницы
         loadChildren(-1);
     });
@@ -244,7 +245,6 @@
     });
 
 
-
     // Обработчик события для кнопок создания нового элемента
     $(document).on('click', '.create-item-btn', function () {
         var parent_id = $(this).data('parent-id');
@@ -284,10 +284,10 @@
             url: base + 'items/' + itemId + '/children/',
             type: 'GET',
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.length > 0) {
                     var html = '';
-                    $.each(response, function(index, item) {
+                    $.each(response, function (index, item) {
                         var disabledClass = item.has_children ? '' : ' disabled';
                         var itemHtml = `
                         <li class="list-group-item">
@@ -322,7 +322,7 @@
                     target.html('<p>No items found.</p>');
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
@@ -334,7 +334,7 @@
         var html = '';
         if (data.ancestors && data.ancestors.length > 0) {
             html += '<p><strong>Address from Root:</strong> ';
-            var addressParts = data.ancestors.map(function(item) {
+            var addressParts = data.ancestors.map(function (item) {
                 return item.site ? item.site : (item.equipment_name ? item.equipment_name : (item.inventory_number ? item.inventory_number : (item.node ? item.node : (item.component ? item.component : 'Не найдено названия'))));
             });
             // Добавляем текущий элемент в адрес в конце
@@ -408,7 +408,7 @@
                 var updatedItemHtml = `
                 <li class="list-group-item">
                     <div class="d-flex justify-content-start align-items-center">
-                        <button class="btn btn-primary toggle-btn me-2" data-id="${response.id}" aria-expanded="false">
+                        <button class="btn btn-primary toggle-btn${response.has_children ? '' : ' disabled'} me-2" data-id="${response.id}" aria-expanded="false">
                             Load Children
                         </button>
                         <span class="ms-2">${response.site ? response.site : response.equipment_name ? response.equipment_name : response.inventory_number ? response.inventory_number : response.node ? response.node : response.component ? response.component : 'нужно, чтобы отобразилось здесь'}</span>
@@ -439,13 +439,6 @@
             }
         });
     }
-
-
-
-
-
-
-
 </script>
 
 
