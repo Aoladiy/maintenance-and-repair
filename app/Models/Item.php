@@ -34,4 +34,24 @@ class Item extends Model
     {
         return $this->children()->exists();
     }
+
+    public function ancestors()
+    {
+        $ancestors = [];
+        $currentItem = $this;
+
+        while ($currentItem->parent_id !== null) {
+            $parentItem = Item::find($currentItem->parent_id);
+            if ($parentItem) {
+                $ancestors[] = $parentItem;
+                $currentItem = $parentItem;
+            } else {
+                // If parent item is not found, exit the loop
+                break;
+            }
+        }
+
+        return $ancestors;
+    }
+
 }

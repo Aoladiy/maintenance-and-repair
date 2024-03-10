@@ -16,6 +16,7 @@ class ItemController extends Controller
         $items = Item::query()->where('parent_id', null)->get();
         $items->each(function ($child) {
             $child->has_children = $child->hasChildren();
+            $child->ancestors = $child->ancestors();
         });
         return view('items.tree', ['items' => $items]);
     }
@@ -36,6 +37,7 @@ class ItemController extends Controller
             'mileage' => $item->mileage,
             'amount' => $item->amount,
             'has_children' => $item->hasChildren(),
+            'ancestors' => $item->ancestors(),
         ]);
     }
 
@@ -45,12 +47,14 @@ class ItemController extends Controller
             $items = Item::query()->where('parent_id', null)->get();
             $items->each(function ($child) {
                 $child->has_children = $child->hasChildren();
+                $child->ancestors = $child->ancestors();
             });
             return $items;
         } else {
             $children = Item::query()->find($id)->children()->get();
             $children->each(function ($child) {
                 $child->has_children = $child->hasChildren();
+                $child->ancestors = $child->ancestors();
             });
             return $children;
         }

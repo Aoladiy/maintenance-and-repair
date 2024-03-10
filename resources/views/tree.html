@@ -295,7 +295,7 @@
                                 <button class="btn btn-primary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
                                     Load Children
                                 </button>
-                                <span class="ms-2">${item.site ? item.site : item.equipment_name ? item.equipment_name : item.inventory_number ? item.inventory_number : item.node ? item.node : item.component ? item.component : 'нужно, чтобы отобразилось здесь'}</span>
+                                <span class="ms-2">${item.site ? item.site : item.equipment_name ? item.equipment_name : item.inventory_number ? item.inventory_number : item.node ? item.node : item.component ? item.component : 'не найдено названия'}</span>
                                 <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                                     Add
                                 </button>
@@ -332,6 +332,19 @@
     // Функция для генерации контента модального окна подробностей
     function generateModalContent(data) {
         var html = '';
+        if (data.ancestors && data.ancestors.length > 0) {
+            html += '<p><strong>Address from Root:</strong> ';
+            var addressParts = data.ancestors.map(function(item) {
+                return item.site ? item.site : (item.equipment_name ? item.equipment_name : (item.inventory_number ? item.inventory_number : (item.node ? item.node : (item.component ? item.component : 'Не найдено названия'))));
+            });
+            // Добавляем текущий элемент в адрес в конце
+            addressParts.push(data.site ? data.site : (data.equipment_name ? data.equipment_name : (data.inventory_number ? data.inventory_number : (data.node ? data.node : (data.component ? data.component : 'Не найдено названия')))));
+            html += addressParts.join(' > ');
+            html += '</p>';
+        } else {
+            // Если нет предков, просто показываем текущий элемент в качестве адреса
+            html += '<p><strong>Address:</strong> ' + (data.site ? data.site : (data.equipment_name ? data.equipment_name : (data.inventory_number ? data.inventory_number : (data.node ? data.node : (data.component ? data.component : 'Не найдено названия'))))) + '</p>';
+        }
         html += '<p><strong>Equipment Name:</strong> ' + data.equipment_name + '</p>';
         html += '<p><strong>Site:</strong> ' + data.site + '</p>';
         html += '<p><strong>Inventory Number:</strong> ' + data.inventory_number + '</p>';
@@ -378,7 +391,7 @@
         var itemId = $('#edit_item_id_input').val();
 
         // Получить HTML всех потомков элемента
-        // var childrenHTML = $('#item_' + itemId).html();
+        var childrenHTML = $('#item_' + itemId).html();
 
         $.ajax({
             url: base + 'items/' + itemId + '/update',
