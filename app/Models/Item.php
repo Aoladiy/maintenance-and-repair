@@ -51,7 +51,7 @@ class Item extends Model
             }
         }
 
-        return $ancestors;
+        return array_reverse($ancestors);
     }
 
 }
