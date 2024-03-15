@@ -6,18 +6,16 @@ import pymysql
 xl = pd.ExcelFile('db.xlsx')
 
 # Забираем название нужного листа в экселе
-sheet_name = xl.sheet_names[3]
+sheet_name = xl.sheet_names[4]
 df = xl.parse(sheet_name)
 
 lst = []
 last_site_id = None
 last_equipment_id = None
-last_inventory_id = None
 last_node_id = None
 last_component_id = None
 prev_last_site_id = None
 prev_last_equipment_id = None
-prev_last_inventory_id = None
 prev_last_node_id = None
 prev_last_component_id = None
 
@@ -30,12 +28,8 @@ for index, row in df.iterrows():
         prev_last_site_id = last_site_id
         last_equipment_id = index
         last_changed_id = 'equipment'
-    if isinstance(row['Инвентарный номер'], str) or isinstance(row['Инвентарный номер'], int):
-        prev_last_equipment_id = last_equipment_id
-        last_inventory_id = index
-        last_changed_id = 'inventory'
     if isinstance(row['Агрегат/ узел'], str):
-        prev_last_inventory_id = last_inventory_id
+        prev_last_equipment_id = last_equipment_id
         last_node_id = index
         last_changed_id = 'node'
     if isinstance(row['Деталь'], str):
@@ -47,10 +41,8 @@ for index, row in df.iterrows():
         parent_id = None
     elif last_changed_id == 'equipment':
         parent_id = prev_last_site_id
-    elif last_changed_id == 'inventory':
-        parent_id = prev_last_equipment_id
     elif last_changed_id == 'node':
-        parent_id = prev_last_inventory_id
+        parent_id = prev_last_equipment_id
     elif last_changed_id == 'component':
         parent_id = prev_last_node_id
 
