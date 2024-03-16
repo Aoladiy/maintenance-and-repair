@@ -113,7 +113,7 @@ function loadChildren(itemId) {
                                 <button class="btn btn-primary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
                                     Load Children
                                 </button>
-                                <span class="ms-2">${item.site ? item.site : item.equipment_name ? item.equipment_name : item.inventory_number ? item.inventory_number : item.node ? item.node : item.component ? item.component : 'не найдено названия'}</span>
+                                <span class="ms-2">${getItemDescription(item)}</span>
                                 <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                                     Add
                                 </button>
@@ -154,10 +154,10 @@ function generateModalContent(data) {
     if (data.ancestors && data.ancestors.length > 0) {
         html += '<p><strong>Address from Root:</strong> ';
         var addressParts = data.ancestors.map(function (item) {
-            return item.site ? item.site : (item.equipment_name ? item.equipment_name : (item.inventory_number ? item.inventory_number : (item.node ? item.node : (item.component ? item.component : 'Не найдено названия'))));
+            return getItemDescription(item);
         });
         // Добавляем текущий элемент в адрес в конце
-        addressParts.push(data.site ? data.site : (data.equipment_name ? data.equipment_name : (data.inventory_number ? data.inventory_number : (data.node ? data.node : (data.component ? data.component : 'Не найдено названия')))));
+        addressParts.push(getItemDescription(data));
         html += addressParts.join(' > ');
         html += '</p>';
     } else {
@@ -233,7 +233,7 @@ function editItem() {
                         <button class="btn btn-primary toggle-btn${response.has_children ? '' : ' disabled'} me-2" data-id="${response.id}" aria-expanded="false">
                             Load Children
                         </button>
-                        <span class="ms-2">${response.site ? response.site : response.equipment_name ? response.equipment_name : response.inventory_number ? response.inventory_number : response.node ? response.node : response.component ? response.component : 'нужно, чтобы отобразилось здесь'}</span>
+                        <span class="ms-2">${getItemDescription(response)}</span>
                         <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                             Add
                         </button>
@@ -260,4 +260,20 @@ function editItem() {
             // Обработка ошибки, если необходимо
         }
     });
+}
+function getItemDescription(item) {
+    if (item.site) {
+        return item.site;
+    } else if (item.equipment_name) {
+        if (item.inventory_number) {
+            return item.equipment_name + ' (Инвентарный номер: ' + item.inventory_number + ')';
+        }
+        return item.equipment_name;
+    } else if (item.node) {
+        return item.node;
+    } else if (item.component) {
+        return item.component;
+    } else {
+        return '';
+    }
 }
