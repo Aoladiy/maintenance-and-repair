@@ -34,8 +34,11 @@ class ItemController extends Controller
             'operation' => $item->operation,
             'service_period_in_days' => $item->service_period_in_days,
             'service_period_in_engine_hours' => $item->service_period_in_engine_hours,
+            'engine_hours_on_the_datetime_of_last_service' => $item->engine_hours_on_the_datetime_of_last_service,
             'mileage' => $item->mileage,
+            'mileage_on_the_datetime_of_last_service' => $item->mileage_on_the_datetime_of_last_service,
             'amount' => $item->amount,
+            'datetime_of_last_service' => $item->datetime_of_last_service,
             'has_children' => $item->hasChildren(),
             'ancestors' => $item->ancestors(),
         ]);
@@ -73,8 +76,11 @@ class ItemController extends Controller
                 'operation',
                 'service_period_in_days',
                 'service_period_in_engine_hours',
+                'engine_hours_on_the_datetime_of_last_service',
                 'mileage',
+                'mileage_on_the_datetime_of_last_service',
                 'amount',
+                'datetime_of_last_service',
                 'parent_id',
             ]
         );
@@ -94,8 +100,11 @@ class ItemController extends Controller
                 'operation',
                 'service_period_in_days',
                 'service_period_in_engine_hours',
+                'engine_hours_on_the_datetime_of_last_service',
                 'mileage',
+                'mileage_on_the_datetime_of_last_service',
                 'amount',
+                'datetime_of_last_service',
                 'parent_id',
             ]
         );

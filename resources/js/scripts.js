@@ -12,8 +12,8 @@ $(document).on('click', '.edit-item-btn', function () {
         dataType: 'json',
         success: function (response) {
             // Заполнение полей формы данными полученными из сервера
-            $('#edit_equipment_name_input').val(response.equipment_name);
             $('#edit_site_input').val(response.site);
+            $('#edit_equipment_name_input').val(response.equipment_name);
             $('#edit_inventory_number_input').val(response.inventory_number);
             $('#edit_node_input').val(response.node);
             $('#edit_component_input').val(response.component);
@@ -21,9 +21,11 @@ $(document).on('click', '.edit-item-btn', function () {
             $('#edit_operation_input').val(response.operation);
             $('#edit_service_period_in_days_input').val(response.service_period_in_days);
             $('#edit_service_period_in_engine_hours_input').val(response.service_period_in_engine_hours);
+            $('#edit_engine_hours_on_the_datetime_of_last_service_input').val(response.engine_hours_on_the_datetime_of_last_service);
             $('#edit_mileage_input').val(response.mileage);
+            $('#edit_mileage_on_the_datetime_of_last_service_input').val(response.mileage_on_the_datetime_of_last_service);
             $('#edit_amount_input').val(response.amount);
-            // Добавьте остальные поля редактирования аналогичным образом
+            $('#edit_datetime_of_last_service_input').val(response.datetime_of_last_service);
             $('#edit_item_id_input').val(itemId);
             $('#editItemModal').modal('show');
         },
@@ -162,8 +164,8 @@ function generateModalContent(data) {
         // Если нет предков, просто показываем текущий элемент в качестве адреса
         html += '<p><strong>Address:</strong> ' + (data.site ? data.site : (data.equipment_name ? data.equipment_name : (data.inventory_number ? data.inventory_number : (data.node ? data.node : (data.component ? data.component : 'Не найдено названия'))))) + '</p>';
     }
-    html += '<p><strong>Equipment Name:</strong> ' + data.equipment_name + '</p>';
     html += '<p><strong>Site:</strong> ' + data.site + '</p>';
+    html += '<p><strong>Equipment Name:</strong> ' + data.equipment_name + '</p>';
     html += '<p><strong>Inventory Number:</strong> ' + data.inventory_number + '</p>';
     html += '<p><strong>Node:</strong> ' + data.node + '</p>';
     html += '<p><strong>Component:</strong> ' + data.component + '</p>';
@@ -171,8 +173,11 @@ function generateModalContent(data) {
     html += '<p><strong>Operation:</strong> ' + data.operation + '</p>';
     html += '<p><strong>Service Period (Days):</strong> ' + data.service_period_in_days + '</p>';
     html += '<p><strong>Service Period (Engine Hours):</strong> ' + data.service_period_in_engine_hours + '</p>';
+    html += '<p><strong>Service Period (Engine Hours) on the datetime of last service:</strong> ' + data.engine_hours_on_the_datetime_of_last_service + '</p>';
     html += '<p><strong>Mileage:</strong> ' + data.mileage + '</p>';
+    html += '<p><strong>Mileage on the datetime of last service:</strong> ' + data.mileage_on_the_datetime_of_last_service + '</p>';
     html += '<p><strong>Amount:</strong> ' + data.amount + '</p>';
+    html += '<p><strong>Datetime of last service:</strong> ' + data.datetime_of_last_service + '</p>';
     html += '<p><strong>Parent ID:</strong> ' + data.parent_id + '</p>';
     return html;
 }

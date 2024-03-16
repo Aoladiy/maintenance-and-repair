@@ -11,12 +11,12 @@
                     <input type="hidden" name="item_id" id="edit_item_id_input">
                     <!-- Поля для редактирования элемента -->
                     <div class="mb-3">
-                        <label for="edit_equipment_name_input" class="form-label">Equipment Name</label>
-                        <input type="text" class="form-control" id="edit_equipment_name_input" name="equipment_name">
-                    </div>
-                    <div class="mb-3">
                         <label for="edit_site_input" class="form-label">Site</label>
                         <input type="text" class="form-control" id="edit_site_input" name="site">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_equipment_name_input" class="form-label">Equipment Name</label>
+                        <input type="text" class="form-control" id="edit_equipment_name_input" name="equipment_name">
                     </div>
                     <div class="mb-3">
                         <label for="edit_inventory_number_input" class="form-label">Inventory Number</label>
@@ -51,12 +51,26 @@
                                name="service_period_in_engine_hours">
                     </div>
                     <div class="mb-3">
+                        <label for="edit_engine_hours_on_the_datetime_of_last_service_input" class="form-label">Service Period (Engine
+                            Hours) on the datetime of last service</label>
+                        <input type="number" class="form-control" id="edit_engine_hours_on_the_datetime_of_last_service_input"
+                               name="engine_hours_on_the_datetime_of_last_service">
+                    </div>
+                    <div class="mb-3">
                         <label for="edit_mileage_input" class="form-label">Mileage</label>
                         <input type="number" class="form-control" id="edit_mileage_input" name="mileage">
                     </div>
                     <div class="mb-3">
+                        <label for="edit_mileage_on_the_datetime_of_last_service_input" class="form-label">Mileage on the datetime of last service</label>
+                        <input type="number" class="form-control" id="edit_mileage_on_the_datetime_of_last_service_input" name="mileage_on_the_datetime_of_last_service">
+                    </div>
+                    <div class="mb-3">
                         <label for="edit_amount_input" class="form-label">Amount</label>
                         <input type="number" class="form-control" id="edit_amount_input" name="amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_datetime_of_last_service_input" class="form-label">Datetime of last service</label>
+                        <input type="datetime-local" class="form-control" id="edit_datetime_of_last_service_input" name="datetime_of_last_service">
                     </div>
                 </form>
             </div>

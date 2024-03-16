@@ -10,12 +10,12 @@
                 <form id="createItemForm">
                     <input type="hidden" name="parent_id" id="parent_id_input">
                     <div class="mb-3">
-                        <label for="equipment_name_input" class="form-label">Equipment Name</label>
-                        <input type="text" class="form-control" id="equipment_name_input" name="equipment_name">
-                    </div>
-                    <div class="mb-3">
                         <label for="site_input" class="form-label">Site</label>
                         <input type="text" class="form-control" id="site_input" name="site">
+                    </div>
+                    <div class="mb-3">
+                        <label for="equipment_name_input" class="form-label">Equipment Name</label>
+                        <input type="text" class="form-control" id="equipment_name_input" name="equipment_name">
                     </div>
                     <div class="mb-3">
                         <label for="inventory_number_input" class="form-label">Inventory Number</label>
@@ -49,12 +49,26 @@
                                name="service_period_in_engine_hours">
                     </div>
                     <div class="mb-3">
+                        <label for="engine_hours_on_the_datetime_of_last_service_input" class="form-label">Service Period (Engine
+                            Hours) on the datetime of last service</label>
+                        <input type="number" class="form-control" id="engine_hours_on_the_datetime_of_last_service_input"
+                               name="engine_hours_on_the_datetime_of_last_service">
+                    </div>
+                    <div class="mb-3">
                         <label for="mileage_input" class="form-label">Mileage</label>
                         <input type="number" class="form-control" id="mileage_input" name="mileage">
                     </div>
                     <div class="mb-3">
+                        <label for="mileage_on_the_datetime_of_last_service_input" class="form-label">Mileage on the datetime of last service</label>
+                        <input type="number" class="form-control" id="mileage_on_the_datetime_of_last_service_input" name="mileage_on_the_datetime_of_last_service">
+                    </div>
+                    <div class="mb-3">
                         <label for="amount_input" class="form-label">Amount</label>
                         <input type="number" class="form-control" id="amount_input" name="amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="datetime_of_last_service_input" class="form-label">Datetime of last service</label>
+                        <input type="datetime-local" class="form-control" id="datetime_of_last_service_input" name="datetime_of_last_service">
                     </div>
                 </form>
             </div>

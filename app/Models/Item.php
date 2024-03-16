@@ -20,8 +20,11 @@ class Item extends Model
         'operation',
         'service_period_in_days',
         'service_period_in_engine_hours',
+        'engine_hours_on_the_datetime_of_last_service',
         'mileage',
+        'mileage_on_the_datetime_of_last_service',
         'amount',
+        'datetime_of_last_service',
         'parent_id',
     ];
 

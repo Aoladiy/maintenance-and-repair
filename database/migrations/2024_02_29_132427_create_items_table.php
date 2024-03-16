@@ -22,8 +22,11 @@ return new class extends Migration
             $table->string('operation')->nullable();
             $table->string('service_period_in_days')->nullable();
             $table->unsignedInteger('service_period_in_engine_hours')->nullable();
+            $table->unsignedInteger('engine_hours_on_the_datetime_of_last_service')->nullable();
             $table->unsignedInteger('mileage')->nullable();
+            $table->unsignedInteger('mileage_on_the_datetime_of_last_service')->nullable();
             $table->unsignedInteger('amount')->nullable();
+            $table->dateTime('datetime_of_last_service')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('items')->nullOnDelete();
             $table->timestamps();
