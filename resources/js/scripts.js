@@ -107,9 +107,26 @@ function loadChildren(itemId) {
                 var html = '';
                 $.each(response, function (index, item) {
                     var disabledClass = item.has_children ? '' : ' disabled';
+
+                    // Определяем, нужно ли отображать значок оповещений
+                    var notificationIcon = '';
+                    if (item.alerts > 0) {
+                        notificationIcon = `
+                            <div class="notification-icon me-3">
+                                <span class="badge">${item.alerts}</span>
+                                <i class="fa-regular fa-bell"></i>
+                            </div>`;
+                    } else {
+                        notificationIcon = `
+                            <div class="notification-icon me-3">
+                                <i class="fa-regular fa-bell"></i>
+                            </div>`;
+                    }
+
                     var itemHtml = `
                         <li class="list-group-item">
                             <div class="d-flex justify-content-start align-items-center">
+                                ${notificationIcon}
                                 <button class="btn btn-primary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
                                     Load Children
                                 </button>

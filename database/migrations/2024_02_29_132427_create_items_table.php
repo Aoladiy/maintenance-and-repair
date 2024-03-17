@@ -27,6 +27,9 @@ return new class extends Migration
             $table->unsignedInteger('mileage_on_the_datetime_of_last_service')->nullable();
             $table->unsignedInteger('amount')->nullable();
             $table->dateTime('datetime_of_last_service')->nullable();
+            $table->unsignedInteger('alert_time_in_engine_hours')->nullable();
+            $table->unsignedInteger('alert_time_in_mileage')->nullable();
+            $table->boolean('alert')->default(false);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('items')->nullOnDelete();
             $table->timestamps();

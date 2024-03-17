@@ -57,4 +57,24 @@ class Item extends Model
         return array_reverse($ancestors);
     }
 
+    public function alerts()
+    {
+        $totalAlerts = 0;
+
+        // Проверяем, есть ли у текущего элемента уведомление
+        if ($this->alert) {
+            $totalAlerts++;
+        }
+
+        // Получаем всех дочерних элементов
+        $children = $this->children;
+
+        // Рекурсивно вызываем alerts() для каждого дочернего элемента
+        foreach ($children as $child) {
+            $totalAlerts += $child->alerts();
+        }
+
+        return $totalAlerts;
+    }
+
 }

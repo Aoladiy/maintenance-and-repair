@@ -51,6 +51,7 @@ class ItemController extends Controller
             $items->each(function ($child) {
                 $child->has_children = $child->hasChildren();
                 $child->ancestors = $child->ancestors();
+                $child->alerts = $child->alerts();
             });
             return $items;
         } else {
@@ -58,6 +59,7 @@ class ItemController extends Controller
             $children->each(function ($child) {
                 $child->has_children = $child->hasChildren();
                 $child->ancestors = $child->ancestors();
+                $child->alerts = $child->alerts();
             });
             return $children;
         }
