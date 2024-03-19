@@ -20,13 +20,14 @@ return new class extends Migration
             $table->string('component')->nullable();
             $table->string('vendor_code')->nullable();
             $table->string('operation')->nullable();
-            $table->string('service_period_in_days')->nullable();
+            $table->integer('service_period_in_days')->nullable();
             $table->unsignedInteger('service_period_in_engine_hours')->nullable();
             $table->unsignedInteger('engine_hours_on_the_datetime_of_last_service')->nullable();
             $table->unsignedInteger('mileage')->nullable();
             $table->unsignedInteger('mileage_on_the_datetime_of_last_service')->nullable();
             $table->unsignedInteger('amount')->nullable();
             $table->dateTime('datetime_of_last_service')->nullable();
+            $table->unsignedInteger('alert_time_in_hours')->nullable();
             $table->unsignedInteger('alert_time_in_engine_hours')->nullable();
             $table->unsignedInteger('alert_time_in_mileage')->nullable();
             $table->boolean('alert')->default(false);

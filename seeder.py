@@ -6,7 +6,7 @@ import pymysql
 xl = pd.ExcelFile('db.xlsx')
 
 # Забираем название нужного листа в экселе
-sheet_name = xl.sheet_names[4]
+sheet_name = xl.sheet_names[5]
 df = xl.parse(sheet_name)
 
 lst = []

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Item;
+use DateTime;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -31,10 +32,14 @@ class getCurrentEngineHoursAndMileAge extends Command
         $currentMileage = Http::get('http://localhost:81/external/api/currentMileage.php')->json();
         $items = Item::all();
         for ($i = 0; $i < count($items); $i++) {
+            $now = new DateTime();
+            $date = new DateTime($items[$i]->datetime_of_last_service);
             if (
                 $items[$i]->service_period_in_engine_hours && ($currentEngineHours[$i]['number'] - $items[$i]->engine_hours_on_the_datetime_of_last_service + $items[$i]->alert_time_in_engine_hours >= $items[$i]->service_period_in_engine_hours)
                 ||
                 $items[$i]->mileage && ($currentMileage[$i]['number'] - $items[$i]->mileage_on_the_datetime_of_last_service + $items[$i]->alert_time_in_mileage >= $items[$i]->mileage)
+                ||
+                $items[$i]->service_period_in_days && ($now->diff($date)->d + $items[$i]->alert_time_in_hours >= $items[$i]->service_period_in_days)
             )
             {
                 $items[$i]->alert = true;
