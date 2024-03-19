@@ -115,6 +115,7 @@ class ItemController extends Controller
 
         $item->update($data);
         $item->has_children = $item->hasChildren();
+        $item->alerts = $item->alerts();
         return $item;
     }
 

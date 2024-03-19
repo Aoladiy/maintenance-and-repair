@@ -108,37 +108,25 @@ function loadChildren(itemId) {
                 $.each(response, function (index, item) {
                     var disabledClass = item.has_children ? '' : ' disabled';
 
-                    // Определяем, нужно ли отображать значок оповещений
-                    var notificationIcon = '';
-                    if (item.alerts > 0) {
-                        notificationIcon = `
-                            <div class="notification-icon me-3">
-                                <span class="badge">${item.alerts}</span>
-                                <i class="fa-regular fa-bell"></i>
-                            </div>`;
-                    } else {
-                        notificationIcon = `
-                            <div class="notification-icon me-3">
-                                <i class="fa-regular fa-bell"></i>
-                            </div>`;
-                    }
+                    var notificationIcon = determineNotificationIcon(item);
 
                     var itemHtml = `
                         <li class="list-group-item">
                             <div class="d-flex justify-content-start align-items-center">
                                 ${notificationIcon}
                                 <button class="btn btn-primary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
-                                    Load Children
+                                    <i class="fa-solid fa-caret-right"></i>
                                 </button>
-                                <span class="ms-2">${getItemDescription(item)}</span>
+                                <div class="d-flex align-items-center flex-grow-1">
+                                    <button class="btn btn-info me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(item)}' data-bs-toggle="modal" data-bs-target="#itemModal">
+                                        <span>${getItemDescription(item)}</span>
+                                    </button>
+                                </div>
                                 <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                                     Add
                                 </button>
                                 <button class="btn btn-warning ms-2 edit-item-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
                                     Edit
-                                </button>
-                                <button class="btn btn-info ms-2 item-details-btn" data-item='${JSON.stringify(item)}' data-bs-toggle="modal" data-bs-target="#itemModal">
-                                    Show Details
                                 </button>
                                 <button class="btn btn-danger ms-2 delete-item-btn" data-item-id="${item.id}">
                                     Delete
@@ -153,6 +141,9 @@ function loadChildren(itemId) {
                 // Вставляем данные в целевой элемент
                 target.html(html);
                 target.collapse('show');
+
+                // Вызываем функцию для обработки события открытия/закрытия списка
+                handleToggleBtnClick();
             } else {
                 target.html('<p>No items found.</p>');
             }
@@ -242,23 +233,26 @@ function editItem() {
 
             // Найти соответствующий элемент списка на странице по его ID
             var listItem = $('#item_' + itemId).closest('li.list-group-item');
+            var notificationIcon = determineNotificationIcon(response);
 
             // Собрать HTML-код для обновленного элемента
             var updatedItemHtml = `
                 <li class="list-group-item">
                     <div class="d-flex justify-content-start align-items-center">
+                        ${notificationIcon}
                         <button class="btn btn-primary toggle-btn${response.has_children ? '' : ' disabled'} me-2" data-id="${response.id}" aria-expanded="false">
-                            Load Children
+                            <i class="fa-solid fa-caret-right"></i>
                         </button>
-                        <span class="ms-2">${getItemDescription(response)}</span>
+                        <div class="d-flex align-items-center flex-grow-1">
+                        <button class="btn btn-info me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#itemModal">
+                            <span>${getItemDescription(response)}</span>
+                        </button>
+                        </div>
                         <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                             Add
                         </button>
                         <button class="btn btn-warning ms-2 edit-item-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
                             Edit
-                        </button>
-                        <button class="btn btn-info ms-2 item-details-btn" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#itemModal">
-                            Show Details
                         </button>
                         <button class="btn btn-danger ms-2 delete-item-btn" data-item-id="${response.id}">
                             Delete
@@ -271,6 +265,8 @@ function editItem() {
 
             // Заменить содержимое элемента на обновленные данные
             listItem.replaceWith(updatedItemHtml);
+
+            handleToggleBtnClick();
         },
         error: function (xhr, status, error) {
             console.error(error);
@@ -292,5 +288,33 @@ function getItemDescription(item) {
         return item.component;
     } else {
         return '';
+    }
+}
+
+function handleToggleBtnClick() {
+    $('.toggle-btn').on('click', function () {
+        var $nextLevel = $(this).parent().next('.collapse'); // Выбираем следующий уровень вложенности
+        var icon = $(this).find('i.fa-solid');
+
+        if ($nextLevel.hasClass('show')) {
+            icon.removeClass('fa-caret-down').addClass('fa-caret-right');
+        } else {
+            icon.removeClass('fa-caret-right').addClass('fa-caret-down');
+        }
+    });
+}
+
+function determineNotificationIcon(item) {
+    if (item.alerts > 0) {
+        return `
+            <div class="notification-icon me-3">
+                <span class="badge">${item.alerts}</span>
+                <i class="fa-regular fa-bell"></i>
+            </div>`;
+    } else {
+        return `
+            <div class="notification-icon me-3">
+                <i class="fa-regular fa-bell"></i>
+            </div>`;
     }
 }
