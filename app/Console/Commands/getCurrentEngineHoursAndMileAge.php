@@ -39,7 +39,7 @@ class getCurrentEngineHoursAndMileAge extends Command
                 ||
                 $items[$i]->mileage && ($currentMileage[$i]['number'] - $items[$i]->mileage_on_the_datetime_of_last_service + $items[$i]->alert_time_in_mileage >= $items[$i]->mileage)
                 ||
-                $items[$i]->service_period_in_days && ($now->diff($date)->d + $items[$i]->alert_time_in_hours >= $items[$i]->service_period_in_days)
+                $items[$i]->service_period_in_days * 24 && ($now->diff($date)->h + $items[$i]->alert_time_in_hours >= $items[$i]->service_period_in_days * 24)
             )
             {
                 $items[$i]->alert = true;

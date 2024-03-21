@@ -77,4 +77,19 @@ class Item extends Model
         return $totalAlerts;
     }
 
+    public function toJsonArray()
+    {
+        $jsonArray = [];
+
+        // Добавляем текущий элемент в массив JSON
+        $jsonArray[] = ["id" => $this->id, "alerts" => $this->alerts()];
+
+        // Рекурсивно вызываем toJsonArray() для каждого дочернего элемента
+        foreach ($this->children as $child) {
+            $jsonArray = array_merge($jsonArray, $child->toJsonArray());
+        }
+
+        return $jsonArray;
+    }
+
 }

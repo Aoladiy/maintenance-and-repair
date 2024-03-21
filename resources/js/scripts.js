@@ -2,7 +2,13 @@ let base = 'http://localhost:8000/';
 $(document).ready(function () {
     // Вызов функции при загрузке страницы
     loadChildren(-1);
+
+    // Вызов функции каждый час
+    setInterval(function() {
+        loadChildren(-1);
+    }, 3600000); // 3600000 миллисекунд - это 1 час
 });
+// Функция для загрузки дочерних элементов с учетом оповещений и сохранения в localStorage
 // Функция для предварительного заполнения формы редактирования элемента и открытия модального окна
 $(document).on('click', '.edit-item-btn', function () {
     var itemId = $(this).data('item-id');
@@ -95,7 +101,6 @@ function loadChildren(itemId) {
         itemId = 0;
     }
 
-    // Изменяем target в зависимости от itemId
     var target = itemId === -1 ? $('#root') : $('#item_' + itemId);
 
     $.ajax({
@@ -105,15 +110,19 @@ function loadChildren(itemId) {
         success: function (response) {
             if (response.length > 0) {
                 var html = '';
+                var promises = []; // Массив промисов для запросов оповещений
+
                 $.each(response, function (index, item) {
                     var disabledClass = item.has_children ? '' : ' disabled';
-
-                    var notificationIcon = determineNotificationIcon(item);
 
                     var itemHtml = `
                         <li class="list-group-item">
                             <div class="d-flex justify-content-start align-items-center">
-                                ${notificationIcon}
+                                <div id="notification-icon_${item.id}">
+                                <div class="notification-icon me-3">
+                                    <i class="fa-regular fa-bell"></i>
+                                </div>
+                                </div>
                                 <button class="btn btn-primary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
                                     <i class="fa-solid fa-caret-right"></i>
                                 </button>
@@ -136,11 +145,40 @@ function loadChildren(itemId) {
                             </ul>
                         </li>`;
                     html += itemHtml;
+
+                    // Если элемент имеет parent_id = null, добавляем запрос оповещений в массив промисов
+                    if (item.parent_id === null) {
+                        promises.push(fetchAlerts(item.id));
+                    }
                 });
 
-                // Вставляем данные в целевой элемент
+                // После добавления всех элементов в HTML
                 target.html(html);
                 target.collapse('show');
+                if (localStorage.getItem('combinedAlerts')) {
+                    displayAlerts();
+                }
+
+                if (itemId === -1) {
+                    // Выполняем все промисы запросов оповещений асинхронно
+                    Promise.all(promises)
+                        .then(function (alerts) {
+                            // Объединяем полученные оповещения в один массив
+                            var combinedAlerts = [].concat.apply([], alerts);
+
+                            // Сохраняем объединенные оповещения в localStorage
+                            localStorage.setItem('combinedAlerts', JSON.stringify(combinedAlerts));
+
+                            // Отображаем оповещения только при наличии combinedAlerts
+                            if (combinedAlerts.length > 0) {
+                                displayAlerts(); // функция отображения оповещений
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                }
+
 
                 // Вызываем функцию для обработки события открытия/закрытия списка
                 handleToggleBtnClick();
@@ -154,6 +192,24 @@ function loadChildren(itemId) {
     });
 }
 
+
+
+// Функция для получения оповещений для конкретного элемента и возврата промиса
+function fetchAlerts(itemId) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: base + 'items/' + itemId + '/alerts',
+            type: 'GET',
+            dataType: 'json',
+            success: function(alertResponse) {
+                resolve(alertResponse);
+            },
+            error: function(xhr, status, error) {
+                reject(error);
+            }
+        });
+    });
+}
 
 // Функция для генерации контента модального окна подробностей
 function generateModalContent(data) {
@@ -233,13 +289,16 @@ function editItem() {
 
             // Найти соответствующий элемент списка на странице по его ID
             var listItem = $('#item_' + itemId).closest('li.list-group-item');
-            var notificationIcon = determineNotificationIcon(response);
 
             // Собрать HTML-код для обновленного элемента
             var updatedItemHtml = `
                 <li class="list-group-item">
                     <div class="d-flex justify-content-start align-items-center">
-                        ${notificationIcon}
+                        <div id="notification-icon_${response.id}">
+                        <div class="notification-icon me-3">
+                            <i class="fa-regular fa-bell"></i>
+                        </div>
+                        </div>
                         <button class="btn btn-primary toggle-btn${response.has_children ? '' : ' disabled'} me-2" data-id="${response.id}" aria-expanded="false">
                             <i class="fa-solid fa-caret-right"></i>
                         </button>
@@ -265,6 +324,10 @@ function editItem() {
 
             // Заменить содержимое элемента на обновленные данные
             listItem.replaceWith(updatedItemHtml);
+
+            if (localStorage.getItem('combinedAlerts')) {
+                displayAlerts();
+            }
 
             handleToggleBtnClick();
         },
@@ -304,17 +367,39 @@ function handleToggleBtnClick() {
     });
 }
 
-function determineNotificationIcon(item) {
-    if (item.alerts > 0) {
-        return `
-            <div class="notification-icon me-3">
-                <span class="badge">${item.alerts}</span>
-                <i class="fa-regular fa-bell"></i>
-            </div>`;
-    } else {
-        return `
-            <div class="notification-icon me-3">
-                <i class="fa-regular fa-bell"></i>
-            </div>`;
+// Функция для определения и отображения оповещений
+function displayAlerts() {
+    // Получаем combinedAlerts из localStorage
+    var combinedAlerts = JSON.parse(localStorage.getItem('combinedAlerts'));
+
+    // Проверяем, есть ли оповещения для отображения
+    if (combinedAlerts.length > 0) {
+        // Проходим по всем элементам, для которых есть оповещения
+        combinedAlerts.forEach(function(combinedAlert) {
+            // Получаем id элемента и количество оповещений
+            var itemId = combinedAlert.id;
+            var alerts = combinedAlert.alerts;
+
+            // Получаем элемент по id
+            var $notificationIcon = $('#notification-icon_' + itemId);
+
+            // Обновляем оповещения в соответствующем элементе
+            if ($notificationIcon.length > 0) {
+                if (alerts > 0) {
+                    $notificationIcon.html(`
+                        <div class="notification-icon me-3">
+                        <span class="badge">${alerts}</span>
+                        <i class="fa-regular fa-bell"></i>
+                        </div>
+                    `);
+                } else {
+                    $notificationIcon.html(`
+                        <div class="notification-icon me-3">
+                        <i class="fa-regular fa-bell"></i>
+                        </div>
+                    `);
+                }
+            }
+        });
     }
 }

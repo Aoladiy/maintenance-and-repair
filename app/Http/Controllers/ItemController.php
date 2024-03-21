@@ -11,6 +11,15 @@ use Illuminate\View\View;
 
 class ItemController extends Controller
 {
+    public function alerts(int $id)
+    {
+        $item = Item::findOrFail($id);
+        // Получение JSON массива
+        $jsonArray = $item->toJsonArray();
+
+        return json_encode($jsonArray);
+    }
+
     public function items(): view
     {
         $items = Item::query()->where('parent_id', null)->get();
@@ -51,7 +60,6 @@ class ItemController extends Controller
             $items->each(function ($child) {
                 $child->has_children = $child->hasChildren();
                 $child->ancestors = $child->ancestors();
-                $child->alerts = $child->alerts();
             });
             return $items;
         } else {
@@ -59,7 +67,6 @@ class ItemController extends Controller
             $children->each(function ($child) {
                 $child->has_children = $child->hasChildren();
                 $child->ancestors = $child->ancestors();
-                $child->alerts = $child->alerts();
             });
             return $children;
         }
@@ -115,7 +122,6 @@ class ItemController extends Controller
 
         $item->update($data);
         $item->has_children = $item->hasChildren();
-        $item->alerts = $item->alerts();
         return $item;
     }
 
