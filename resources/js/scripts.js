@@ -32,6 +32,10 @@ $(document).on('click', '.edit-item-btn', function () {
             $('#edit_mileage_on_the_datetime_of_last_service_input').val(response.mileage_on_the_datetime_of_last_service);
             $('#edit_amount_input').val(response.amount);
             $('#edit_datetime_of_last_service_input').val(response.datetime_of_last_service);
+            $('#edit_alert_time_in_hours_input').val(response.alert_time_in_hours);
+            $('#edit_alert_time_in_engine_hours_input').val(response.alert_time_in_engine_hours);
+            $('#edit_alert_time_in_mileage_input').val(response.alert_time_in_mileage);
+            $('#edit_alert_input').prop('checked', response.alert);
             $('#edit_item_id_input').val(itemId);
             $('#editItemModal').modal('show');
         },
@@ -214,7 +218,6 @@ function fetchAlerts(itemId) {
 // Функция для генерации контента модального окна подробностей
 function generateModalContent(data) {
     var html = '';
-    console.log("Ancestors before processing:", data.ancestors);
     if (data.ancestors && data.ancestors.length > 0) {
         html += '<p><strong>Address from Root:</strong> ';
         var addressParts = data.ancestors.map(function (item) {
@@ -243,6 +246,10 @@ function generateModalContent(data) {
     html += '<p><strong>Mileage on the datetime of last service:</strong> ' + (data.mileage_on_the_datetime_of_last_service || '') + '</p>';
     html += '<p><strong>Amount:</strong> ' + (data.amount || '') + '</p>';
     html += '<p><strong>Datetime of last service:</strong> ' + (data.datetime_of_last_service || '') + '</p>';
+    html += '<p><strong>Alert time in hours:</strong> ' + (data.alert_time_in_hours || '') + '</p>';
+    html += '<p><strong>Alert time in engine hours:</strong> ' + (data.alert_time_in_engine_hours || '') + '</p>';
+    html += '<p><strong>Alert time in mileage:</strong> ' + (data.alert_time_in_mileage || '') + '</p>';
+    html += '<p><strong>Alert:</strong> ' + (data.alert || '') + '</p>';
     html += '<p><strong>Parent ID:</strong> ' + (data.parent_id || '') + '</p>';
     return html;
 }

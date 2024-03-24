@@ -70,6 +70,22 @@
                         <label for="datetime_of_last_service_input" class="form-label">Datetime of last service</label>
                         <input type="datetime-local" class="form-control" id="datetime_of_last_service_input" name="datetime_of_last_service">
                     </div>
+                    <div class="mb-3">
+                        <label for="alert_time_in_hours_input" class="form-label">Alert time in hours</label>
+                        <input type="number" class="form-control" id="alert_time_in_hours_input" name="alert_time_in_hours">
+                    </div>
+                    <div class="mb-3">
+                        <label for="alert_time_in_engine_hours_input" class="form-label">Alert time in engine hours</label>
+                        <input type="number" class="form-control" id="alert_time_in_engine_hours_input" name="alert_time_in_engine_hours">
+                    </div>
+                    <div class="mb-3">
+                        <label for="alert_time_in_mileage_input" class="form-label">Alert time in mileage</label>
+                        <input type="number" class="form-control" id="alert_time_in_mileage_input" name="alert_time_in_mileage">
+                    </div>
+                    <div class="mb-3">
+                        <label for="alert_input" class="form-label">Alert</label>
+                        <input type="checkbox" class="form-check-input" id="alert_input" name="alert">
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

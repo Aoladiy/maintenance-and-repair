@@ -48,6 +48,10 @@ class ItemController extends Controller
             'mileage_on_the_datetime_of_last_service' => $item->mileage_on_the_datetime_of_last_service,
             'amount' => $item->amount,
             'datetime_of_last_service' => $item->datetime_of_last_service,
+            'alert_time_in_hours' => $item->alert_time_in_hours,
+            'alert_time_in_engine_hours' => $item->alert_time_in_engine_hours,
+            'alert_time_in_mileage' => $item->alert_time_in_mileage,
+            'alert' => $item->alert,
             'has_children' => $item->hasChildren(),
             'ancestors' => $item->ancestors(),
         ]);
@@ -90,9 +94,14 @@ class ItemController extends Controller
                 'mileage_on_the_datetime_of_last_service',
                 'amount',
                 'datetime_of_last_service',
+                'alert_time_in_hours',
+                'alert_time_in_engine_hours',
+                'alert_time_in_mileage',
+                'alert',
                 'parent_id',
             ]
         );
+        $data['alert'] = isset($data['alert']) ? 1 : 0;
         return Item::create($data);
     }
 
@@ -114,11 +123,17 @@ class ItemController extends Controller
                 'mileage_on_the_datetime_of_last_service',
                 'amount',
                 'datetime_of_last_service',
+                'alert_time_in_hours',
+                'alert_time_in_engine_hours',
+                'alert_time_in_mileage',
+                'alert',
                 'parent_id',
             ]
         );
 
         $item = Item::findOrFail($id);
+
+        $data['alert'] = isset($data['alert']) ? 1 : 0;
 
         $item->update($data);
         $item->has_children = $item->hasChildren();

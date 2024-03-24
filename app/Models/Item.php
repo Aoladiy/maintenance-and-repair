@@ -25,6 +25,10 @@ class Item extends Model
         'mileage_on_the_datetime_of_last_service',
         'amount',
         'datetime_of_last_service',
+        'alert_time_in_hours',
+        'alert_time_in_engine_hours',
+        'alert_time_in_mileage',
+        'alert',
         'parent_id',
     ];
 
