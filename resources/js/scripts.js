@@ -226,23 +226,24 @@ function generateModalContent(data) {
         html += '</p>';
     } else {
         // Если нет предков, просто показываем текущий элемент в качестве адреса
-        html += '<p><strong>Address:</strong> ' + (data.site ? data.site : (data.equipment_name ? data.equipment_name : (data.inventory_number ? data.inventory_number : (data.node ? data.node : (data.component ? data.component : 'Не найдено названия'))))) + '</p>';
+        var address = data.site || data.equipment_name || data.inventory_number || data.node || data.component || 'Не найдено названия';
+        html += '<p><strong>Address:</strong> ' + address + '</p>';
     }
-    html += '<p><strong>Site:</strong> ' + data.site + '</p>';
-    html += '<p><strong>Equipment Name:</strong> ' + data.equipment_name + '</p>';
-    html += '<p><strong>Inventory Number:</strong> ' + data.inventory_number + '</p>';
-    html += '<p><strong>Node:</strong> ' + data.node + '</p>';
-    html += '<p><strong>Component:</strong> ' + data.component + '</p>';
-    html += '<p><strong>Vendor Code:</strong> ' + data.vendor_code + '</p>';
-    html += '<p><strong>Operation:</strong> ' + data.operation + '</p>';
-    html += '<p><strong>Service Period (Days):</strong> ' + data.service_period_in_days + '</p>';
-    html += '<p><strong>Service Period (Engine Hours):</strong> ' + data.service_period_in_engine_hours + '</p>';
-    html += '<p><strong>Service Period (Engine Hours) on the datetime of last service:</strong> ' + data.engine_hours_on_the_datetime_of_last_service + '</p>';
-    html += '<p><strong>Mileage:</strong> ' + data.mileage + '</p>';
-    html += '<p><strong>Mileage on the datetime of last service:</strong> ' + data.mileage_on_the_datetime_of_last_service + '</p>';
-    html += '<p><strong>Amount:</strong> ' + data.amount + '</p>';
-    html += '<p><strong>Datetime of last service:</strong> ' + data.datetime_of_last_service + '</p>';
-    html += '<p><strong>Parent ID:</strong> ' + data.parent_id + '</p>';
+    html += '<p><strong>Site:</strong> ' + (data.site || '') + '</p>';
+    html += '<p><strong>Equipment Name:</strong> ' + (data.equipment_name || '') + '</p>';
+    html += '<p><strong>Inventory Number:</strong> ' + (data.inventory_number || '') + '</p>';
+    html += '<p><strong>Node:</strong> ' + (data.node || '') + '</p>';
+    html += '<p><strong>Component:</strong> ' + (data.component || '') + '</p>';
+    html += '<p><strong>Vendor Code:</strong> ' + (data.vendor_code || '') + '</p>';
+    html += '<p><strong>Operation:</strong> ' + (data.operation || '') + '</p>';
+    html += '<p><strong>Service Period (Days):</strong> ' + (data.service_period_in_days || '') + '</p>';
+    html += '<p><strong>Service Period (Engine Hours):</strong> ' + (data.service_period_in_engine_hours || '') + '</p>';
+    html += '<p><strong>Service Period (Engine Hours) on the datetime of last service:</strong> ' + (data.engine_hours_on_the_datetime_of_last_service || '') + '</p>';
+    html += '<p><strong>Mileage:</strong> ' + (data.mileage || '') + '</p>';
+    html += '<p><strong>Mileage on the datetime of last service:</strong> ' + (data.mileage_on_the_datetime_of_last_service || '') + '</p>';
+    html += '<p><strong>Amount:</strong> ' + (data.amount || '') + '</p>';
+    html += '<p><strong>Datetime of last service:</strong> ' + (data.datetime_of_last_service || '') + '</p>';
+    html += '<p><strong>Parent ID:</strong> ' + (data.parent_id || '') + '</p>';
     return html;
 }
 
