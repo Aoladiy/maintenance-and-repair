@@ -27,7 +27,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="component_input" class="form-label">Component</label>
-                        <input type="text" class="form-control" id="component_input" name="component">
+                        <textarea type="text" class="form-control" id="component_input" name="component" rows="5"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="vendor_code_input" class="form-label">Vendor Code</label>

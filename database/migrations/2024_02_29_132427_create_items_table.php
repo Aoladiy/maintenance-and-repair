@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('equipment_name')->nullable();
             $table->string('inventory_number')->nullable();
             $table->string('node')->nullable();
-            $table->string('component')->nullable();
+            $table->text('component')->nullable();
             $table->string('vendor_code')->nullable();
             $table->string('operation')->nullable();
             $table->integer('service_period_in_days')->nullable();
