@@ -124,7 +124,9 @@ function loadChildren(itemId) {
                             <div class="d-flex justify-content-start align-items-center">
                                 <div id="notification-icon_${item.id}">
                                 <div class="notification-icon me-3">
-                                    <i class="fa-regular fa-bell"></i>
+                                    <div class="spinner-grow" role="status">
+                                        <span class="visually-hidden">Загрузка...</span>
+                                    </div>
                                 </div>
                                 </div>
                                 <button class="btn btn-primary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
@@ -136,13 +138,13 @@ function loadChildren(itemId) {
                                     </button>
                                 </div>
                                 <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
-                                    Add
+                                    <i class="bi bi-plus-lg"></i>
                                 </button>
-                                <button class="btn btn-warning ms-2 edit-item-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
-                                    Edit
+                                <button class="btn btn-secondary ms-2 edit-item-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
+                                    <i class="bi bi-pencil"></i>
                                 </button>
                                 <button class="btn btn-danger ms-2 delete-item-btn" data-item-id="${item.id}">
-                                    Delete
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </div>
                             <ul class="list-group collapse mt-2" id="item_${item.id}">
@@ -304,7 +306,9 @@ function editItem() {
                     <div class="d-flex justify-content-start align-items-center">
                         <div id="notification-icon_${response.id}">
                         <div class="notification-icon me-3">
-                            <i class="fa-regular fa-bell"></i>
+                            <div class="spinner-grow" role="status">
+                                <span class="visually-hidden">Загрузка...</span>
+                            </div>
                         </div>
                         </div>
                         <button class="btn btn-primary toggle-btn${response.has_children ? '' : ' disabled'} me-2" data-id="${response.id}" aria-expanded="false">
@@ -316,13 +320,13 @@ function editItem() {
                         </button>
                         </div>
                         <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
-                            Add
+                            <i class="bi bi-plus-lg"></i>
                         </button>
-                        <button class="btn btn-warning ms-2 edit-item-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
-                            Edit
+                        <button class="btn btn-secondary ms-2 edit-item-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
+                            <i class="bi bi-pencil"></i>
                         </button>
                         <button class="btn btn-danger ms-2 delete-item-btn" data-item-id="${response.id}">
-                            Delete
+                            <i class="bi bi-trash"></i>
                         </button>
                     </div>
                     <ul class="list-group collapse mt-2" id="item_${response.id}">
