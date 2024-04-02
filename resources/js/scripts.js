@@ -83,6 +83,9 @@ $(document).on('click', '.create-item-btn', function () {
 $(document).on('click', '.create-maintenance-btn', function () {
     var item_id = $(this).data('item-id');
     $('#item_id_input').val(item_id);
+    $('#createMaintenanceForm').trigger('reset'); // Сбрасываем значения формы
+    var errorMessage = document.getElementById('error_message');
+    errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
 
 // Обработчик события для кнопок деталей элемента
