@@ -39,6 +39,9 @@
 <!-- Модальное окно для создания нового элемента -->
 <?php include './modals/modal_create.php'; ?>
 
+<!-- Модальное окно для создания новой записи о техническом обслуживании -->
+<?php include './modals/modal_maintenance_create.php'; ?>
+
 <!-- Модальное окно для редактирования элемента -->
 <?php include './modals/modal_edit.php'; ?>
 

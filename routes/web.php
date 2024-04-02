@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\MaintenanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,6 @@ Route::patch('items/{id}/update', [ItemController::class, 'update'])->name('upda
 Route::delete('items/{id}/delete', [ItemController::class, 'delete'])->name('delete');
 
 Route::get('items/{id}/alerts', [ItemController::class, 'alerts'])->name('alerts');
+
+Route::get('maintenance/time', [MaintenanceController::class, 'time'])->name('maintenance.time');
+Route::post('maintenance/create', [MaintenanceController::class, 'store'])->name('maintenance.store');

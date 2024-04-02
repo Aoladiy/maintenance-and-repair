@@ -79,6 +79,12 @@ $(document).on('click', '.create-item-btn', function () {
     $('#parent_id_input').val(parent_id);
 });
 
+// Обработчик события для кнопок создания новой записи о тех обслуживании
+$(document).on('click', '.create-maintenance-btn', function () {
+    var item_id = $(this).data('item-id');
+    $('#item_id_input').val(item_id);
+});
+
 // Обработчик события для кнопок деталей элемента
 $(document).on('click', '.item-details-btn', function () {
     var data = $(this).data('item');
@@ -139,6 +145,9 @@ function loadChildren(itemId) {
                                 </div>
                                 <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                                     <i class="bi bi-plus-lg"></i>
+                                </button>
+                                <button class="btn btn-success ms-2 create-maintenance-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">
+                                    <i class="bi bi-tools"></i>
                                 </button>
                                 <button class="btn btn-secondary ms-2 edit-item-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
                                     <i class="bi bi-pencil"></i>
@@ -280,6 +289,30 @@ function createItem() {
     });
 }
 
+// Функция для отправки данных новой записи о тех обслуживании на сервер
+function createMaintenance() {
+    var formData = $('#createMaintenanceForm').serialize();
+    $.ajax({
+        url: base + 'maintenance/create',
+        type: 'POST',
+        data: formData,
+        success: function (response) {
+            $('#createMaintenanceModal').modal('hide'); // Закрываем модальное окно
+            displayAlerts();
+        },
+        error: function (xhr, status, error) {
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON;
+                var errorMessage = document.getElementById('error_message');
+                errorMessage.textContent = errors.datetime_of_service;
+                errorMessage.style.display = 'block'; // Показываем сообщение об ошибке
+            } else {
+                console.error(error);
+            }
+        }
+    });
+}
+
 
 // Функция для отправки данных редактирования элемента на сервер
 function editItem() {
@@ -321,6 +354,9 @@ function editItem() {
                         </div>
                         <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                             <i class="bi bi-plus-lg"></i>
+                        </button>
+                        <button class="btn btn-success ms-2 create-maintenance-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">
+                            <i class="bi bi-tools"></i>
                         </button>
                         <button class="btn btn-secondary ms-2 edit-item-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
                             <i class="bi bi-pencil"></i>
