@@ -13,7 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([ItemSeeder::class]);
+        exec('python seeder.py');
+        exec('php artisan app:get-current-engine-hours-and-mileage');
+//        $this->call([ItemSeeder::class]);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

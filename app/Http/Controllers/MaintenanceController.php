@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MaintenanceCreateRequest;
 use App\Models\Item;
 use App\Models\Maintenance;
-use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -46,7 +44,7 @@ class MaintenanceController extends Controller
             'datetime_of_service' => $request->datetime_of_service,
         ];
         $item = Item::findOrFail($data['item_id']);
-        $data['alert_date'] = date("Y-m-d", strtotime($item->datetime_of_last_service) + $item->service_period_in_days * 24 * 60 * 60);
+        $data['deadline_date'] = date("Y-m-d", strtotime($item->datetime_of_next_service));
 
         if ($item->datetime_of_last_service > $data['datetime_of_service']) {
             return response()->json(['datetime_of_service' => 'Дата технического обслуживания не должна быть меньше предыдущей даты технического обслуживания'], 422);

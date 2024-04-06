@@ -34,16 +34,16 @@
 <body>
 
 <!-- Модальное окно просмотра подробностей -->
-<?php include './modals/modal_details.php'; ?>
+@include('./modals/modal_details')
 
 <!-- Модальное окно для создания нового элемента -->
-<?php include './modals/modal_create.php'; ?>
+@include('./modals/modal_create')
 
 <!-- Модальное окно для создания новой записи о техническом обслуживании -->
-<?php include './modals/modal_maintenance_create.php'; ?>
+@include('./modals/modal_maintenance_create')
 
-<!-- Модальное окно для редактирования элемента -->
-<?php include './modals/modal_edit.php'; ?>
+{{--<!-- Модальное окно для редактирования элемента -->--}}
+@include('./modals/modal_edit')
 
 <div class="container mt-4">
     <button class="btn btn-success mb-2 create-item-btn" data-parent-id=null data-bs-toggle="modal"
@@ -61,7 +61,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Основные скрипты -->
-<script src="../js/scripts.js"></script>
+<script src="{{asset('js/scripts.js')}}"></script>
 
 
 </body>

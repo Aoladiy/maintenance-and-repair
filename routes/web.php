@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [ItemController::class, 'index'])->name('index');
 Route::get('items', [ItemController::class, 'items'])->name('items');
 Route::get('items/{id}', [ItemController::class, 'item'])->name('item');
 Route::get('items/{id}/children', [ItemController::class, 'children'])->name('children');

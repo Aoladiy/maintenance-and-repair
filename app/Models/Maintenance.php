@@ -11,7 +11,7 @@ class Maintenance extends Model
     protected $fillable = [
         'username',
         'datetime_of_service',
-        'alert_date',
+        'deadline_date',
         'comment',
         'item_id',
     ];

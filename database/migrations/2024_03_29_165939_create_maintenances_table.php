@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->dateTime('datetime_of_service');
-            $table->date('alert_date')->nullable();
+            $table->date('deadline_date')->nullable();
             $table->text('comment')->nullable();
             $table->unsignedBigInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items')->noActionOnDelete();

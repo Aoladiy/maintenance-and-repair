@@ -11,6 +11,12 @@ use Illuminate\View\View;
 
 class ItemController extends Controller
 {
+
+    public function index()
+    {
+        return view('tree');
+    }
+
     public function alerts(int $id)
     {
         $item = Item::findOrFail($id);
