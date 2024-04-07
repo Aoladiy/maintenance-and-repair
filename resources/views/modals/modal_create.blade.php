@@ -8,6 +8,8 @@
             </div>
             <div class="modal-body">
                 <form id="createItemForm">
+                    <!-- Элемент для отображения ошибки -->
+                    <p id="ItemCreateError" style="display: none; color: red; font-weight: bold;">Здесь будет сообщение об ошибке</p>
                     <input type="hidden" name="parent_id" id="parent_id_input">
                     <div class="mb-3">
                         <label for="site_input" class="form-label">Site</label>
@@ -36,6 +38,10 @@
                     <div class="mb-3">
                         <label for="operation_input" class="form-label">Operation</label>
                         <input type="text" class="form-control" id="operation_input" name="operation">
+                    </div>
+                    <div class="mb-3">
+                        <label for="service_duration_in_seconds_input" class="form-label">Service duration in seconds</label>
+                        <input type="number" class="form-control" id="service_duration_in_seconds_input" name="service_duration_in_seconds">
                     </div>
                     <div class="mb-3">
                         <label for="service_period_in_days_input" class="form-label">Service Period (Days)</label>

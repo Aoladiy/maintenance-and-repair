@@ -47,6 +47,7 @@ class ItemController extends Controller
             'component' => $item->component,
             'vendor_code' => $item->vendor_code,
             'operation' => $item->operation,
+            'service_duration_in_seconds' => $item->service_duration_in_seconds,
             'service_period_in_days' => $item->service_period_in_days,
             'service_period_in_engine_hours' => $item->service_period_in_engine_hours,
             'engine_hours_on_the_datetime_of_last_service' => $item->engine_hours_on_the_datetime_of_last_service,
@@ -82,7 +83,7 @@ class ItemController extends Controller
         }
     }
 
-    public function create(Request $request): Item
+    public function create(Request $request)
     {
         $data = $request->only(
             [
@@ -93,6 +94,7 @@ class ItemController extends Controller
                 'component',
                 'vendor_code',
                 'operation',
+                'service_duration_in_seconds',
                 'service_period_in_days',
                 'service_period_in_engine_hours',
                 'engine_hours_on_the_datetime_of_last_service',
@@ -107,11 +109,14 @@ class ItemController extends Controller
                 'parent_id',
             ]
         );
+        if ($data['service_duration_in_seconds'] < 1) {
+            return response()->json(['service_duration_in_seconds' => 'Длительность проведения технического обслуживания должна быть больше или равна 1'], 422);
+        }
         $data['alert'] = isset($data['alert']) ? 1 : 0;
         return Item::create($data);
     }
 
-    public function update(Request $request, int $id): Item
+    public function update(Request $request, int $id)
     {
         $data = $request->only(
             [
@@ -122,6 +127,7 @@ class ItemController extends Controller
                 'component',
                 'vendor_code',
                 'operation',
+                'service_duration_in_seconds',
                 'service_period_in_days',
                 'service_period_in_engine_hours',
                 'engine_hours_on_the_datetime_of_last_service',
@@ -136,6 +142,9 @@ class ItemController extends Controller
                 'parent_id',
             ]
         );
+        if ($data['service_duration_in_seconds'] < 1) {
+            return response()->json(['service_duration_in_seconds' => 'Длительность проведения технического обслуживания должна быть больше или равна 1'], 422);
+        }
 
         $item = Item::findOrFail($id);
 

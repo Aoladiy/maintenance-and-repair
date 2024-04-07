@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('component')->nullable();
             $table->string('vendor_code')->nullable();
             $table->string('operation')->nullable();
+            $table->unsignedInteger('service_duration_in_seconds')->nullable();
             $table->integer('service_period_in_days')->nullable();
             $table->unsignedInteger('service_period_in_engine_hours')->nullable();
             $table->unsignedInteger('engine_hours_on_the_datetime_of_last_service')->nullable();

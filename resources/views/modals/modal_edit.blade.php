@@ -8,6 +8,8 @@
             </div>
             <div class="modal-body">
                 <form id="editItemForm">
+                    <!-- Элемент для отображения ошибки -->
+                    <p id="ItemUpdateError" style="display: none; color: red; font-weight: bold;">Здесь будет сообщение об ошибке</p>
                     <input type="hidden" name="item_id" id="edit_item_id_input">
                     <!-- Поля для редактирования элемента -->
                     <div class="mb-3">
@@ -38,6 +40,10 @@
                     <div class="mb-3">
                         <label for="edit_operation_input" class="form-label">Operation</label>
                         <input type="text" class="form-control" id="edit_operation_input" name="operation">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_service_duration_in_seconds_input" class="form-label">Service duration in seconds</label>
+                        <input type="number" class="form-control" id="edit_service_duration_in_seconds_input" name="service_duration_in_seconds">
                     </div>
                     <div class="mb-3">
                         <label for="edit_service_period_in_days_input" class="form-label">Service Period (Days)</label>

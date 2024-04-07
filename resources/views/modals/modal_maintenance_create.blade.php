@@ -11,7 +11,7 @@
                     <input type="hidden" name="item_id" id="item_id_input">
                     <input type="hidden" name="username" id="username" value="will be accessed through get parameters">
                     <!-- Элемент для отображения ошибки -->
-                    <p id="error_message" style="display: none; color: red; font-weight: bold;">Здесь будет сообщение об ошибке</p>
+                    <p id="MaintenanceCreateError" style="display: none; color: red; font-weight: bold;">Здесь будет сообщение об ошибке</p>
                     <div class="mb-3">
                         <label for="datetime_of_service" class="form-label">Maintenance date</label>
                         <input type="datetime-local" class="form-control" id="datetime_of_service"

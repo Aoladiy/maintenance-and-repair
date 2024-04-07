@@ -18,6 +18,7 @@ class Item extends Model
         'component',
         'vendor_code',
         'operation',
+        'service_duration_in_seconds',
         'service_period_in_days',
         'service_period_in_engine_hours',
         'engine_hours_on_the_datetime_of_last_service',

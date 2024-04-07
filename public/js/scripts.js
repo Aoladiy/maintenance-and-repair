@@ -25,6 +25,7 @@ $(document).on('click', '.edit-item-btn', function () {
             $('#edit_component_input').val(response.component);
             $('#edit_vendor_code_input').val(response.vendor_code);
             $('#edit_operation_input').val(response.operation);
+            $('#edit_service_duration_in_seconds_input').val(response.service_duration_in_seconds);
             $('#edit_service_period_in_days_input').val(response.service_period_in_days);
             $('#edit_service_period_in_engine_hours_input').val(response.service_period_in_engine_hours);
             $('#edit_engine_hours_on_the_datetime_of_last_service_input').val(response.engine_hours_on_the_datetime_of_last_service);
@@ -44,6 +45,8 @@ $(document).on('click', '.edit-item-btn', function () {
             // Обработка ошибки, если необходимо
         }
     });
+    var errorMessage = document.getElementById('ItemUpdateError');
+    errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
 
 
@@ -77,6 +80,8 @@ $(document).on('click', '.delete-item-btn', function () {
 $(document).on('click', '.create-item-btn', function () {
     var parent_id = $(this).data('parent-id');
     $('#parent_id_input').val(parent_id);
+    var errorMessage = document.getElementById('ItemCreateError');
+    errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
 
 // Обработчик события для кнопок создания новой записи о тех обслуживании
@@ -84,7 +89,7 @@ $(document).on('click', '.create-maintenance-btn', function () {
     var item_id = $(this).data('item-id');
     $('#item_id_input').val(item_id);
     $('#createMaintenanceForm').trigger('reset'); // Сбрасываем значения формы
-    var errorMessage = document.getElementById('error_message');
+    var errorMessage = document.getElementById('MaintenanceCreateError');
     errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
 
@@ -253,6 +258,7 @@ function generateModalContent(data) {
     html += '<p><strong>Component:</strong> ' + (data.component || '') + '</p>';
     html += '<p><strong>Vendor Code:</strong> ' + (data.vendor_code || '') + '</p>';
     html += '<p><strong>Operation:</strong> ' + (data.operation || '') + '</p>';
+    html += '<p><strong>Service duration in seconds:</strong> ' + (data.service_duration_in_seconds || '') + '</p>';
     html += '<p><strong>Service Period (Days):</strong> ' + (data.service_period_in_days || '') + '</p>';
     html += '<p><strong>Service Period (Engine Hours):</strong> ' + (data.service_period_in_engine_hours || '') + '</p>';
     html += '<p><strong>Service Period (Engine Hours) on the datetime of last service:</strong> ' + (data.engine_hours_on_the_datetime_of_last_service || '') + '</p>';
@@ -287,7 +293,14 @@ function createItem() {
             $('#createItemForm').trigger('reset'); // Очищаем форму создания
         },
         error: function (xhr, status, error) {
-            console.error(error);
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON;
+                var errorMessage = document.getElementById('ItemCreateError');
+                errorMessage.textContent = errors.service_duration_in_seconds;
+                errorMessage.style.display = 'block'; // Показываем сообщение об ошибке
+            } else {
+                console.error(error);
+            }
         }
     });
 }
@@ -306,7 +319,7 @@ function createMaintenance() {
         error: function (xhr, status, error) {
             if (xhr.status === 422) {
                 var errors = xhr.responseJSON;
-                var errorMessage = document.getElementById('error_message');
+                var errorMessage = document.getElementById('MaintenanceCreateError');
                 errorMessage.textContent = errors.datetime_of_service;
                 errorMessage.style.display = 'block'; // Показываем сообщение об ошибке
             } else {
@@ -383,8 +396,14 @@ function editItem() {
             handleToggleBtnClick();
         },
         error: function (xhr, status, error) {
-            console.error(error);
-            // Обработка ошибки, если необходимо
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON;
+                var errorMessage = document.getElementById('ItemUpdateError');
+                errorMessage.textContent = errors.service_duration_in_seconds;
+                errorMessage.style.display = 'block'; // Показываем сообщение об ошибке
+            } else {
+                console.error(error);
+            }
         }
     });
 }
