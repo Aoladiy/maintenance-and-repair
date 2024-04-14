@@ -44,7 +44,11 @@ class MaintenanceController extends Controller
             'datetime_of_service' => $request->datetime_of_service,
         ];
         $item = Item::findOrFail($data['item_id']);
-        $data['deadline_date'] = date("Y-m-d", strtotime($item->datetime_of_next_service));
+        if (is_null($item->datetime_of_next_service)) {
+            $data['deadline_date'] = null;
+        } else {
+            $data['deadline_date'] = date("Y-m-d", strtotime($item->datetime_of_next_service));
+        }
 
         if ($item->datetime_of_last_service > $data['datetime_of_service']) {
             return response()->json(['datetime_of_service' => 'Дата технического обслуживания не должна быть меньше предыдущей даты технического обслуживания'], 422);
