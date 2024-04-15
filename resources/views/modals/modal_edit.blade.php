@@ -94,6 +94,12 @@
                         <label for="edit_alert_input" class="form-label">Alert</label>
                         <input type="checkbox" class="form-check-input" id="edit_alert_input" name="alert">
                     </div>
+                    <div class="mb-3">
+                        <label for="edit_unit_input" class="form-label">Unit</label>
+                        <select class="form-control" id="edit_unit_input" name="unit_id">
+                            <!-- Опции будут добавлены с помощью AJAX -->
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

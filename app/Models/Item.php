@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Item extends Model
@@ -31,6 +32,7 @@ class Item extends Model
         'alert_time_in_mileage',
         'alert',
         'parent_id',
+        'unit_id',
     ];
 
     public function children(): HasMany
@@ -95,6 +97,11 @@ class Item extends Model
         }
 
         return $jsonArray;
+    }
+
+    public function unit(): BelongsTo
+    {
+        return $this->belongsTo(Unit::class);
     }
 
 }

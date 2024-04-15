@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,5 @@ Route::get('items/{id}/alerts', [ItemController::class, 'alerts'])->name('alerts
 
 Route::get('maintenance/time', [MaintenanceController::class, 'time'])->name('maintenance.time');
 Route::post('maintenance/create', [MaintenanceController::class, 'store'])->name('maintenance.store');
+
+Route::get('units', [UnitController::class, 'units'])->name('units');

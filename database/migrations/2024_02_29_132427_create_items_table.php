@@ -35,6 +35,8 @@ return new class extends Migration
             $table->boolean('alert')->default(false);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('items')->nullOnDelete();
+            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->foreign('unit_id')->references('id')->on('units')->nullOnDelete();
             $table->timestamps();
         });
     }

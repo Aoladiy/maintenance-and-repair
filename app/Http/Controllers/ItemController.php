@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -59,6 +60,8 @@ class ItemController extends Controller
             'alert_time_in_engine_hours' => $item->alert_time_in_engine_hours,
             'alert_time_in_mileage' => $item->alert_time_in_mileage,
             'alert' => $item->alert,
+            'unit' => Unit::query()->findOrFail($item->unit_id)->name,
+            'unit_id' => $item->unit_id,
             'has_children' => $item->hasChildren(),
             'ancestors' => $item->ancestors(),
         ]);
@@ -71,6 +74,7 @@ class ItemController extends Controller
             $items->each(function ($child) {
                 $child->has_children = $child->hasChildren();
                 $child->ancestors = $child->ancestors();
+                $child->unit = Unit::query()->find($child->unit_id)->name ?? null;
             });
             return $items;
         } else {
@@ -78,6 +82,7 @@ class ItemController extends Controller
             $children->each(function ($child) {
                 $child->has_children = $child->hasChildren();
                 $child->ancestors = $child->ancestors();
+                $child->unit = Unit::query()->find($child->unit_id)->name ?? null;
             });
             return $children;
         }
@@ -107,13 +112,16 @@ class ItemController extends Controller
                 'alert_time_in_mileage',
                 'alert',
                 'parent_id',
+                'unit_id',
             ]
         );
         if ($data['service_duration_in_seconds'] < 1) {
             return response()->json(['service_duration_in_seconds' => 'Длительность проведения технического обслуживания должна быть больше или равна 1'], 422);
         }
         $data['alert'] = isset($data['alert']) ? 1 : 0;
-        return Item::create($data);
+        $item = Item::create($data);
+        $item->unit = Unit::query()->find($data['unit_id'])->name ?? null;
+        return $item;
     }
 
     public function update(Request $request, int $id)
@@ -140,6 +148,7 @@ class ItemController extends Controller
                 'alert_time_in_mileage',
                 'alert',
                 'parent_id',
+                'unit_id',
             ]
         );
         if ($data['service_duration_in_seconds'] < 1) {
@@ -152,6 +161,7 @@ class ItemController extends Controller
 
         $item->update($data);
         $item->has_children = $item->hasChildren();
+        $item->unit = Unit::query()->find($data['unit_id'])->name ?? null;
         return $item;
     }
 

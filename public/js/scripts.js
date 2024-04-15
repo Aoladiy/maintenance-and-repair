@@ -39,6 +39,8 @@ $(document).on('click', '.edit-item-btn', function () {
             $('#edit_alert_input').prop('checked', response.alert);
             $('#edit_item_id_input').val(itemId);
             $('#editItemModal').modal('show');
+            $('#edit_unit_input').empty(); // Очищаем <select> перед заполнением
+            fillUnitSelect('#edit_unit_input', response.unit_id); // Заполняем <select> значениями
         },
         error: function (xhr, status, error) {
             console.error(error);
@@ -74,10 +76,33 @@ $(document).on('click', '.delete-item-btn', function () {
         });
     }
 });
+// Функция для выполнения AJAX запроса и заполнения <select>
+function fillUnitSelect(unitInput, defaultUnitId) {
+    $.ajax({
+        url: base + 'units',
+        type: 'GET',
+        success: function(response) {
+            var options = '';
+            $.each(response, function(index, unit) {
+                var value = unit.id !== null ? unit.id : '-';
+                var name = unit.name !== null ? unit.name : '-';
+                var selected = unit.id === defaultUnitId ? 'selected' : ''; // Определяем, выбран ли элемент
+                options += '<option value="' + value + '" ' + selected + '>' + name + '</option>';
+            });
+            $(unitInput).append(options);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
 
 
 // Обработчик события для кнопок создания нового элемента
 $(document).on('click', '.create-item-btn', function () {
+    $('#unit_input').empty(); // Очищаем <select> перед заполнением
+    fillUnitSelect('#unit_input'); // Заполняем <select> значениями
     var parent_id = $(this).data('parent-id');
     $('#parent_id_input').val(parent_id);
     var errorMessage = document.getElementById('ItemCreateError');
@@ -271,6 +296,7 @@ function generateModalContent(data) {
     html += '<p><strong>Alert time in mileage:</strong> ' + (data.alert_time_in_mileage || '') + '</p>';
     html += '<p><strong>Alert:</strong> ' + (data.alert || '') + '</p>';
     html += '<p><strong>Parent ID:</strong> ' + (data.parent_id || '') + '</p>';
+    html += '<p><strong>Unit:</strong> ' + (data.unit || '') + '</p>';
     return html;
 }
 
