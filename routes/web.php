@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\ScheduledMaintenanceController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,5 @@ Route::get('maintenance/time', [MaintenanceController::class, 'time'])->name('ma
 Route::post('maintenance/create', [MaintenanceController::class, 'store'])->name('maintenance.store');
 
 Route::get('units', [UnitController::class, 'units'])->name('units');
+
+Route::get('scheduled-maintenances', [ScheduledMaintenanceController::class, 'index'])->name('scheduled-maintenances.index');

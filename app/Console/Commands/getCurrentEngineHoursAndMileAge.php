@@ -62,5 +62,6 @@ class getCurrentEngineHoursAndMileAge extends Command
             $item->datetime_of_next_service = $maintenance_datetime;
             $item->save();
         }
+        $this->info('Command executed successfully.');
     }
 }
