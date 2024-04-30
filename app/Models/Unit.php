@@ -18,4 +18,9 @@ class Unit extends Model
     {
         return $this->hasMany(Item::class);
     }
+
+    public function scheduledPurchases(): HasMany
+    {
+        return $this->hasMany(ScheduledPurchase::class);
+    }
 }

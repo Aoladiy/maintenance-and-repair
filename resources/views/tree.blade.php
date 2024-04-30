@@ -37,6 +37,11 @@
         <a href="{{route('scheduled-maintenances.index')}}" class="btn btn-success">План ТОиР</a>
     </p>
 </div>
+<div class="container">
+    <p class="mt-4">
+        <a href="{{route('scheduled-purchases.index')}}" class="btn btn-success">План Закупок</a>
+    </p>
+</div>
 
 <!-- Модальное окно просмотра подробностей -->
 @include('./modals/modal_details')
