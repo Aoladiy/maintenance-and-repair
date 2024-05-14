@@ -168,18 +168,18 @@ function loadChildren(itemId) {
                                     </div>
                                 </div>
                                 </div>
-                                <button class="btn btn-primary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
+                                <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
                                     <i class="fa-solid fa-caret-right"></i>
                                 </button>
                                 <div class="d-flex align-items-center flex-grow-1">
-                                    <button class="btn btn-info me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(item)}' data-bs-toggle="modal" data-bs-target="#itemModal">
+                                    <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(item)}' data-bs-toggle="modal" data-bs-target="#itemModal">
                                         <span>${getItemDescription(item)}</span>
                                     </button>
                                 </div>
-                                <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
+                                <button class="btn btn-secondary ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                                     <i class="bi bi-plus-lg"></i>
                                 </button>
-                                <button class="btn btn-success ms-2 create-maintenance-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">
+                                <button class="btn btn-secondary ms-2 create-maintenance-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">
                                     <i class="bi bi-tools"></i>
                                 </button>
                                 <button class="btn btn-secondary ms-2 edit-item-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">
@@ -386,18 +386,18 @@ function editItem() {
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-primary toggle-btn${response.has_children ? '' : ' disabled'} me-2" data-id="${response.id}" aria-expanded="false">
+                        <button class="btn btn-secondary toggle-btn${response.has_children ? '' : ' disabled'} me-2" data-id="${response.id}" aria-expanded="false">
                             <i class="fa-solid fa-caret-right"></i>
                         </button>
                         <div class="d-flex align-items-center flex-grow-1">
-                        <button class="btn btn-info me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#itemModal">
+                        <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#itemModal">
                             <span>${getItemDescription(response)}</span>
                         </button>
                         </div>
-                        <button class="btn btn-success ms-auto create-item-btn" data-parent-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
+                        <button class="btn btn-secondary ms-auto create-item-btn" data-parent-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createItemModal">
                             <i class="bi bi-plus-lg"></i>
                         </button>
-                        <button class="btn btn-success ms-2 create-maintenance-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">
+                        <button class="btn btn-secondary ms-2 create-maintenance-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">
                             <i class="bi bi-tools"></i>
                         </button>
                         <button class="btn btn-secondary ms-2 edit-item-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editItemModal">

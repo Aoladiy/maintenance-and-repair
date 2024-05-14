@@ -11,11 +11,11 @@
 <body>
 <div class="container">
     <p class="mt-4">
-        <a href="{{route('index')}}" class="btn btn-success">Все детали</a>
+        <a href="{{route('index')}}" class="btn btn-secondary">Все детали</a>
     </p>
 </div>
 <div class="container">
-    <table id="scheduled-maintenances-table" class="table table-striped table-bordered">
+    <table id="scheduled-maintenances-table" class="table table-striped table-bordered table-hover">
         <thead class="table-dark">
         <tr>
             <th>Id</th>

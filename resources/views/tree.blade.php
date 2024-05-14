@@ -34,12 +34,12 @@
 <body>
 <div class="container">
     <p class="mt-4">
-        <a href="{{route('scheduled-maintenances.index')}}" class="btn btn-success">План ТОиР</a>
+        <a href="{{route('scheduled-maintenances.index')}}" class="btn btn-secondary">План ТОиР</a>
     </p>
 </div>
 <div class="container">
     <p class="mt-4">
-        <a href="{{route('scheduled-purchases.index')}}" class="btn btn-success">План Закупок</a>
+        <a href="{{route('scheduled-purchases.index')}}" class="btn btn-secondary">План Закупок</a>
     </p>
 </div>
 
@@ -56,7 +56,7 @@
 @include('./modals/modal_edit')
 
 <div class="container mt-4">
-    <button class="btn btn-success mb-2 create-item-btn" data-parent-id=null data-bs-toggle="modal"
+    <button class="btn btn-secondary mb-2 create-item-btn" data-parent-id=null data-bs-toggle="modal"
             data-bs-target="#createItemModal">
         Create Root Item
     </button>

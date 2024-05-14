@@ -31,7 +31,11 @@ class seedPurchase extends Command
         //Очищаем таблицу
         ScheduledPurchase::query()->truncate();
         // Используем Query Builder для получения данных и подсчета количества
-        $scheduledPurchasesData = ScheduledMaintenance::query()->select('items.component', 'items.unit_id', DB::raw('COUNT(*) as number'))
+        $scheduledPurchasesData = ScheduledMaintenance::query()
+            ->select('items.component', 'items.unit_id',
+                DB::raw('COUNT(*) as number'),
+                DB::raw('SUM(items.amount) as total_amount')
+            )
             ->join('items', 'scheduled_maintenances.item_id', '=', 'items.id')
             ->groupBy('items.component', 'items.unit_id')
             ->get();
@@ -41,7 +45,7 @@ class seedPurchase extends Command
             ScheduledPurchase::query()->create([
                 'component' => $data->component,
                 'unit_id' => $data->unit_id,
-                'number' => $data->number,
+                'number' => $data->total_amount ?? 0,
             ]);
         }
 

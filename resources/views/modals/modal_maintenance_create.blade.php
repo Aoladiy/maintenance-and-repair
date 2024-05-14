@@ -25,7 +25,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="createButton" onclick="createMaintenance()" disabled>Create</button>
+                <button type="button" class="btn btn-secondary" id="createButton" onclick="createMaintenance()" disabled>Create</button>
             </div>
         </div>
     </div>
