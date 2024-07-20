@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([UnitSeeder::class]);
-        exec('python seeder.py');
+        exec('python3 seeder.py'); // заполнение старой god object таблицы
+        exec('python3 seeder_new.py'); // заполнение бд, спроектриованной несолько лучше
         exec('php artisan app:get-current-engine-hours-and-mileage');
 //        $this->call([ItemSeeder::class]);
         // \App\Models\User::factory(10)->create();

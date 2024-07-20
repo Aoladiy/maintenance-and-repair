@@ -1,5 +1,6 @@
+import os
+from dotenv import load_dotenv
 import pandas as pd
-import numpy as np
 import pymysql
 
 # Читаем Excel файл
@@ -60,13 +61,14 @@ for item in lst:
 
 # Подключаемся к базе данных и вставляем данные
 try:
+    load_dotenv()
     # Connect to the MySQL database
     connection = pymysql.connect(
-        host='localhost',
-        port=3307,
-        user='root',
-        password='Root-123',
-        database='maintenance_and_repair'
+        host=os.getenv('DB_HOST'),
+        port=int(os.getenv('DB_PORT')),
+        database=os.getenv('DB_DATABASE'),
+        user=os.getenv('DB_USERNAME'),
+        password=os.getenv('DB_PASSWORD'),
     )
 
     # Create a cursor object

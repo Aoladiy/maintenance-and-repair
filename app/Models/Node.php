@@ -4,24 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Unit extends Model
+class Node extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
+        'equipment_id',
     ];
 
-    public function items(): HasMany
+    public function equipment(): BelongsTo
     {
-        return $this->hasMany(Item::class);
-    }
-
-    public function scheduledPurchases(): HasMany
-    {
-        return $this->hasMany(ScheduledPurchase::class);
+        return $this->belongsTo(Equipment::class);
     }
 
     public function components(): HasMany
