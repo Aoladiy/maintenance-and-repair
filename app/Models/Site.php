@@ -10,12 +10,31 @@ class Site extends Model
 {
     use HasFactory;
 
+    /**
+     * @var bool|mixed
+     */
+    public bool $hasEquipment;
+
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name',
     ];
 
+    /**
+     * @return HasMany
+     */
     public function equipments(): HasMany
     {
         return $this->hasMany(Equipment::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEquipment(): bool
+    {
+        return $this->equipments()->exists();
     }
 }

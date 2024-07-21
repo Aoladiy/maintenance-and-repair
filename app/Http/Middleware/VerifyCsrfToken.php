@@ -16,5 +16,8 @@ class VerifyCsrfToken extends Middleware
         'items/*/update',
         'items/*/delete',
         'maintenance/*',
+        'sites/store',
+        'sites/*/update',
+        'sites/*/delete',
     ];
 }

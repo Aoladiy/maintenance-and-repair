@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\BasicController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\ScheduledMaintenanceController;
 use App\Http\Controllers\ScheduledPurchaseController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +20,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ItemController::class, 'index'])->name('index');
+Route::get('/', BasicController::class)->name('index');
+Route::get('/sites', [SiteController::class, 'index'])->name('sites');
+Route::get('/sites/{id}', [SiteController::class, 'show'])->name('sites.show');
+Route::post('/sites/store', [SiteController::class, 'store'])->name('sites.store');
+Route::patch('/sites/{id}/update', [SiteController::class, 'update'])->name('sites.update');
+Route::delete('/sites/{id}/delete', [SiteController::class, 'destroy'])->name('sites.delete');
+
+
+Route::get('/old', [ItemController::class, 'index'])->name('index');
 Route::get('items', [ItemController::class, 'items'])->name('items');
 Route::get('items/{id}', [ItemController::class, 'item'])->name('item');
 Route::get('items/{id}/children', [ItemController::class, 'children'])->name('children');
