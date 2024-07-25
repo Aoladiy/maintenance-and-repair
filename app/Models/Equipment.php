@@ -26,4 +26,9 @@ class Equipment extends Model
     {
         return $this->hasMany(Node::class);
     }
+
+    public function hasNodes(): bool
+    {
+        return $this->nodes()->exists();
+    }
 }

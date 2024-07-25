@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BasicController;
+use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\ScheduledMaintenanceController;
@@ -20,15 +21,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', BasicController::class)->name('index');
-Route::get('/sites', [SiteController::class, 'index'])->name('sites');
+Route::get('/', [BasicController::class, 'index'])->name('index');
+Route::get('/sites', [BasicController::class, 'sites'])->name('sites');
+Route::get('/sites/all', [SiteController::class, 'index'])->name('sites.all');
 Route::get('/sites/{id}', [SiteController::class, 'show'])->name('sites.show');
 Route::post('/sites/store', [SiteController::class, 'store'])->name('sites.store');
 Route::patch('/sites/{id}/update', [SiteController::class, 'update'])->name('sites.update');
 Route::delete('/sites/{id}/delete', [SiteController::class, 'destroy'])->name('sites.delete');
 
+Route::get('/equipment/site/{id}', [BasicController::class, 'equipment'])->name('equipment.bySite');
+Route::get('/equipment/site/{id}/all', [EquipmentController::class, 'getEquipmentBySiteId'])->name('equipment.bySite.all');
+Route::get('/equipment/{id}', [EquipmentController::class, 'show'])->name('equipment.show');
+Route::post('/equipment/store', [EquipmentController::class, 'store'])->name('equipment.store');
+Route::patch('/equipment/{id}/update', [EquipmentController::class, 'update'])->name('equipment.update');
+Route::delete('/equipment/{id}/delete', [EquipmentController::class, 'destroy'])->name('equipment.delete');
 
-Route::get('/old', [ItemController::class, 'index'])->name('index');
+
+Route::get('/old', [ItemController::class, 'index'])->name('old.index');
 Route::get('items', [ItemController::class, 'items'])->name('items');
 Route::get('items/{id}', [ItemController::class, 'item'])->name('item');
 Route::get('items/{id}/children', [ItemController::class, 'children'])->name('children');
