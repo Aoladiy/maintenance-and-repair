@@ -1,4 +1,14 @@
 $(document).ready(function () {
+    var name = getUrlParameter('name');
+    var data = {
+        name: name,
+    };
+    var modalBody = $('#siteModalBody');
+    var modalContent = showSite(data);
+    modalBody.html(modalContent);
+    if (data.name) {
+        $('#siteModal').modal('show');
+    }
     // Вызов функции при загрузке страницы
     loadSites();
 

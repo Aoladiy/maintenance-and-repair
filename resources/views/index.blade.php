@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 noarchive">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tree View</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -47,12 +47,12 @@
         <a href="{{route('scheduled-purchases.index')}}" class="btn btn-secondary">План Закупок</a>
     </p>
 </div>
-@yield('address')
 <div class="container mt-4">
     <button class="btn btn-secondary mb-2 create-item-btn" data-parent-id=null data-bs-toggle="modal"
             data-bs-target="#createSiteModal">
         Создать участок
     </button>
+    <div>@yield('address')</div>
     <ul class="list-group" id="root">
     </ul>
 </div>

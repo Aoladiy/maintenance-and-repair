@@ -1,6 +1,6 @@
 @extends('index')
 @section('address')
-    <strong><a href="{{route('sites.show', $site->id)}}">{{$site->name}}</a></strong>
+    <strong>Адрес: <a href="{{route('sites')}}?name={{$site->name}}">{{$site->name}}</a></strong>
 @endsection
 @section('modals')
     <!-- Модальное окно просмотра подробностей -->
