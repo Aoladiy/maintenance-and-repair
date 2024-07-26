@@ -30,7 +30,6 @@ $(document).on('click', '.edit-site-btn', function () {
         type: 'GET',
         dataType: 'json',
         success: function (response) {
-            console.log(response)
             // Заполнение полей формы данными полученными из сервера
             $('#edit_name_input').val(response.name);
             $('#edit_site_id_input').val(siteId);
@@ -52,6 +51,9 @@ $(document).on('click', '.delete-site-btn', function () {
     if (confirm("Вы точно уверены, что хотите удалить этот участок?")) {
 
         $.ajax({
+            headers: {
+                'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+            },
             url: base + 'sites/' + siteId + '/delete',
             type: 'DELETE',
             success: function (response) {
@@ -138,6 +140,9 @@ function editSite() {
     var childrenHTML = $('#item_' + itemId).html();
 
     $.ajax({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        },
         url: base + 'sites/' + itemId + '/update',
         type: 'PATCH',
         data: formData,
@@ -185,8 +190,6 @@ function editSite() {
 
             // Заменить содержимое элемента на обновленные данные
             listSite.replaceWith(updatedSiteHtml);
-
-            handleToggleBtnClick();
         },
         error: function (xhr, status, error) {
             var errorMessage = document.getElementById('SiteUpdateError');
@@ -200,6 +203,9 @@ function editSite() {
 function createSite() {
     var formData = $('#createSiteForm').serialize();
     $.ajax({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        },
         url: base + 'sites/store',
         type: 'POST',
         data: formData,

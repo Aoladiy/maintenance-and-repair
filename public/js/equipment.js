@@ -20,9 +20,9 @@ $(document).on('click', '.edit-equipment-btn', function () {
         type: 'GET',
         dataType: 'json',
         success: function (response) {
-            console.log(response)
             // Заполнение полей формы данными полученными из сервера
-            $('#edit_name_input').val(response.name);
+            $('#edit_equipment_name_input').val(response.name);
+            $('#edit_inventory_number_input').val(response.inventory_number);
             $('#edit_equipment_id_input').val(equipmentId);
             $('#editEquipmentModal').modal('show');
         },
@@ -34,7 +34,9 @@ $(document).on('click', '.edit-equipment-btn', function () {
     errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
 $(document).on('click', '.create-equipment-btn', function () {
-    var errorMessage = document.getElementById('ItemCreateError');
+    var errorMessage = document.getElementById('EquipmentCreateError');
+    var site_id = $(this).data('site-id');
+    $('#site_id_input').val(site_id);
     errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
 $(document).on('click', '.delete-equipment-btn', function () {
@@ -42,6 +44,9 @@ $(document).on('click', '.delete-equipment-btn', function () {
     if (confirm("Вы точно уверены, что хотите удалить этот участок?")) {
 
         $.ajax({
+            headers: {
+                'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+            },
             url: base + 'equipment/' + equipmentId + '/delete',
             type: 'DELETE',
             success: function (response) {
@@ -86,7 +91,7 @@ function loadEquipment() {
                                         <span>${item.name}</span>
                                     </button>
                                 </div>
-                                <button class="btn btn-secondary ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createEquipmentModal">
+                                <button class="btn btn-secondary ms-auto create-equipment-btn" data-site-id="${item.site_id}" data-bs-toggle="modal" data-bs-target="#createEquipmentModal">
                                     <i class="bi bi-plus-lg"></i>
                                 </button>
                                 <button class="btn btn-secondary ms-2 edit-equipment-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
@@ -128,6 +133,9 @@ function editEquipment() {
     var childrenHTML = $('#item_' + itemId).html();
 
     $.ajax({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        },
         url: base + 'equipment/' + itemId + '/update',
         type: 'PATCH',
         data: formData,
@@ -175,8 +183,6 @@ function editEquipment() {
 
             // Заменить содержимое элемента на обновленные данные
             listEquipment.replaceWith(updatedEquipmentHtml);
-
-            handleToggleBtnClick();
         },
         error: function (xhr, status, error) {
             var errorMessage = document.getElementById('EquipmentUpdateError');
@@ -190,6 +196,9 @@ function editEquipment() {
 function createEquipment() {
     var formData = $('#createEquipmentForm').serialize();
     $.ajax({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        },
         url: base + 'equipment/store',
         type: 'POST',
         data: formData,

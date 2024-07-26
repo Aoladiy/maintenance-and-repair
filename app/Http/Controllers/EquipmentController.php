@@ -36,7 +36,9 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $equipment = Equipment::query()->create($request->all());
+        $equipment->has_nodes = $equipment->hasNodes();
+        return $equipment;
     }
 
     /**
@@ -44,7 +46,7 @@ class EquipmentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Equipment::query()->findOrFail($id);
     }
 
     /**
@@ -60,7 +62,10 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $equipment = Equipment::query()->findOrFail($id);
+        $equipment->update($request->all());
+        $equipment->has_nodes = $equipment->hasNodes();
+        return $equipment;
     }
 
     /**
@@ -68,6 +73,6 @@ class EquipmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return Equipment::query()->findOrFail($id)->delete();
     }
 }

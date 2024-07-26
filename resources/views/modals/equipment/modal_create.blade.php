@@ -10,99 +10,20 @@
                 <form id="createEquipmentForm">
                     <!-- Элемент для отображения ошибки -->
                     <p id="EquipmentCreateError" style="display: none; color: red; font-weight: bold;">Здесь будет сообщение об ошибке</p>
-                    <input type="hidden" name="parent_id" id="parent_id_input">
+                    <input type="hidden" name="site_id" id="site_id_input">
                     <div class="mb-3">
-                        <label for="site_input" class="form-label">Site</label>
-                        <input type="text" class="form-control" id="site_input" name="site">
+                        <label for="equipment_name_input" class="form-label">Название</label>
+                        <input type="text" class="form-control" id="equipment_name_input" name="name">
                     </div>
                     <div class="mb-3">
-                        <label for="equipment_name_input" class="form-label">Equipment Name</label>
-                        <input type="text" class="form-control" id="equipment_name_input" name="equipment_name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="inventory_number_input" class="form-label">Inventory Number</label>
+                        <label for="inventory_number_input" class="form-label">Инвентарный номер</label>
                         <input type="text" class="form-control" id="inventory_number_input" name="inventory_number">
-                    </div>
-                    <div class="mb-3">
-                        <label for="node_input" class="form-label">Node</label>
-                        <input type="text" class="form-control" id="node_input" name="node">
-                    </div>
-                    <div class="mb-3">
-                        <label for="component_input" class="form-label">Component</label>
-                        <textarea type="text" class="form-control" id="component_input" name="component" rows="5"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="vendor_code_input" class="form-label">Vendor Code</label>
-                        <input type="text" class="form-control" id="vendor_code_input" name="vendor_code">
-                    </div>
-                    <div class="mb-3">
-                        <label for="operation_input" class="form-label">Operation</label>
-                        <input type="text" class="form-control" id="operation_input" name="operation">
-                    </div>
-                    <div class="mb-3">
-                        <label for="service_duration_in_seconds_input" class="form-label">Service duration in seconds</label>
-                        <input type="number" class="form-control" id="service_duration_in_seconds_input" name="service_duration_in_seconds">
-                    </div>
-                    <div class="mb-3">
-                        <label for="service_period_in_days_input" class="form-label">Service Period (Days)</label>
-                        <input type="number" class="form-control" id="service_period_in_days_input"
-                               name="service_period_in_days">
-                    </div>
-                    <div class="mb-3">
-                        <label for="service_period_in_engine_hours_input" class="form-label">Service Period (Engine
-                            Hours)</label>
-                        <input type="number" class="form-control" id="service_period_in_engine_hours_input"
-                               name="service_period_in_engine_hours">
-                    </div>
-                    <div class="mb-3">
-                        <label for="engine_hours_on_the_datetime_of_last_service_input" class="form-label">Service Period (Engine
-                            Hours) on the datetime of last service</label>
-                        <input type="number" class="form-control" id="engine_hours_on_the_datetime_of_last_service_input"
-                               name="engine_hours_on_the_datetime_of_last_service">
-                    </div>
-                    <div class="mb-3">
-                        <label for="mileage_input" class="form-label">Mileage</label>
-                        <input type="number" class="form-control" id="mileage_input" name="mileage">
-                    </div>
-                    <div class="mb-3">
-                        <label for="mileage_on_the_datetime_of_last_service_input" class="form-label">Mileage on the datetime of last service</label>
-                        <input type="number" class="form-control" id="mileage_on_the_datetime_of_last_service_input" name="mileage_on_the_datetime_of_last_service">
-                    </div>
-                    <div class="mb-3">
-                        <label for="amount_input" class="form-label">Amount</label>
-                        <input type="number" class="form-control" id="amount_input" name="amount">
-                    </div>
-                    <div class="mb-3">
-                        <label for="datetime_of_last_service_input" class="form-label">Datetime of last service</label>
-                        <input type="datetime-local" class="form-control" id="datetime_of_last_service_input" name="datetime_of_last_service">
-                    </div>
-                    <div class="mb-3">
-                        <label for="alert_time_in_hours_input" class="form-label">Alert time in hours</label>
-                        <input type="number" class="form-control" id="alert_time_in_hours_input" name="alert_time_in_hours">
-                    </div>
-                    <div class="mb-3">
-                        <label for="alert_time_in_engine_hours_input" class="form-label">Alert time in engine hours</label>
-                        <input type="number" class="form-control" id="alert_time_in_engine_hours_input" name="alert_time_in_engine_hours">
-                    </div>
-                    <div class="mb-3">
-                        <label for="alert_time_in_mileage_input" class="form-label">Alert time in mileage</label>
-                        <input type="number" class="form-control" id="alert_time_in_mileage_input" name="alert_time_in_mileage">
-                    </div>
-                    <div class="mb-3">
-                        <label for="alert_input" class="form-label">Alert</label>
-                        <input type="checkbox" class="form-check-input" id="alert_input" name="alert">
-                    </div>
-                    <div class="mb-3">
-                        <label for="unit_input" class="form-label">Unit</label>
-                        <select class="form-control" id="unit_input" name="unit_id">
-                            <!-- Опции будут добавлены с помощью AJAX -->
-                        </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-secondary" onclick="createEquipment()">Create</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-secondary" onclick="createEquipment()">Создать</button>
             </div>
         </div>
     </div>
