@@ -1,65 +1,55 @@
 $(document).ready(function () {
-    var name = getUrlParameter('name');
-    var data = {
-        name: name,
-    };
-    var modalBody = $('#siteModalBody');
-    var modalContent = showSite(data);
-    modalBody.html(modalContent);
-    if (data.name) {
-        $('#siteModal').modal('show').on('hidden.bs.modal', function () {
-            window.location.replace(window.location.pathname);
-        });
-    }
     // Вызов функции при загрузке страницы
-    loadSites();
+    loadNodes();
 
     // Вызов функции каждый час
     setInterval(function () {
         loadSites();
     }, 3600000); // 3600000 миллисекунд - это 1 час
 });
-$(document).on('click', '.site-details-btn', function () {
+$(document).on('click', '.node-details-btn', function () {
     var data = $(this).data('item');
-    var modalBody = $('#siteModalBody');
-    var modalContent = showSite(data);
+    var modalBody = $('#nodeModalBody');
+    var modalContent = showNode(data);
     modalBody.html(modalContent);
 });
-$(document).on('click', '.edit-site-btn', function () {
-    var siteId = $(this).data('item-id');
+$(document).on('click', '.edit-node-btn', function () {
+    var nodeId = $(this).data('item-id');
     $.ajax({
-        url: base + 'sites/' + siteId, // URL для получения данных о элементе
+        url: base + 'nodes/' + nodeId, // URL для получения данных о элементе
         type: 'GET',
         dataType: 'json',
         success: function (response) {
             // Заполнение полей формы данными полученными из сервера
-            $('#edit_name_input').val(response.name);
-            $('#edit_site_id_input').val(siteId);
-            $('#editSiteModal').modal('show');
+            $('#edit_node_name_input').val(response.name);
+            $('#edit_node_id_input').val(nodeId);
+            $('#editNodeModal').modal('show');
         },
         error: function (xhr, status, error) {
             console.error(error);
         }
     });
-    var errorMessage = document.getElementById('SiteUpdateError');
+    var errorMessage = document.getElementById('NodeUpdateError');
     errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
-$(document).on('click', '.create-site-btn', function () {
-    var errorMessage = document.getElementById('ItemCreateError');
+$(document).on('click', '.create-item-btn', function () {
+    var errorMessage = document.getElementById('NodeCreateError');
+    var equipment_id = document.getElementById('parent_id').value
+    $('#equipment_id_input').val(equipment_id);
     errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
-$(document).on('click', '.delete-site-btn', function () {
-    var siteId = $(this).data('item-id');
+$(document).on('click', '.delete-node-btn', function () {
+    var nodeId = $(this).data('item-id');
     if (confirm("Вы точно уверены, что хотите удалить этот участок?")) {
 
         $.ajax({
             headers: {
                 'X-CSRF-Token': $('meta[name="_token"]').attr('content')
             },
-            url: base + 'sites/' + siteId + '/delete',
+            url: base + 'nodes/' + nodeId + '/delete',
             type: 'DELETE',
             success: function (response) {
-                loadSites();
+                loadNodes();
             },
             error: function (xhr, status, error) {
                 alert(xhr.responseJSON.message)
@@ -69,17 +59,18 @@ $(document).on('click', '.delete-site-btn', function () {
     }
 });
 
-function loadSites() {
+function loadNodes() {
     const target = $('#root');
+    let id = window.location.pathname.split("/").pop();
     $.ajax({
-        url: base + 'sites/all',
+        url: base + 'nodes/equipment/' + id + '/all',
         type: 'GET',
         dataType: 'json',
         success: function (response) {
             if (response.length > 0) {
                 var html = '';
                 $.each(response, function (index, item) {
-                    var disabledClass = item.has_equipment ? '' : ' disabled';
+                    var disabledClass = item.has_components ? '' : ' disabled';
 
                     var itemHtml = `
                         <li class="list-group-item">
@@ -91,20 +82,18 @@ function loadSites() {
                                     </div>
                                 </div>
                                 </div>
-                                    <a href="${base}equipment/site/${item.id}">
-                                        <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
-                                            <i class="fa-solid fa-caret-right"></i>
-                                        </button>
-                                    </a>
+                                <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
+                                    <i class="fa-solid fa-caret-right"></i>
+                                </button>
                                 <div class="d-flex align-items-center flex-grow-1">
-                                    <button class="btn btn-secondary me-2 site-details-btn flex-grow-1" data-item='${JSON.stringify(item)}' data-bs-toggle="modal" data-bs-target="#siteModal">
+                                    <button class="btn btn-secondary me-2 node-details-btn flex-grow-1" data-item='${JSON.stringify(item)}' data-bs-toggle="modal" data-bs-target="#nodeModal">
                                         <span>${item.name}</span>
                                     </button>
                                 </div>
-                                <button class="btn btn-secondary edit-site-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editSiteModal">
+                                <button class="btn btn-secondary edit-node-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editNodeModal">
                                     <i class="bi bi-pencil"></i>
                                 </button>
-                                <button class="btn btn-danger ms-2 delete-site-btn" data-item-id="${item.id}">
+                                <button class="btn btn-danger ms-2 delete-node-btn" data-item-id="${item.id}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -125,15 +114,15 @@ function loadSites() {
     });
 }
 
-function showSite(data) {
+function showNode(data) {
     var html = '';
     html += '<p><strong>Название:</strong> ' + (data.name || '') + '</p>';
     return html;
 }
 
-function editSite() {
-    var formData = $('#editSiteForm').serialize();
-    var itemId = $('#edit_site_id_input').val();
+function editNode() {
+    var formData = $('#editNodeForm').serialize();
+    var itemId = $('#edit_node_id_input').val();
 
     // Получить HTML всех потомков элемента
     var childrenHTML = $('#item_' + itemId).html();
@@ -142,19 +131,19 @@ function editSite() {
         headers: {
             'X-CSRF-Token': $('meta[name="_token"]').attr('content')
         },
-        url: base + 'sites/' + itemId + '/update',
+        url: base + 'nodes/' + itemId + '/update',
         type: 'PATCH',
         data: formData,
         success: function (response) {
-            var disabledClass = response.has_equipment ? '' : ' disabled';
+            var disabledClass = response.has_components ? '' : ' disabled';
             // Обработка успешного редактирования элемента, если необходимо
-            $('#editSiteModal').modal('hide');
+            $('#editNodeModal').modal('hide');
 
             // Найти соответствующий элемент списка на странице по его ID
-            var listSite = $('#item_' + itemId).closest('li.list-group-item');
+            var listNode = $('#item_' + itemId).closest('li.list-group-item');
 
             // Собрать HTML-код для обновленного элемента
-            var updatedSiteHtml = `
+            var updatedNodeHtml = `
                 <li class="list-group-item">
                     <div class="d-flex justify-content-start align-items-center">
                         <div id="notification-icon_${response.id}">
@@ -164,20 +153,18 @@ function editSite() {
                             </div>
                         </div>
                         </div>
-                        <a href="${base}equipment/site/${response.id}">
-                            <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${response.id}" aria-expanded="false">
-                                <i class="fa-solid fa-caret-right"></i>
-                            </button>
-                        </a>
+                        <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${response.id}" aria-expanded="false">
+                            <i class="fa-solid fa-caret-right"></i>
+                        </button>
                         <div class="d-flex align-items-center flex-grow-1">
-                        <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#siteModal">
+                        <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#nodeModal">
                             <span>${response.name}</span>
                         </button>
                         </div>
-                        <button class="btn btn-secondary edit-site-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editSiteModal">
+                        <button class="btn btn-secondary edit-node-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editNodeModal">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-danger ms-2 delete-site-btn" data-item-id="${response.id}">
+                        <button class="btn btn-danger ms-2 delete-node-btn" data-item-id="${response.id}">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
@@ -187,10 +174,10 @@ function editSite() {
                 </li>`;
 
             // Заменить содержимое элемента на обновленные данные
-            listSite.replaceWith(updatedSiteHtml);
+            listNode.replaceWith(updatedNodeHtml);
         },
         error: function (xhr, status, error) {
-            var errorMessage = document.getElementById('SiteUpdateError');
+            var errorMessage = document.getElementById('NodeUpdateError');
             errorMessage.textContent = xhr.responseJSON.message;
             errorMessage.style.display = 'block'; // Показываем сообщение об ошибке
             console.error(error);
@@ -198,22 +185,22 @@ function editSite() {
     });
 }
 
-function createSite() {
-    var formData = $('#createSiteForm').serialize();
+function createNode() {
+    var formData = $('#createNodeForm').serialize();
     $.ajax({
         headers: {
             'X-CSRF-Token': $('meta[name="_token"]').attr('content')
         },
-        url: base + 'sites/store',
+        url: base + 'nodes/store',
         type: 'POST',
         data: formData,
         success: function (response) {
-            loadSites();
-            // loadEquipment(site_id); // Загружаем дочерние элементы для участка по site_id
-            $('#createSiteForm').trigger('reset'); // Очищаем форму создания
+            loadNodes();
+            // loadNodes(node_id); // Загружаем дочерние элементы для участка по node_id
+            $('#createNodeForm').trigger('reset'); // Очищаем форму создания
         },
         error: function (xhr, status, error) {
-            var errorMessage = document.getElementById('SiteCreateError');
+            var errorMessage = document.getElementById('NodeCreateError');
             errorMessage.textContent = xhr.responseJSON.message;
             errorMessage.style.display = 'block'; // Показываем сообщение об ошибке
             console.error(error);

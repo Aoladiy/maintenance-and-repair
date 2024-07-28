@@ -25,4 +25,9 @@ class Node extends Model
     {
         return $this->hasMany(Component::class);
     }
+
+    public function hasComponents(): bool
+    {
+        return $this->components()->exists();
+    }
 }

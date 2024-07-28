@@ -4,6 +4,7 @@ use App\Http\Controllers\BasicController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\NodeController;
 use App\Http\Controllers\ScheduledMaintenanceController;
 use App\Http\Controllers\ScheduledPurchaseController;
 use App\Http\Controllers\SiteController;
@@ -35,6 +36,13 @@ Route::get('/equipment/{id}', [EquipmentController::class, 'show'])->name('equip
 Route::post('/equipment/store', [EquipmentController::class, 'store'])->name('equipment.store');
 Route::patch('/equipment/{id}/update', [EquipmentController::class, 'update'])->name('equipment.update');
 Route::delete('/equipment/{id}/delete', [EquipmentController::class, 'destroy'])->name('equipment.delete');
+
+Route::get('/nodes/equipment/{id}', [BasicController::class, 'nodes'])->name('nodes.bySite');
+Route::get('/nodes/equipment/{id}/all', [NodeController::class, 'getNodeBySiteId'])->name('nodes.bySite.all');
+Route::get('/nodes/{id}', [NodeController::class, 'show'])->name('nodes.show');
+Route::post('/nodes/store', [NodeController::class, 'store'])->name('nodes.store');
+Route::patch('/nodes/{id}/update', [NodeController::class, 'update'])->name('nodes.update');
+Route::delete('/nodes/{id}/delete', [NodeController::class, 'destroy'])->name('nodes.delete');
 
 
 Route::get('/old', [ItemController::class, 'index'])->name('old.index');

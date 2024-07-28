@@ -10,7 +10,7 @@
                 <form id="editEquipmentForm">
                     <!-- Элемент для отображения ошибки -->
                     <p id="EquipmentUpdateError" style="display: none; color: red; font-weight: bold;">Здесь будет сообщение об ошибке</p>
-                    <input type="hidden" name="edit_equipment_id_input" id="edit_equipment_id_input">
+                    <input type="hidden" name="id" id="edit_equipment_id_input">
                     <div class="mb-3">
                         <label for="edit_equipment_name_input" class="form-label">Название</label>
                         <input type="text" class="form-control" id="edit_equipment_name_input" name="name">

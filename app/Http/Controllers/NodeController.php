@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipment;
+use App\Models\Node;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-class EquipmentController extends Controller
+class NodeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Equipment::all()->each(function ($site) {
-            $site->has_nodes = $site->hasNodes();
+        return Node::all()->each(function ($site) {
+            $site->has_components = $site->hasComponents();
         });
     }
 
-    public function getEquipmentBySiteId(int $id): Collection
+    public function getNodeBySiteId(int $id): Collection
     {
-        return Equipment::query()
-            ->where('site_id', $id)
+        return Node::query()
+            ->where('equipment_id', $id)
             ->get()
             ->each(function ($site) {
-                $site->has_nodes = $site->hasNodes();
+                $site->has_components = $site->hasComponents();
             });
     }
 
@@ -41,8 +41,8 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        $equipment = Equipment::query()->create($request->all());
-        $equipment->has_nodes = $equipment->hasNodes();
+        $equipment = Node::query()->create($request->all());
+        $equipment->has_components = $equipment->hasComponents();
         return $equipment;
     }
 
@@ -51,7 +51,7 @@ class EquipmentController extends Controller
      */
     public function show(string $id)
     {
-        return Equipment::query()->findOrFail($id);
+        return Node::query()->findOrFail($id);
     }
 
     /**
@@ -67,9 +67,9 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $equipment = Equipment::query()->findOrFail($id);
+        $equipment = Node::query()->findOrFail($id);
         $equipment->update($request->all());
-        $equipment->has_nodes = $equipment->hasNodes();
+        $equipment->has_components = $equipment->hasComponents();
         return $equipment;
     }
 
@@ -78,6 +78,6 @@ class EquipmentController extends Controller
      */
     public function destroy(string $id)
     {
-        return Equipment::query()->findOrFail($id)->delete();
+        return Node::query()->findOrFail($id)->delete();
     }
 }

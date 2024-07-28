@@ -1,4 +1,19 @@
 $(document).ready(function () {
+    var name = getUrlParameter('name');
+    var inventory_number = getUrlParameter('inventory_number');
+    var data = {
+        name: name,
+        inventory_number: inventory_number,
+    };
+    var modalBody = $('#equipmentModalBody');
+    var modalContent = showEquipment(data);
+    modalBody.html(modalContent);
+    if (data.name && data.inventory_number) {
+        $('#equipmentModal').modal('show')
+            .on('hidden.bs.modal', function () {
+            window.location.replace(window.location.pathname);
+        });
+    }
     // Вызов функции при загрузке страницы
     loadEquipment();
 
@@ -71,7 +86,7 @@ function loadEquipment() {
             if (response.length > 0) {
                 var html = '';
                 $.each(response, function (index, item) {
-                    var disabledClass = item.has_equipment ? '' : ' disabled';
+                    var disabledClass = item.has_nodes ? '' : ' disabled';
 
                     var itemHtml = `
                         <li class="list-group-item">
@@ -83,9 +98,11 @@ function loadEquipment() {
                                     </div>
                                 </div>
                                 </div>
-                                <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
-                                    <i class="fa-solid fa-caret-right"></i>
-                                </button>
+                                <a href="${base}nodes/equipment/${item.id}">
+                                    <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
+                                        <i class="fa-solid fa-caret-right"></i>
+                                    </button>
+                                </a>
                                 <div class="d-flex align-items-center flex-grow-1">
                                     <button class="btn btn-secondary me-2 equipment-details-btn flex-grow-1" data-item='${JSON.stringify(item)}' data-bs-toggle="modal" data-bs-target="#equipmentModal">
                                         <span>${item.name}</span>
@@ -137,7 +154,7 @@ function editEquipment() {
         type: 'PATCH',
         data: formData,
         success: function (response) {
-            var disabledClass = response.has_equipment ? '' : ' disabled';
+            var disabledClass = response.has_nodes ? '' : ' disabled';
             // Обработка успешного редактирования элемента, если необходимо
             $('#editEquipmentModal').modal('hide');
 
@@ -155,9 +172,11 @@ function editEquipment() {
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${response.id}" aria-expanded="false">
-                            <i class="fa-solid fa-caret-right"></i>
-                        </button>
+                        <a href="${base}nodes/equipment/${response.id}">
+                            <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${response.id}" aria-expanded="false">
+                                <i class="fa-solid fa-caret-right"></i>
+                            </button>
+                        </a>
                         <div class="d-flex align-items-center flex-grow-1">
                         <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#equipmentModal">
                             <span>${response.name}</span>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipment;
+use App\Models\Node;
 use App\Models\Site;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,5 +25,12 @@ class BasicController extends Controller
     {
         $site = Site::query()->findOrFail($id);
         return view('equipment.index', ['site' => $site, 'parentId' => $site->id]);
+    }
+
+    public function nodes(int $id): View
+    {
+        $equipment = Equipment::query()->findOrFail($id);
+        $site = $equipment->site;
+        return view('node.index', ['site' => $site, 'equipment' => $equipment, 'parentId' => $equipment->id]);
     }
 }
