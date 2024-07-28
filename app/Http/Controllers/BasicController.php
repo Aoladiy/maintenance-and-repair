@@ -22,6 +22,6 @@ class BasicController extends Controller
     public function equipment(int $id): View
     {
         $site = Site::query()->findOrFail($id);
-        return view('equipment.index', ['site' => $site]);
+        return view('equipment.index', ['site' => $site, 'parentId' => $site->id]);
     }
 }

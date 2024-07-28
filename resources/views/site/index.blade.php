@@ -1,12 +1,13 @@
 @extends('index')
+@section('createButton')
+    <button class="btn btn-secondary create-item-btn" data-parent-id=null data-bs-toggle="modal"
+            data-bs-target="#createSiteModal">
+        Создать участок
+    </button>
+@endsection
 @section('modals')
-    <!-- Модальное окно просмотра подробностей -->
     @include('./modals/site/modal_details')
-
-    <!-- Модальное окно для создания нового элемента -->
     @include('./modals/site/modal_create')
-
-    <!-- Модальное окно для редактирования элемента -->
     @include('./modals/site/modal_edit')
 @endsection
 @section('scripts')

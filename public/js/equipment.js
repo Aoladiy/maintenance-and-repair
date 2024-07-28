@@ -33,9 +33,9 @@ $(document).on('click', '.edit-equipment-btn', function () {
     var errorMessage = document.getElementById('EquipmentUpdateError');
     errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
-$(document).on('click', '.create-equipment-btn', function () {
+$(document).on('click', '.create-item-btn', function () {
     var errorMessage = document.getElementById('EquipmentCreateError');
-    var site_id = $(this).data('site-id');
+    var site_id = document.getElementById('parent_id').value
     $('#site_id_input').val(site_id);
     errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
 });
@@ -91,10 +91,7 @@ function loadEquipment() {
                                         <span>${item.name}</span>
                                     </button>
                                 </div>
-                                <button class="btn btn-secondary ms-auto create-equipment-btn" data-site-id="${item.site_id}" data-bs-toggle="modal" data-bs-target="#createEquipmentModal">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
-                                <button class="btn btn-secondary ms-2 edit-equipment-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                                <button class="btn btn-secondary edit-equipment-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <button class="btn btn-danger ms-2 delete-equipment-btn" data-item-id="${item.id}">
@@ -166,10 +163,7 @@ function editEquipment() {
                             <span>${response.name}</span>
                         </button>
                         </div>
-                        <button class="btn btn-secondary ms-auto create-equipment-btn" data-parent-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createEquipmentModal">
-                            <i class="bi bi-plus-lg"></i>
-                        </button>
-                        <button class="btn btn-secondary ms-2 edit-equipment-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
+                        <button class="btn btn-secondary edit-equipment-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editEquipmentModal">
                             <i class="bi bi-pencil"></i>
                         </button>
                         <button class="btn btn-danger ms-2 delete-equipment-btn" data-item-id="${response.id}">

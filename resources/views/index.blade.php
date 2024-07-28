@@ -30,29 +30,40 @@
             color: #333;
         }
 
+        .top {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+
+        .top-item {
+            float: left;
+            margin-inline: auto;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <p class="mt-4">
-        <a href="{{route('index')}}" class="btn btn-secondary">На главную</a>
-    </p>
-</div>
-<div class="container">
-    <p class="mt-4">
-        <a href="{{route('scheduled-maintenances.index')}}" class="btn btn-secondary">План ТОиР</a>
-    </p>
-</div>
-<div class="container">
-    <p class="mt-4">
-        <a href="{{route('scheduled-purchases.index')}}" class="btn btn-secondary">План Закупок</a>
-    </p>
+<input id="parent_id" type="hidden" value="{{$parentId ?? null}}">
+<div class="top">
+    <div class="top-item">
+        <p>
+            <a href="{{route('index')}}" class="btn btn-secondary">На главную</a>
+        </p>
+    </div>
+    <div class="top-item">
+        <p>
+            <a href="{{route('scheduled-maintenances.index')}}" class="btn btn-secondary">План ТОиР</a>
+        </p>
+    </div>
+    <div class="top-item">
+        <p>
+            <a href="{{route('scheduled-purchases.index')}}" class="btn btn-secondary">План Закупок</a>
+        </p>
+    </div>
+    <div class="top-item">
+        @yield('createButton')
+    </div>
 </div>
 <div class="container mt-4">
-    <button class="btn btn-secondary mb-2 create-item-btn" data-parent-id=null data-bs-toggle="modal"
-            data-bs-target="#createSiteModal">
-        Создать участок
-    </button>
     <div>@yield('address')</div>
     <ul class="list-group" id="root">
     </ul>
@@ -67,7 +78,5 @@
 <!-- Основные скрипты -->
 <script src="{{asset('js/new_scripts.js')}}"></script>
 @yield('scripts')
-
-
 </body>
 </html>

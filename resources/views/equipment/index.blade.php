@@ -1,15 +1,16 @@
 @extends('index')
+@section('createButton')
+    <button class="btn btn-secondary create-item-btn" data-parent-id=null data-bs-toggle="modal"
+            data-bs-target="#createEquipmentModal">
+        Создать оборудование
+    </button>
+@endsection
 @section('address')
     <strong>Адрес: <a href="{{route('sites')}}?name={{$site->name}}">{{$site->name}}</a></strong>
 @endsection
 @section('modals')
-    <!-- Модальное окно просмотра подробностей -->
     @include('./modals/equipment/modal_details')
-
-    <!-- Модальное окно для создания нового элемента -->
     @include('./modals/equipment/modal_create')
-
-    <!-- Модальное окно для редактирования элемента -->
     @include('./modals/equipment/modal_edit')
 @endsection
 @section('scripts')

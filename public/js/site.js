@@ -99,10 +99,7 @@ function loadSites() {
                                         <span>${item.name}</span>
                                     </button>
                                 </div>
-                                <button class="btn btn-secondary ms-auto create-item-btn" data-parent-id="${item.id}" data-bs-toggle="modal" data-bs-target="#createSiteModal">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
-                                <button class="btn btn-secondary ms-2 edit-site-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editSiteModal">
+                                <button class="btn btn-secondary edit-site-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editSiteModal">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <button class="btn btn-danger ms-2 delete-site-btn" data-item-id="${item.id}">
@@ -173,10 +170,7 @@ function editSite() {
                             <span>${response.name}</span>
                         </button>
                         </div>
-                        <button class="btn btn-secondary ms-auto create-site-btn" data-parent-id="${response.id}" data-bs-toggle="modal" data-bs-target="#createSiteModal">
-                            <i class="bi bi-plus-lg"></i>
-                        </button>
-                        <button class="btn btn-secondary ms-2 edit-site-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editSiteModal">
+                        <button class="btn btn-secondary edit-site-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editSiteModal">
                             <i class="bi bi-pencil"></i>
                         </button>
                         <button class="btn btn-danger ms-2 delete-site-btn" data-item-id="${response.id}">
