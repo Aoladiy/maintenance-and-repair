@@ -18,7 +18,7 @@ class NodeController extends Controller
         });
     }
 
-    public function getNodeBySiteId(int $id): Collection
+    public function getNodeByEquipmentId(int $id): Collection
     {
         return Node::query()
             ->where('equipment_id', $id)

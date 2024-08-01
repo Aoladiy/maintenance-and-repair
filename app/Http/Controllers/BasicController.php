@@ -33,4 +33,12 @@ class BasicController extends Controller
         $site = $equipment->site;
         return view('node.index', ['site' => $site, 'equipment' => $equipment, 'parentId' => $equipment->id]);
     }
+
+    public function components(int $id): View
+    {
+        $node = Node::query()->findOrFail($id);
+        $equipment = $node->equipment;
+        $site = $equipment->site;
+        return view('component.index', ['site' => $site, 'equipment' => $equipment, 'node' => $node, 'parentId' => $node->id]);
+    }
 }

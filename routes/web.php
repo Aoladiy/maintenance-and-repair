@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BasicController;
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaintenanceController;
@@ -37,12 +38,19 @@ Route::post('/equipment/store', [EquipmentController::class, 'store'])->name('eq
 Route::patch('/equipment/{id}/update', [EquipmentController::class, 'update'])->name('equipment.update');
 Route::delete('/equipment/{id}/delete', [EquipmentController::class, 'destroy'])->name('equipment.delete');
 
-Route::get('/nodes/equipment/{id}', [BasicController::class, 'nodes'])->name('nodes.bySite');
-Route::get('/nodes/equipment/{id}/all', [NodeController::class, 'getNodeBySiteId'])->name('nodes.bySite.all');
+Route::get('/nodes/equipment/{id}', [BasicController::class, 'nodes'])->name('nodes.byEquipment');
+Route::get('/nodes/equipment/{id}/all', [NodeController::class, 'getNodeByEquipmentId'])->name('nodes.byEquipment.all');
 Route::get('/nodes/{id}', [NodeController::class, 'show'])->name('nodes.show');
 Route::post('/nodes/store', [NodeController::class, 'store'])->name('nodes.store');
 Route::patch('/nodes/{id}/update', [NodeController::class, 'update'])->name('nodes.update');
 Route::delete('/nodes/{id}/delete', [NodeController::class, 'destroy'])->name('nodes.delete');
+
+Route::get('/components/node/{id}', [BasicController::class, 'components'])->name('components.byNode');
+Route::get('/components/node/{id}/all', [ComponentController::class, 'getComponentByNodeId'])->name('components.byNode.all');
+Route::get('/components/{id}', [ComponentController::class, 'show'])->name('components.show');
+Route::post('/components/store', [ComponentController::class, 'store'])->name('components.store');
+Route::patch('/components/{id}/update', [ComponentController::class, 'update'])->name('components.update');
+Route::delete('/components/{id}/delete', [ComponentController::class, 'destroy'])->name('components.delete');
 
 
 Route::get('/old', [ItemController::class, 'index'])->name('old.index');
