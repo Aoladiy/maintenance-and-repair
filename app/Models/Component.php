@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property non-negative-int $alert_in_advance_in_engine_hours
  * @property non-negative-int $alert_in_advance_in_mileage
  * @property boolean $alert
+ * @property string $class_name
  */
 class Component extends Model
 {

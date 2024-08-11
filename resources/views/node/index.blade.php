@@ -12,6 +12,8 @@
     @include('./modals/node/modal_details')
     @include('./modals/node/modal_create')
     @include('./modals/node/modal_edit')
+    @include('./modals/modal_alertable_edit')
+    @include('./modals/modal_serviceable_edit')
 @endsection
 @section('scripts')
     <script src="{{asset('js/node.js')}}"></script>

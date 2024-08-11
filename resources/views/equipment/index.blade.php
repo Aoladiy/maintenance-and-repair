@@ -12,6 +12,8 @@
     @include('./modals/equipment/modal_details')
     @include('./modals/equipment/modal_create')
     @include('./modals/equipment/modal_edit')
+    @include('./modals/modal_alertable_edit')
+    @include('./modals/modal_serviceable_edit')
 @endsection
 @section('scripts')
     <script src="{{asset('js/equipment.js')}}"></script>

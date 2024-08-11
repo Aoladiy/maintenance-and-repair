@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlertCharacteristicsController;
 use App\Http\Controllers\BasicController;
 use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\EquipmentController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\NodeController;
 use App\Http\Controllers\ScheduledMaintenanceController;
 use App\Http\Controllers\ScheduledPurchaseController;
+use App\Http\Controllers\ServiceCharacteristicsController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [BasicController::class, 'index'])->name('index');
+
+Route::post('/alert-characteristics/edit', [AlertCharacteristicsController::class, 'getAlertableById'])->name('alert-characteristics.byId');
+Route::patch('/alert-characteristics/update', [AlertCharacteristicsController::class, 'updateAlertable'])->name('alert-characteristics.update');
+
+Route::post('/service-characteristics/edit', [ServiceCharacteristicsController::class, 'getServiceableById'])->name('service-characteristics.byId');
+Route::patch('/service-characteristics/update', [ServiceCharacteristicsController::class, 'updateServiceable'])->name('service-characteristics.update');
+
 Route::get('/sites', [BasicController::class, 'sites'])->name('sites');
 Route::get('/sites/all', [SiteController::class, 'index'])->name('sites.all');
 Route::get('/sites/{id}', [SiteController::class, 'show'])->name('sites.show');

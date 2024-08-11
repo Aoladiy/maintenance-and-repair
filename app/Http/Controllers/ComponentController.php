@@ -18,6 +18,8 @@ class ComponentController extends Controller
         /** @var AlertCharacteristics $alertCharacteristics */
         $alertCharacteristics = $component->alertCharacteristics()->first();
 
+        $component->class_name = get_class($component);
+
         $component->unit = $unit?->name;
 
         $component->service_duration_in_seconds = $serviceCharacteristics?->service_duration_in_seconds;
