@@ -31,8 +31,8 @@ return new class extends Migration {
             $table->timestamps();
 
 
-            $table->unsignedBigInteger('component_id')->unique()->index();
-            $table->foreign('component_id')->references('id')->on('components')->cascadeOnDelete();
+            $table->unsignedBigInteger('serviceable_id')->unique()->index();
+            $table->string('serviceable_type')->index();
         });
     }
 

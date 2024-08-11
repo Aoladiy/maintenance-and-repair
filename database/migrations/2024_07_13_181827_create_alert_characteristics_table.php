@@ -20,9 +20,8 @@ return new class extends Migration {
 
             $table->timestamps();
 
-
-            $table->unsignedBigInteger('component_id')->unique()->index();
-            $table->foreign('component_id')->references('id')->on('components')->cascadeOnDelete();
+            $table->unsignedBigInteger('alertable_id')->unique()->index();
+            $table->string('alertable_type')->index();
         });
     }
 

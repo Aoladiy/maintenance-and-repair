@@ -76,7 +76,8 @@ for index, row in df.iterrows():
         })
 
         service_characteristics.append({
-            'component_id': component_id,
+            'serviceable_id': component_id,
+            'serviceable_type': 'App\\Models\\Component',
             'service_period_in_days': row.get('Период обслуживания (дни)'),
             'service_period_in_engine_hours': row.get('Период обслуживания (моточасы)'),
             'mileage': row.get('Пробег (км)')

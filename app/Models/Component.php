@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * @property string $unit
@@ -27,6 +28,9 @@ class Component extends Model
 {
     use HasFactory;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name',
         'vendor_code',
@@ -35,26 +39,41 @@ class Component extends Model
         'unit_id',
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function node(): BelongsTo
     {
         return $this->belongsTo(Node::class);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
     }
 
-    public function alertCharacteristics(): HasOne
+    /**
+     * @return MorphOne
+     */
+    public function alertCharacteristics(): MorphOne
     {
-        return $this->hasOne(AlertCharacteristics::class);
+        return $this->morphOne(AlertCharacteristics::class, 'alertable');
     }
 
-    public function serviceCharacteristics(): HasOne
+    /**
+     * @return MorphOne
+     */
+    public function serviceCharacteristics(): MorphOne
     {
-        return $this->hasOne(ServiceCharacteristics::class);
+        return $this->morphOne(ServiceCharacteristics::class, 'serviceable');
     }
 
+    /**
+     * @return HasMany
+     */
     public function operations(): HasMany
     {
         return $this->hasMany(Operation::class);
