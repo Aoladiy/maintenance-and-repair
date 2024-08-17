@@ -2,56 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AlertCharacteristics;
 use App\Models\Component;
-use App\Models\ServiceCharacteristics;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
+/**
+ *
+ */
 class ComponentController extends Controller
 {
-    public function attachAdditionalData(Component $component): Component
-    {
-        $unit = $component->unit()->first();
-        /** @var ServiceCharacteristics $serviceCharacteristics */
-        $serviceCharacteristics = $component->serviceCharacteristics()->first();
-        /** @var AlertCharacteristics $alertCharacteristics */
-        $alertCharacteristics = $component->alertCharacteristics()->first();
-
-        $component->class_name = get_class($component);
-
-        $component->unit = $unit?->name;
-
-        $component->service_duration_in_seconds = $serviceCharacteristics?->service_duration_in_seconds;
-        $component->service_period_in_days = $serviceCharacteristics?->service_period_in_days;
-        $component->service_period_in_engine_hours = $serviceCharacteristics?->service_period_in_engine_hours;
-        $component->engine_hours_by_the_datetime_of_last_service = $serviceCharacteristics?->engine_hours_by_the_datetime_of_last_service;
-        $component->mileage = $serviceCharacteristics?->mileage;
-        $component->mileage_by_the_datetime_of_last_service = $serviceCharacteristics?->mileage_by_the_datetime_of_last_service;
-        $component->datetime_of_last_service = $serviceCharacteristics?->datetime_of_last_service;
-        $component->datetime_of_next_service = $serviceCharacteristics?->datetime_of_next_service;
-
-        $component->alert_in_advance_in_hours = $alertCharacteristics?->alert_in_advance_in_hours;
-        $component->alert_in_advance_in_engine_hours = $alertCharacteristics?->alert_in_advance_in_engine_hours;
-        $component->alert_in_advance_in_mileage = $alertCharacteristics?->alert_in_advance_in_mileage;
-        $component->alert = $alertCharacteristics?->alert;
-        return $component;
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Collection
     {
-        return Component::all()
-            ->each([$this, 'attachAdditionalData']);
+        return Component::all();
     }
 
+    /**
+     * @param int $id
+     * @return Collection
+     */
     public function getComponentByNodeId(int $id): Collection
     {
         return Component::query()
             ->where('node_id', $id)
-            ->get()
-            ->each([$this, 'attachAdditionalData']);
+            ->get();
     }
 
     /**
@@ -69,8 +45,6 @@ class ComponentController extends Controller
     {
         /** @var Component $component */
         $component = Component::query()->create($request->all());
-        $component = $this->attachAdditionalData($component);
-        $this->attachAdditionalData($component);
         return $component;
     }
 
@@ -100,7 +74,6 @@ class ComponentController extends Controller
         /** @var Component $component */
         $component = Component::query()->findOrFail($id);
         $component->update($request->all());
-        $this->attachAdditionalData($component);
         return $component;
     }
 
