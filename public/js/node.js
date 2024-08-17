@@ -187,10 +187,10 @@ function editNode() {
                         <button class="btn btn-secondary edit-node-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editNodeModal">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-secondary ms-2 edit-serviceable-btn" data-item-id="${item.id}" data-item-type="${item.class_name}" data-bs-toggle="modal" data-bs-target="#editServiceableModal">
+                        <button class="btn btn-secondary ms-2 edit-serviceable-btn" data-item-id="${response.id}" data-item-type="${response.class_name}" data-bs-toggle="modal" data-bs-target="#editServiceableModal">
                             <i class="bi bi-wrench"></i>
                         </button>
-                        <button class="btn btn-secondary ms-2 edit-alertable-btn" data-item-id="${item.id}" data-item-type="${item.class_name}" data-bs-toggle="modal" data-bs-target="#editAlertableModal">
+                        <button class="btn btn-secondary ms-2 edit-alertable-btn" data-item-id="${response.id}" data-item-type="${response.class_name}" data-bs-toggle="modal" data-bs-target="#editAlertableModal">
                             <i class="bi bi-bell"></i>
                         </button>
                         <button class="btn btn-danger ms-2 delete-node-btn" data-item-id="${response.id}">
