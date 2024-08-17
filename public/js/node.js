@@ -53,7 +53,7 @@ $(document).on('click', '.create-item-btn', function () {
 });
 $(document).on('click', '.delete-node-btn', function () {
     var nodeId = $(this).data('item-id');
-    if (confirm("Вы точно уверены, что хотите удалить этот участок?")) {
+    if (confirm("Вы точно уверены, что хотите удалить этот узел?")) {
 
         $.ajax({
             headers: {
@@ -107,6 +107,12 @@ function loadNodes() {
                                 </div>
                                 <button class="btn btn-secondary edit-node-btn" data-item-id="${item.id}" data-bs-toggle="modal" data-bs-target="#editNodeModal">
                                     <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-secondary ms-2 edit-serviceable-btn" data-item-id="${item.id}" data-item-type="${item.class_name}" data-bs-toggle="modal" data-bs-target="#editServiceableModal">
+                                    <i class="bi bi-wrench"></i>
+                                </button>
+                                <button class="btn btn-secondary ms-2 edit-alertable-btn" data-item-id="${item.id}" data-item-type="${item.class_name}" data-bs-toggle="modal" data-bs-target="#editAlertableModal">
+                                    <i class="bi bi-bell"></i>
                                 </button>
                                 <button class="btn btn-danger ms-2 delete-node-btn" data-item-id="${item.id}">
                                     <i class="bi bi-trash"></i>
@@ -180,6 +186,12 @@ function editNode() {
                         </div>
                         <button class="btn btn-secondary edit-node-btn" data-item-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editNodeModal">
                             <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-secondary ms-2 edit-serviceable-btn" data-item-id="${item.id}" data-item-type="${item.class_name}" data-bs-toggle="modal" data-bs-target="#editServiceableModal">
+                            <i class="bi bi-wrench"></i>
+                        </button>
+                        <button class="btn btn-secondary ms-2 edit-alertable-btn" data-item-id="${item.id}" data-item-type="${item.class_name}" data-bs-toggle="modal" data-bs-target="#editAlertableModal">
+                            <i class="bi bi-bell"></i>
                         </button>
                         <button class="btn btn-danger ms-2 delete-node-btn" data-item-id="${response.id}">
                             <i class="bi bi-trash"></i>

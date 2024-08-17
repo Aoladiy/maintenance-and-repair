@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+use App\Interfaces\AlertableInterface;
+use App\Interfaces\ServiceableInterface;
+use App\Traits\AlertCharacteristicsDataTrait;
+use App\Traits\ClassNameDataTrait;
+use App\Traits\ServiceCharacteristicsDataTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,9 +16,12 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 /**
  *
  */
-class Node extends Model
+class Node extends Model implements ServiceableInterface, AlertableInterface
 {
     use HasFactory;
+    use ClassNameDataTrait;
+    use ServiceCharacteristicsDataTrait;
+    use AlertCharacteristicsDataTrait;
 
     /**
      * @var string[]

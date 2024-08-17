@@ -20,8 +20,9 @@ return new class extends Migration {
 
             $table->timestamps();
 
-            $table->unsignedBigInteger('alertable_id')->unique()->index();
+            $table->unsignedBigInteger('alertable_id')->index();
             $table->string('alertable_type')->index();
+            $table->unique(['alertable_id', 'alertable_type']);
         });
     }
 

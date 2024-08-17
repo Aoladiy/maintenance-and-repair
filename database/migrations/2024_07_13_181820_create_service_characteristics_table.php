@@ -31,8 +31,9 @@ return new class extends Migration {
             $table->timestamps();
 
 
-            $table->unsignedBigInteger('serviceable_id')->unique()->index();
+            $table->unsignedBigInteger('serviceable_id')->index();
             $table->string('serviceable_type')->index();
+            $table->unique(['serviceable_id', 'serviceable_type']);
         });
     }
 

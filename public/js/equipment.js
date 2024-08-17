@@ -56,7 +56,7 @@ $(document).on('click', '.create-item-btn', function () {
 });
 $(document).on('click', '.delete-equipment-btn', function () {
     var equipmentId = $(this).data('item-id');
-    if (confirm("Вы точно уверены, что хотите удалить этот участок?")) {
+    if (confirm("Вы точно уверены, что хотите удалить это оборудование?")) {
 
         $.ajax({
             headers: {
