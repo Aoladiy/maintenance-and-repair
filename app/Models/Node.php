@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Facades\DB;
 
 /**
  *
@@ -92,8 +93,10 @@ class Node extends Model implements ServiceableInterface, AlertableInterface
      */
     public function getAllAlertsNumberAttribute(): int
     {
-        return $this->components->sum(function (Component $component) {
-                return $component->all_alerts_number;
-            }) + $this->alerts_number;
+        return DB::table('alert_characteristics')
+                ->where('alertable_type', Component::class)
+                ->join('components', 'alert_characteristics.alertable_id', '=', 'components.id')
+                ->where('components.node_id', $this->id)
+                ->sum('alert_characteristics.alert') + $this->alerts_number;
     }
 }
