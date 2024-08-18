@@ -26,9 +26,16 @@ class Site extends Model
     ];
 
     /**
+     * @var string[]
+     */
+    protected $appends = [
+        'all_alerts_number',
+    ];
+
+    /**
      * @return HasMany
      */
-    public function equipments(): HasMany
+    public function equipment(): HasMany
     {
         return $this->hasMany(Equipment::class);
     }
@@ -38,6 +45,16 @@ class Site extends Model
      */
     public function hasEquipment(): bool
     {
-        return $this->equipments()->exists();
+        return $this->equipment()->exists();
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllAlertsNumberAttribute(): int
+    {
+        return $this->equipment->sum(function (Equipment $equipment) {
+            return $equipment->all_alerts_number;
+        });
     }
 }

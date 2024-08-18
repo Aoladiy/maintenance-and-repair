@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
+/**
+ *
+ */
 class Component extends Model implements ServiceableInterface, AlertableInterface
 {
     use HasFactory;
@@ -32,9 +35,14 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
         'unit_id',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $appends = [
         'unit',
         'operations',
+        'alerts_number',
+        'all_alerts_number',
     ];
 
     /**
@@ -91,5 +99,21 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
     public function getOperationsAttribute(): Collection
     {
         return $this->operations()->get();
+    }
+
+    /**
+     * @return int
+     */
+    public function getAlertsNumberAttribute(): int
+    {
+        return $this->alertCharacteristics?->alert ?? 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllAlertsNumberAttribute(): int
+    {
+        return $this->alerts_number;
     }
 }

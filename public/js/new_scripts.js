@@ -25,7 +25,7 @@ $(document).on('click', '.edit-alertable-btn', function () {
             $('#edit_alert_in_advance_in_hours_input').val(response.alert_in_advance_in_hours);
             $('#edit_alert_in_advance_in_engine_hours_input').val(response.alert_in_advance_in_engine_hours);
             $('#edit_alert_in_advance_in_mileage_input').val(response.alert_in_advance_in_mileage);
-            $('#edit_alert_input').prop('checked', response.alert);
+            $('#edit_alert_input').prop('checked', response.alert ?? null);
             $('#editServiceableModalModal').modal('show');
         },
         error: function (xhr, status, error) {

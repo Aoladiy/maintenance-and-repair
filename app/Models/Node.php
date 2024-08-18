@@ -32,6 +32,14 @@ class Node extends Model implements ServiceableInterface, AlertableInterface
     ];
 
     /**
+     * @var string[]
+     */
+    protected $appends = [
+        'alerts_number',
+        'all_alerts_number',
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function equipment(): BelongsTo
@@ -69,5 +77,23 @@ class Node extends Model implements ServiceableInterface, AlertableInterface
     public function serviceCharacteristics(): MorphOne
     {
         return $this->morphOne(ServiceCharacteristics::class, 'serviceable');
+    }
+
+    /**
+     * @return int
+     */
+    public function getAlertsNumberAttribute(): int
+    {
+        return $this->alertCharacteristics?->alert ?? 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllAlertsNumberAttribute(): int
+    {
+        return $this->components->sum(function (Component $component) {
+                return $component->all_alerts_number;
+            }) + $this->alerts_number;
     }
 }

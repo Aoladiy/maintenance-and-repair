@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property non-negative-int $alert_in_advance_in_hours
  * @property non-negative-int $alert_in_advance_in_engine_hours
  * @property non-negative-int $alert_in_advance_in_mileage
+ * @property non-negative-int $alerts_number
+ * @property non-negative-int $all_alerts_number
  * @property boolean $alert
  */
 interface AlertableInterface
@@ -36,4 +38,14 @@ interface AlertableInterface
      * @return int|null
      */
     public function getAlertAttribute(): ?int;
+
+    /**
+     * @return int
+     */
+    public function getAlertsNumberAttribute(): int;
+
+    /**
+     * @return int
+     */
+    public function getAllAlertsNumberAttribute(): int;
 }
