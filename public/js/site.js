@@ -80,16 +80,21 @@ function loadSites() {
                 var html = '';
                 $.each(response, function (index, item) {
                     var disabledClass = item.has_equipment ? '' : ' disabled';
-
+                    var notificationIconHtml = item.all_alerts_number > 0
+                        ?
+                        `<div class="notification-icon me-3">
+                        <span class="badge">${item.all_alerts_number}</span>
+                        <i class="fa-regular fa-bell"></i>
+                     </div>`
+                        :
+                        `<div class="notification-icon me-3">
+                        <i class="fa-regular fa-bell"></i>
+                     </div>`;
                     var itemHtml = `
                         <li class="list-group-item">
                             <div class="d-flex justify-content-start align-items-center">
                                 <div id="notification-icon_${item.id}">
-                                <div class="notification-icon me-3">
-                                    <div class="spinner-grow" role="status">
-                                        <span class="visually-hidden">Загрузка...</span>
-                                    </div>
-                                </div>
+                                    ${notificationIconHtml}
                                 </div>
                                     <a href="${base}equipment/site/${item.id}">
                                         <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${item.id}" aria-expanded="false">
@@ -152,17 +157,23 @@ function editSite() {
 
             // Найти соответствующий элемент списка на странице по его ID
             var listSite = $('#item_' + itemId).closest('li.list-group-item');
+            var notificationIconHtml = response.all_alerts_number > 0
+                ?
+                `<div class="notification-icon me-3">
+                    <span class="badge">${response.all_alerts_number}</span>
+                    <i class="fa-regular fa-bell"></i>
+                 </div>`
+                :
+                `<div class="notification-icon me-3">
+                    <i class="fa-regular fa-bell"></i>
+                 </div>`;
 
             // Собрать HTML-код для обновленного элемента
             var updatedSiteHtml = `
                 <li class="list-group-item">
                     <div class="d-flex justify-content-start align-items-center">
                         <div id="notification-icon_${response.id}">
-                        <div class="notification-icon me-3">
-                            <div class="spinner-grow" role="status">
-                                <span class="visually-hidden">Загрузка...</span>
-                            </div>
-                        </div>
+                            ${notificationIconHtml}
                         </div>
                         <a href="${base}equipment/site/${response.id}">
                             <button class="btn btn-secondary toggle-btn${disabledClass} me-2" data-id="${response.id}" aria-expanded="false">

@@ -1,4 +1,4 @@
-let base = 'http://localhost:8000/';
+let base = 'http://maintenance-and-repair.local/';
 $(document).ready(function () {
     // Вызов функции при загрузке страницы
     loadChildren(-1);

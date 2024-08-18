@@ -79,16 +79,21 @@ function loadComponents() {
             if (response.length > 0) {
                 var html = '';
                 $.each(response, function (index, item) {
-
+                    var notificationIconHtml = item.all_alerts_number > 0
+                        ?
+                        `<div class="notification-icon me-3">
+                        <span class="badge">${item.all_alerts_number}</span>
+                        <i class="fa-regular fa-bell"></i>
+                     </div>`
+                        :
+                        `<div class="notification-icon me-3">
+                        <i class="fa-regular fa-bell"></i>
+                     </div>`;
                     var itemHtml = `
                         <li class="list-group-item">
                             <div class="d-flex justify-content-start align-items-center">
                                 <div id="notification-icon_${item.id}">
-                                <div class="notification-icon me-3">
-                                    <div class="spinner-grow" role="status">
-                                        <span class="visually-hidden">Загрузка...</span>
-                                    </div>
-                                </div>
+                                    ${notificationIconHtml}
                                 </div>
                                 <div class="d-flex align-items-center flex-grow-1">
                                     <button class="btn btn-secondary me-2 component-details-btn flex-grow-1" data-item='${JSON.stringify(item)}' data-bs-toggle="modal" data-bs-target="#componentModal">
@@ -155,17 +160,22 @@ function editComponent() {
 
             // Найти соответствующий элемент списка на странице по его ID
             var listComponent = $('#item_' + itemId).closest('li.list-group-item');
-
+            var notificationIconHtml = response.all_alerts_number > 0
+                ?
+                `<div class="notification-icon me-3">
+                        <span class="badge">${response.all_alerts_number}</span>
+                        <i class="fa-regular fa-bell"></i>
+                     </div>`
+                :
+                `<div class="notification-icon me-3">
+                        <i class="fa-regular fa-bell"></i>
+                     </div>`;
             // Собрать HTML-код для обновленного элемента
             var updatedComponentHtml = `
                 <li class="list-group-item">
                     <div class="d-flex justify-content-start align-items-center">
                         <div id="notification-icon_${response.id}">
-                        <div class="notification-icon me-3">
-                            <div class="spinner-grow" role="status">
-                                <span class="visually-hidden">Загрузка...</span>
-                            </div>
-                        </div>
+                            ${notificationIconHtml}
                         </div>
                         <div class="d-flex align-items-center flex-grow-1">
                         <button class="btn btn-secondary me-2 component-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#componentModal">
