@@ -184,7 +184,7 @@ function editEquipment() {
                             </button>
                         </a>
                         <div class="d-flex align-items-center flex-grow-1">
-                        <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#equipmentModal">
+                        <button class="btn btn-secondary me-2 equipment-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#equipmentModal">
                             <span>${response.name}</span>
                         </button>
                         </div>

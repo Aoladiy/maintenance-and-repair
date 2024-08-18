@@ -73,6 +73,7 @@ class ComponentController extends Controller
     {
         /** @var Component $component */
         $component = Component::query()->findOrFail($id);
+        $component->operations()->sync($request->get('operations'));
         $component->update($request->all());
         return $component;
     }

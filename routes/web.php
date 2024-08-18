@@ -7,6 +7,7 @@ use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\NodeController;
+use App\Http\Controllers\OperationController;
 use App\Http\Controllers\ScheduledMaintenanceController;
 use App\Http\Controllers\ScheduledPurchaseController;
 use App\Http\Controllers\ServiceCharacteristicsController;
@@ -76,6 +77,7 @@ Route::get('maintenance/time', [MaintenanceController::class, 'time'])->name('ma
 Route::post('maintenance/create', [MaintenanceController::class, 'store'])->name('maintenance.store');
 
 Route::get('units', [UnitController::class, 'units'])->name('units');
+Route::get('operations', [OperationController::class, 'operations'])->name('operations');
 
 Route::get('scheduled-maintenances', [ScheduledMaintenanceController::class, 'index'])->name('scheduled-maintenances.index');
 Route::get('scheduled-purchases', [ScheduledPurchaseController::class, 'index'])->name('scheduled-purchases.index');

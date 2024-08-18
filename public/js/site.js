@@ -170,7 +170,7 @@ function editSite() {
                             </button>
                         </a>
                         <div class="d-flex align-items-center flex-grow-1">
-                        <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#siteModal">
+                        <button class="btn btn-secondary me-2 site-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#siteModal">
                             <span>${response.name}</span>
                         </button>
                         </div>

@@ -10,6 +10,7 @@ $(document).ready(function () {
 $(document).on('click', '.component-details-btn', function () {
     var data = $(this).data('item');
     var modalBody = $('#componentModalBody');
+    modalBody.empty();
     var modalContent = showComponent(data);
     modalBody.html(modalContent);
 });
@@ -23,6 +24,8 @@ $(document).on('click', '.edit-component-btn', function () {
             // Заполнение полей формы данными полученными из сервера
             $('#edit_component_name_input').val(response.name);
             $('#edit_vendor_code_input').val(response.vendor_code);
+            $('#edit_operations_input').empty(); // Очищаем <select> перед заполнением
+            fillOperationsSelect('#edit_operations_input', response.operations); // Заполняем <select> значениями
             $('#edit_amount_input').val(response.amount);
             $('#edit_component_id_input').val(componentId);
             $('#edit_unit_input').empty(); // Очищаем <select> перед заполнением
@@ -125,9 +128,10 @@ function loadComponents() {
 function showComponent(data) {
     var html = '';
     html += '<p><strong>Название:</strong> ' + (data.name || '') + '</p>';
-    html += '<p><strong>Vendor Code:</strong> ' + (data.vendor_code || '') + '</p>';
-    html += '<p><strong>Amount:</strong> ' + (data.amount || '') + '</p>';
-    html += '<p><strong>Unit:</strong> ' + (data.unit || '') + '</p>';
+    html += '<p><strong>Идентификатор (артикул):</strong> ' + (data.vendor_code || '') + '</p>';
+    html += '<p><strong>Операции:</strong>' + (data.operations.map((operation) => ' ' + operation.name) || '') + '</p>';
+    html += '<p><strong>Количество:</strong> ' + (data.amount || '') + '</p>';
+    html += '<p><strong>Единицы измерения:</strong> ' + (data.unit || '') + '</p>';
     return html;
 }
 
@@ -164,7 +168,7 @@ function editComponent() {
                         </div>
                         </div>
                         <div class="d-flex align-items-center flex-grow-1">
-                        <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#componentModal">
+                        <button class="btn btn-secondary me-2 component-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#componentModal">
                             <span>${response.name}</span>
                         </button>
                         </div>
@@ -234,6 +238,29 @@ function fillUnitSelect(unitInput, defaultUnitId) {
                 options += '<option value="' + value + '" ' + selected + '>' + name + '</option>';
             });
             $(unitInput).append(options);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
+function fillOperationsSelect(operationInput, defaultOperationsIds) {
+    defaultOperationsIds = defaultOperationsIds.map(function (operation) {
+        return operation.id;
+    })
+    $.ajax({
+        url: base + 'operations',
+        type: 'GET',
+        success: function(response) {
+            var options = '';
+            $.each(response, function(index, operation) {
+                var value = operation.id !== null ? operation.id : '-';
+                var name = operation.name !== null ? operation.name : '-';
+                var isSelected = defaultOperationsIds.find((operationId) => operationId === operation.id) ? 'selected' : '';
+                options += '<option value="' + value + '" ' + isSelected + '>' + name + '</option>';
+            });
+            $(operationInput).append(options);
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);

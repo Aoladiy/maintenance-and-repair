@@ -180,7 +180,7 @@ function editNode() {
                             </button>
                         </a>
                         <div class="d-flex align-items-center flex-grow-1">
-                        <button class="btn btn-secondary me-2 item-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#nodeModal">
+                        <button class="btn btn-secondary me-2 node-details-btn flex-grow-1" data-item='${JSON.stringify(response)}' data-bs-toggle="modal" data-bs-target="#nodeModal">
                             <span>${response.name}</span>
                         </button>
                         </div>

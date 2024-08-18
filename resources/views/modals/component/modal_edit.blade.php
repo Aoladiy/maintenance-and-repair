@@ -16,15 +16,21 @@
                         <input type="text" class="form-control" id="edit_component_name_input" name="name">
                     </div>
                     <div class="mb-3">
-                        <label for="edit_vendor_code_input" class="form-label">Vendor Code</label>
+                        <label for="edit_vendor_code_input" class="form-label">Идентификатор (артикул)</label>
                         <input type="text" class="form-control" id="edit_vendor_code_input" name="vendor_code">
                     </div>
                     <div class="mb-3">
-                        <label for="edit_amount_input" class="form-label">Amount</label>
+                        <label for="edit_operations_input" class="form-label">Операции</label>
+                        <select multiple class="form-control" id="edit_operations_input" name="operations[]">
+                            <!-- Опции будут добавлены с помощью AJAX -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_amount_input" class="form-label">Количество</label>
                         <input type="number" class="form-control" id="edit_amount_input" name="amount">
                     </div>
                     <div class="mb-3">
-                        <label for="edit_unit_input" class="form-label">Unit</label>
+                        <label for="edit_unit_input" class="form-label">Единицы измерения</label>
                         <select class="form-control" id="edit_unit_input" name="unit_id">
                             <!-- Опции будут добавлены с помощью AJAX -->
                         </select>

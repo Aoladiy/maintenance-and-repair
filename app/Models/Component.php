@@ -7,11 +7,11 @@ use App\Interfaces\ServiceableInterface;
 use App\Traits\AlertCharacteristicsDataTrait;
 use App\Traits\ClassNameDataTrait;
 use App\Traits\ServiceCharacteristicsDataTrait;
-use App\Traits\UnitDataTrait;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Component extends Model implements ServiceableInterface, AlertableInterface
@@ -20,7 +20,6 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
     use ClassNameDataTrait;
     use ServiceCharacteristicsDataTrait;
     use AlertCharacteristicsDataTrait;
-    use UnitDataTrait;
 
     /**
      * @var string[]
@@ -31,6 +30,11 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
         'amount',
         'node_id',
         'unit_id',
+    ];
+
+    protected $appends = [
+        'unit',
+        'operations',
     ];
 
     /**
@@ -66,10 +70,26 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
     }
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function operations(): HasMany
+    public function operations(): BelongsToMany
     {
-        return $this->hasMany(Operation::class);
+        return $this->belongsToMany(Operation::class, 'component_operation_pivot');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUnitAttribute(): ?string
+    {
+        return $this->unit()->first()?->name;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getOperationsAttribute(): Collection
+    {
+        return $this->operations()->get();
     }
 }
