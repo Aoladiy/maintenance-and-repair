@@ -36,12 +36,15 @@ class AlertCharacteristicsController extends Controller
             $data['alert'] = 0;
         }
 
-        return AlertCharacteristics::query()->updateOrCreate(
+        $alertCharacteristics = AlertCharacteristics::query()->updateOrCreate(
             [
                 'alertable_id' => $data['alertable_id'],
                 'alertable_type' => $data['alertable_type'],
             ],
             $data
         );
+        $alertCharacteristics->all_alerts_number = $alertCharacteristics->alertable()->first()->all_alerts_number;
+
+        return $alertCharacteristics;
     }
 }

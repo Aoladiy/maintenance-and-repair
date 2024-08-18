@@ -46,6 +46,23 @@ function editAlertable() {
         type: 'PATCH',
         data: formData,
         success: function (response) {
+            var $notificationIcon = $('#notification-icon_' + response.alertable_id);
+            if ($notificationIcon.length > 0) {
+                if (response.all_alerts_number > 0) {
+                    $notificationIcon.html(`
+                        <div class="notification-icon me-3">
+                        <span class="badge">${response.all_alerts_number}</span>
+                        <i class="fa-regular fa-bell"></i>
+                        </div>
+                    `);
+                } else {
+                    $notificationIcon.html(`
+                        <div class="notification-icon me-3">
+                        <i class="fa-regular fa-bell"></i>
+                        </div>
+                    `);
+                }
+            }
             // Обработка успешного редактирования элемента, если необходимо
             $('#editAlertableModal').modal('hide');
             $('#edit_alertable_id_input').val(response.alertable_id);
