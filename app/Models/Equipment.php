@@ -31,6 +31,7 @@ class Equipment extends Model implements ServiceableInterface, AlertableInterfac
         'name',
         'inventory_number',
         'site_id',
+        'all_alerts_number',
     ];
 
     /**
@@ -38,7 +39,6 @@ class Equipment extends Model implements ServiceableInterface, AlertableInterfac
      */
     protected $appends = [
         'alerts_number',
-        'all_alerts_number',
     ];
 
     /**
@@ -92,12 +92,20 @@ class Equipment extends Model implements ServiceableInterface, AlertableInterfac
     /**
      * @return int
      */
-    public function getAllAlertsNumberAttribute(): int
+    public function allAlertsNumber(): int
     {
-        return DB::table('nodes')
-                ->join('alert_characteristics', 'nodes.id', '=', 'alert_characteristics.alertable_id')
-                ->where('alert_characteristics.alertable_type', Node::class)
-                ->where('nodes.equipment_id', $this->id)
-                ->sum('alert_characteristics.alert') + $this->alerts_number;
+        $alertsFromComponents = $this->nodes->sum(function($node) {
+            return $node->allAlertsNumber();
+        });
+
+        return $this->alerts_number + $alertsFromComponents;
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function parentAlertable(): BelongsTo
+    {
+        return $this->site();
     }
 }

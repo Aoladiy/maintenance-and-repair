@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AlertChangedEvent;
 use App\Models\AlertCharacteristics;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -44,6 +45,8 @@ class AlertCharacteristicsController extends Controller
             $data
         );
         $alertCharacteristics->all_alerts_number = $alertCharacteristics->alertable()->first()->all_alerts_number;
+
+        AlertChangedEvent::dispatch($alertCharacteristics->alertable()->first());
 
         return $alertCharacteristics;
     }

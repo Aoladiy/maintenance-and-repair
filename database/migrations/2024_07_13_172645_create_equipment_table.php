@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('inventory_number')->nullable()->unique();
+            $table->bigInteger('all_alerts_number')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('site_id')->index();

@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('vendor_code')->nullable();
             $table->integer('amount')->nullable();
+            $table->bigInteger('all_alerts_number')->nullable();
             $table->timestamps();
 
             //foreign keys

@@ -24,13 +24,13 @@ class Site extends Model
      */
     protected $fillable = [
         'name',
+        'all_alerts_number',
     ];
 
     /**
      * @var string[]
      */
     protected $appends = [
-        'all_alerts_number',
     ];
 
     /**
@@ -52,13 +52,14 @@ class Site extends Model
     /**
      * @return int
      */
-    public function getAllAlertsNumberAttribute(): int
+    public function allAlertsNumber(): int
     {
-        return DB::table('equipment')
-            ->join('nodes', 'equipment.id', '=', 'nodes.equipment_id')
-            ->join('alert_characteristics', 'nodes.id', '=', 'alert_characteristics.alertable_id')
-            ->where('alert_characteristics.alertable_type', Node::class)
-            ->where('equipment.site_id', $this->id)
-            ->sum('alert_characteristics.alert');
+        $alertsFromComponents = $this->equipment->sum(function($equipment) {
+            return $equipment->allAlertsNumber();
+        });
+
+        return $this->alerts_number + $alertsFromComponents;
     }
+
+    //TODO что я понял - нужно чтобы при любом изменении alert срабатывал event, который запустит job, которая рекурсивно обсчитает all_alerts_number (новый столбец в alert_characteristics) пока нашел 2 места куда влепить event: AlertCharacteristicsController и getCurrentEngineHoursAndMileAge
 }

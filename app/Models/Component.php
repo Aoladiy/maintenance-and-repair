@@ -33,6 +33,7 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
         'amount',
         'node_id',
         'unit_id',
+        'all_alerts_number',
     ];
 
     /**
@@ -42,7 +43,6 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
         'unit',
         'operations',
         'alerts_number',
-        'all_alerts_number',
     ];
 
     /**
@@ -112,8 +112,16 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
     /**
      * @return int
      */
-    public function getAllAlertsNumberAttribute(): int
+    public function allAlertsNumber(): int
     {
         return $this->alerts_number;
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function parentAlertable(): BelongsTo
+    {
+        return $this->node();
     }
 }

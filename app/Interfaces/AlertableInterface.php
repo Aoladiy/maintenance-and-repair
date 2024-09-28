@@ -2,6 +2,7 @@
 
 namespace App\Interfaces;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
@@ -47,5 +48,10 @@ interface AlertableInterface
     /**
      * @return int
      */
-    public function getAllAlertsNumberAttribute(): int;
+    public function allAlertsNumber(): int;
+
+    /**
+     * @return BelongsTo
+     */
+    public function parentAlertable(): BelongsTo;
 }
