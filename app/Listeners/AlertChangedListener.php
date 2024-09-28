@@ -33,12 +33,18 @@ class AlertChangedListener implements ShouldQueue
                     if (in_array(AlertableInterface::class, class_implements($parentAlertable))) {
                         AlertChangedEvent::dispatch($parentAlertable);
                     } elseif (method_exists($parentAlertable, 'allAlertsNumber')) {
-                        $parentAlertable->all_alerts_number = $parentAlertable->allAlertsNumber();
-                        $parentAlertable->save();
+                        $newAlertsNumber = $parentAlertable->allAlertsNumber();
+                        if ($parentAlertable->all_alerts_number !== $newAlertsNumber) {
+                            $parentAlertable->all_alerts_number = $newAlertsNumber;
+                            $parentAlertable->save();
+                        }
                     }
                 }
-                $alertable->all_alerts_number = $alertable->allAlertsNumber();
-                $alertable->save();
+                $newAlertsNumber = $alertable->allAlertsNumber();
+                if ($alertable->all_alerts_number !== $newAlertsNumber) {
+                    $alertable->all_alerts_number = $newAlertsNumber;
+                    $alertable->save();
+                }
             });
         } catch (Throwable $e) {
             logger()->error($e);
