@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int $service_period_in_days
  * @property non-negative-int $service_period_in_engine_hours
  * @property non-negative-int $engine_hours_by_the_datetime_of_last_service
- * @property non-negative-int $mileage
+ * @property non-negative-int $service_period_in_mileage
  * @property non-negative-int $mileage_by_the_datetime_of_last_service
  * @property string $datetime_of_last_service
  * @property string $datetime_of_next_service
@@ -28,7 +28,7 @@ class ServiceCharacteristics extends Model
         'service_period_in_days',
         'service_period_in_engine_hours',
         'engine_hours_by_the_datetime_of_last_service',
-        'mileage',
+        'service_period_in_mileage',
         'mileage_by_the_datetime_of_last_service',
         'datetime_of_last_service',
         'datetime_of_next_service',

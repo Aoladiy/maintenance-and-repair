@@ -11,7 +11,7 @@ trait ServiceCharacteristicsDataTrait
             'service_period_in_days',
             'service_period_in_engine_hours',
             'engine_hours_by_the_datetime_of_last_service',
-            'mileage',
+            'service_period_in_mileage',
             'mileage_by_the_datetime_of_last_service',
             'datetime_of_last_service',
             'datetime_of_next_service',
@@ -38,9 +38,9 @@ trait ServiceCharacteristicsDataTrait
         return $this->serviceCharacteristics()->first()?->engine_hours_by_the_datetime_of_last_service;
     }
 
-    public function getMileageAttribute(): ?int
+    public function getServicePeriodInMileageAttribute(): ?int
     {
-        return $this->serviceCharacteristics()->first()?->mileage;
+        return $this->serviceCharacteristics()->first()?->service_period_in_mileage;
     }
 
     public function getMileageByTheDatetimeOfLastServiceAttribute(): ?int

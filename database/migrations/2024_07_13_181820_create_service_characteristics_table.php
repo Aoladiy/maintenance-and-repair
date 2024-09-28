@@ -20,9 +20,11 @@ return new class extends Migration {
 
             $table->unsignedInteger('service_period_in_engine_hours')->nullable();
             $table->unsignedInteger('engine_hours_by_the_datetime_of_last_service')->nullable();
+            $table->unsignedInteger('current_engine_hours')->nullable();
 
-            $table->unsignedInteger('mileage')->nullable();
+            $table->unsignedInteger('service_period_in_mileage')->nullable();
             $table->unsignedInteger('mileage_by_the_datetime_of_last_service')->nullable();
+            $table->unsignedInteger('current_mileage')->nullable();
 
             $table->dateTime('datetime_of_last_service')->nullable();
             $table->dateTime('datetime_of_next_service')->nullable();

@@ -99,8 +99,9 @@ $(document).on('click', '.edit-serviceable-btn', function () {
             $('#edit_service_duration_in_seconds_input').val(response.service_duration_in_seconds);
             $('#edit_service_period_in_days_input').val(response.service_period_in_days);
             $('#edit_service_period_in_engine_hours_input').val(response.service_period_in_engine_hours);
+            $('#edit_service_period_in_mileage_input').val(response.service_period_in_mileage);
             $('#edit_engine_hours_by_the_datetime_of_last_service_input').val(response.engine_hours_by_the_datetime_of_last_service);
-            $('#mileage').val(response.mileage);
+            $('#edit_service_period_in_mileage').val(response.service_period_in_mileage);
             $('#edit_mileage_by_the_datetime_of_last_service_input').val(response.mileage_by_the_datetime_of_last_service);
             $('#edit_datetime_of_last_service_input').val(response.datetime_of_last_service);
             $('#edit_datetime_of_next_service_input').val(response.datetime_of_next_service);
@@ -132,7 +133,7 @@ function editServiceable() {
             $('#edit_service_period_in_days_input').val(response.service_period_in_days);
             $('#edit_service_period_in_engine_hours_input').val(response.service_period_in_engine_hours);
             $('#edit_engine_hours_by_the_datetime_of_last_service_input').val(response.engine_hours_by_the_datetime_of_last_service);
-            $('#mileage').val(response.mileage);
+            $('#service_period_in_mileage').val(response.service_period_in_mileage);
             $('#edit_mileage_by_the_datetime_of_last_service_input').val(response.mileage_by_the_datetime_of_last_service);
             $('#edit_datetime_of_last_service_input').val(response.datetime_of_last_service);
             $('#edit_datetime_of_next_service_input').val(response.datetime_of_next_service);

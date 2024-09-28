@@ -80,7 +80,7 @@ for index, row in df.iterrows():
             'serviceable_type': 'App\\Models\\Component',
             'service_period_in_days': row.get('Период обслуживания (дни)'),
             'service_period_in_engine_hours': row.get('Период обслуживания (моточасы)'),
-            'mileage': row.get('Пробег (км)')
+            'service_period_in_mileage': row.get('Пробег (км)')
         })
 
         # Заполняем operations и компонент-операция связи

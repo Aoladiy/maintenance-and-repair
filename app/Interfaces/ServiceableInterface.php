@@ -44,7 +44,7 @@ interface ServiceableInterface
     /**
      * @return int|null
      */
-    public function getMileageAttribute(): ?int;
+    public function getServicePeriodInMileageAttribute(): ?int;
 
     /**
      * @return int|null

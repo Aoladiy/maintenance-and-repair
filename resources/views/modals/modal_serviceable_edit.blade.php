@@ -26,6 +26,11 @@
                                name="service_period_in_engine_hours">
                     </div>
                     <div class="mb-3">
+                        <label for="edit_service_period_in_mileage_input" class="form-label">Частота обслуживания в пробеге</label>
+                        <input type="number" class="form-control" id="edit_service_period_in_mileage_input"
+                               name="service_period_in_mileage">
+                    </div>
+                    <div class="mb-3">
                         <label for="edit_engine_hours_by_the_datetime_of_last_service_input" class="form-label">Моточасы на момент последнего обслуживания</label>
                         <input type="number" class="form-control" id="edit_engine_hours_by_the_datetime_of_last_service_input"
                                name="engine_hours_by_the_datetime_of_last_service">
