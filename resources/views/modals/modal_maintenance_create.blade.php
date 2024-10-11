@@ -8,7 +8,9 @@
             </div>
             <div class="modal-body">
                 <form id="createMaintenanceForm">
-                    <input type="hidden" name="item_id" id="item_id_input">
+                    <input type="hidden" name="item_id" id="item_id_input" value="1"> @php//TODO убрать заглушку value="1"@endphp
+                    <input type="hidden" name="serviceable_id" id="serviceable_id_input">
+                    <input type="hidden" name="serviceable_type" id="serviceable_type_input">
                     <input type="hidden" name="username" id="username" value="will be accessed through get parameters">
                     <!-- Элемент для отображения ошибки -->
                     <p id="MaintenanceCreateError" style="display: none; color: red; font-weight: bold;">Здесь будет сообщение об ошибке</p>
@@ -35,7 +37,7 @@
     function setMaintenanceDate() {
         // Отправляем запрос AJAX на сервер
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8000/maintenance/time', true);
+        xhr.open('GET', 'http://maintenance-and-repair.local/maintenance/time', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 // Парсим ответ сервера
@@ -44,9 +46,8 @@
                     // Получаем значение datetime_of_service из ответа
                     var serverDate = response.datetime_of_service.date;
                     // Обрезаем строку даты до первых 16 символов, чтобы получить дату и время без миллисекунд и временной зоны
-                    var formattedDate = serverDate.slice(0, 16).replace(' ', 'T');
                     // Устанавливаем отформатированную дату и время в поле формы
-                    document.getElementById('datetime_of_service').value = formattedDate;
+                    document.getElementById('datetime_of_service').value = serverDate.slice(0, 16).replace(' ', 'T');
                     // Проверяем, заполнено ли поле datetime_of_service
                     checkDateTimeOfService();
                 } else {

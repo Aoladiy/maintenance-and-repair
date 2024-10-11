@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AlertChangedEvent;
+use App\Events\AlertPossibleChangeEvent;
 use App\Models\Item;
 use App\Models\Maintenance;
+use App\Models\ServiceCharacteristics;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -40,22 +43,36 @@ class MaintenanceController extends Controller
         $data = [
             'comment' => $request->comment,
             'item_id' => $request->item_id,
+            'serviceable_id' => $request->serviceable_id,
+            'serviceable_type' => $request->serviceable_type,
             'username' => $request->username,
             'datetime_of_service' => $request->datetime_of_service,
         ];
-        $item = Item::findOrFail($data['item_id']);
-        if (is_null($item->datetime_of_next_service)) {
+        $serviceCharacteristicsQuery = ServiceCharacteristics::query()->where([
+            'serviceable_id' => $data['serviceable_id'],
+            'serviceable_type' => $data['serviceable_type'],]);
+        if ($serviceCharacteristicsQuery->exists()) {
+            /** @var ServiceCharacteristics $serviceCharacteristicsIdInput */
+            $serviceCharacteristicsIdInput = $serviceCharacteristicsQuery->first();
+        } else {
+            $serviceCharacteristicsIdInput = new ServiceCharacteristics();
+            $serviceCharacteristicsIdInput->serviceable_id = $data['serviceable_id'];
+            $serviceCharacteristicsIdInput->serviceable_type = $data['serviceable_type'];
+        }
+        if (is_null($serviceCharacteristicsIdInput->datetime_of_next_service)) {
             $data['deadline_date'] = null;
         } else {
-            $data['deadline_date'] = date("Y-m-d", strtotime($item->datetime_of_next_service));
+            $data['deadline_date'] = date("Y-m-d", strtotime($serviceCharacteristicsIdInput->datetime_of_next_service));
         }
 
-        if ($item->datetime_of_last_service > $data['datetime_of_service']) {
+        if ($serviceCharacteristicsIdInput->datetime_of_last_service > $data['datetime_of_service']) {
             return response()->json(['datetime_of_service' => 'Дата технического обслуживания не должна быть меньше предыдущей даты технического обслуживания'], 422);
         }
 
-        $item->datetime_of_last_service = $data['datetime_of_service'];
-        $item->save();
+        $serviceCharacteristicsIdInput->datetime_of_last_service = $data['datetime_of_service'];
+        $serviceCharacteristicsIdInput->save();
+        $data['service_characteristics_id'] = $serviceCharacteristicsIdInput->id;
+        AlertPossibleChangeEvent::dispatch();
         return Maintenance::query()->create($data);
     }
 

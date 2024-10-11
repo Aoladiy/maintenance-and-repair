@@ -122,6 +122,9 @@ function loadEquipment() {
                                 <button class="btn btn-secondary ms-2 edit-alertable-btn" data-item-id="${item.id}" data-item-type="${item.class_name}" data-bs-toggle="modal" data-bs-target="#editAlertableModal">
                                     <i class="bi bi-bell"></i>
                                 </button>
+                                <button class="btn btn-secondary ms-2 create-maintenance-btn" data-item-id="${item.id}" data-item-type="${item.class_name}" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">
+                                    <i class="bi bi-tools"></i>
+                                </button>
                                 <button class="btn btn-danger ms-2 delete-equipment-btn" data-item-id="${item.id}">
                                     <i class="bi bi-trash"></i>
                                 </button>
@@ -206,6 +209,9 @@ function editEquipment() {
                         </button>
                         <button class="btn btn-secondary ms-2 edit-alertable-btn" data-item-id="${response.id}" data-item-type="${response.class_name}" data-bs-toggle="modal" data-bs-target="#editAlertableModal">
                             <i class="bi bi-bell"></i>
+                        </button>
+                        <button class="btn btn-secondary ms-2 create-maintenance-btn" data-item-id="${response.id}" data-item-type="${response.class_name}" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">
+                            <i class="bi bi-tools"></i>
                         </button>
                         <button class="btn btn-danger ms-2 delete-equipment-btn" data-item-id="${response.id}">
                             <i class="bi bi-trash"></i>

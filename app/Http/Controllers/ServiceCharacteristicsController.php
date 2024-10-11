@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AlertPossibleChangeEvent;
 use App\Models\ServiceCharacteristics;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -30,13 +31,14 @@ class ServiceCharacteristicsController extends Controller
     public function updateServiceable(Request $request): Model
     {
         $data = $request->all();
-
-        return ServiceCharacteristics::query()->updateOrCreate(
+        $serviceCharacteristics = ServiceCharacteristics::query()->updateOrCreate(
             [
                 'serviceable_id' => $data['serviceable_id'],
                 'serviceable_type' => $data['serviceable_type'],
             ],
             $data
         );
+        AlertPossibleChangeEvent::dispatch();
+        return $serviceCharacteristics;
     }
 }

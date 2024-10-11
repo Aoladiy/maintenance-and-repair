@@ -146,3 +146,40 @@ function editServiceable() {
         }
     });
 }
+
+// Функция для отправки данных новой записи о тех обслуживании на сервер
+function createMaintenance() {
+    var formData = $('#createMaintenanceForm').serialize();
+    $.ajax({
+        headers: {
+            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        },
+        url: base + 'maintenance/create',
+        type: 'POST',
+        data: formData,
+        success: function (response) {
+            $('#createMaintenanceModal').modal('hide'); // Закрываем модальное окно
+            displayAlerts();
+        },
+        error: function (xhr, status, error) {
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON;
+                var errorMessage = document.getElementById('MaintenanceCreateError');
+                errorMessage.textContent = errors.datetime_of_service;
+                errorMessage.style.display = 'block'; // Показываем сообщение об ошибке
+            } else {
+                console.error(error);
+            }
+        }
+    });
+}
+
+$(document).on('click', '.create-maintenance-btn', function () {
+    var serviceable_id = $(this).data('item-id');
+    var serviceable_type = $(this).data('item-type');
+    $('#serviceable_id_input').val(serviceable_id);
+    $('#serviceable_type_input').val(serviceable_type);
+    $('#createMaintenanceForm').trigger('reset'); // Сбрасываем значения формы
+    var errorMessage = document.getElementById('MaintenanceCreateError');
+    errorMessage.style.display = 'none'; // Скрываем сообщение об ошибке
+});

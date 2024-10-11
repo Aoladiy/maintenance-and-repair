@@ -14,6 +14,7 @@
     @include('./modals/component/modal_edit')
     @include('./modals/modal_alertable_edit')
     @include('./modals/modal_serviceable_edit')
+    @include('./modals/modal_maintenance_create')
 @endsection
 @section('scripts')
     <script src="{{asset('js/component.js')}}"></script>

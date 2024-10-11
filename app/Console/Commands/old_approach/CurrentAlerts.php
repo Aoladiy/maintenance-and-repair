@@ -29,7 +29,7 @@ class CurrentAlerts extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         try {
             foreach (ServiceCharacteristics::all() as $serviceCharacteristics) {

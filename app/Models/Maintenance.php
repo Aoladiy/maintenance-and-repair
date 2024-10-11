@@ -21,5 +21,6 @@ class Maintenance extends Model
         'deadline_date',
         'comment',
         'item_id',
+        'service_characteristics_id',
     ];
 }

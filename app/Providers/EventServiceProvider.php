@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\AlertChangedEvent;
+use App\Events\AlertPossibleChangeEvent;
 use App\Listeners\AlertChangedListener;
+use App\Listeners\AlertPossibleChangeListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AlertChangedEvent::class => [
             AlertChangedListener::class,
+        ],
+        AlertPossibleChangeEvent::class => [
+            AlertPossibleChangeListener::class,
         ]
     ];
 
