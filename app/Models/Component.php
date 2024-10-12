@@ -124,4 +124,14 @@ class Component extends Model implements ServiceableInterface, AlertableInterfac
     {
         return $this->node();
     }
+
+    /**
+     * @return string
+     */
+    public function getUrlAttribute(): string
+    {
+        $operations = $this->operations()->pluck('name');
+        $operationsParameter = '&operations[]=' . implode('&operations[]=', $operations->toArray());
+        return sprintf(route('components.byNode', $this->node->id) . '?name=%s&vendor_code=%s&amount=%s&unit=%s%s', $this->name, $this->vendor_code, $this->amount, $this->unit, $operationsParameter);
+    }
 }

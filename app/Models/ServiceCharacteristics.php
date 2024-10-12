@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Interfaces\ServiceableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
+ * @property-read non-negative-int $id
  * @property non-negative-int $service_duration_in_seconds
  * @property int $service_period_in_days
  * @property non-negative-int $service_period_in_engine_hours
@@ -17,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property non-negative-int $current_mileage
  * @property string $datetime_of_last_service
  * @property string $datetime_of_next_service
+ * @property-read ServiceableInterface $serviceable
  */
 class ServiceCharacteristics extends Model
 {

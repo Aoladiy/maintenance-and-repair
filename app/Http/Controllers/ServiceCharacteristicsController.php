@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AlertPossibleChangeEvent;
+use App\Events\FillDatetimeOfNextServiceEvent;
 use App\Models\ServiceCharacteristics;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class ServiceCharacteristicsController extends Controller
             $data
         );
         AlertPossibleChangeEvent::dispatch();
+        FillDatetimeOfNextServiceEvent::dispatch();
         return $serviceCharacteristics;
     }
 }

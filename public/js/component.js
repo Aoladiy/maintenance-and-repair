@@ -1,4 +1,23 @@
 $(document).ready(function () {
+    var name = getUrlParameter('name');
+    var vendor_code = getUrlParameter('vendor_code');
+    var amount = getUrlParameter('amount');
+    var unit = getUrlParameter('unit');
+    var data = {
+        name: name,
+        vendor_code: vendor_code,
+        amount: amount,
+        unit: unit,
+    };
+    var modalBody = $('#componentModalBody');
+    var modalContent = showComponent(data);
+    modalBody.html(modalContent);
+    if (data.name) {
+        $('#componentModal').modal('show')
+            .on('hidden.bs.modal', function () {
+                window.location.replace(window.location.pathname);
+            });
+    }
     // Вызов функции при загрузке страницы
     loadComponents();
 
@@ -135,9 +154,13 @@ function loadComponents() {
 
 function showComponent(data) {
     var html = '';
+    const url = new URL(window.location.href);
+    const operations = url.searchParams.getAll('operations[]').length > 0
+        ? url.searchParams.getAll('operations[]')
+        : (data.operations || []);
     html += '<p><strong>Название:</strong> ' + (data.name || '') + '</p>';
     html += '<p><strong>Идентификатор (артикул):</strong> ' + (data.vendor_code || '') + '</p>';
-    html += '<p><strong>Операции:</strong>' + (data.operations.map((operation) => ' ' + operation.name) || '') + '</p>';
+    html += '<p><strong>Операции:</strong>' + (operations?.map((operation) => typeof operation === 'string' ? ' ' + operation : ' ' + operation.name).join(', ') || 'Нет доступных операций') + '</p>';
     html += '<p><strong>Количество:</strong> ' + (data.amount || '') + '</p>';
     html += '<p><strong>Единицы измерения:</strong> ' + (data.unit || '') + '</p>';
     return html;
@@ -245,9 +268,9 @@ function fillUnitSelect(unitInput, defaultUnitId) {
     $.ajax({
         url: base + 'units',
         type: 'GET',
-        success: function(response) {
+        success: function (response) {
             var options = '';
-            $.each(response, function(index, unit) {
+            $.each(response, function (index, unit) {
                 var value = unit.id !== null ? unit.id : '-';
                 var name = unit.name !== null ? unit.name : '-';
                 var selected = unit.id === defaultUnitId ? 'selected' : ''; // Определяем, выбран ли элемент
@@ -255,7 +278,7 @@ function fillUnitSelect(unitInput, defaultUnitId) {
             });
             $(unitInput).append(options);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(xhr.responseText);
         }
     });
@@ -268,9 +291,9 @@ function fillOperationsSelect(operationInput, defaultOperationsIds) {
     $.ajax({
         url: base + 'operations',
         type: 'GET',
-        success: function(response) {
+        success: function (response) {
             var options = '';
-            $.each(response, function(index, operation) {
+            $.each(response, function (index, operation) {
                 var value = operation.id !== null ? operation.id : '-';
                 var name = operation.name !== null ? operation.name : '-';
                 var isSelected = defaultOperationsIds.find((operationId) => operationId === operation.id) ? 'selected' : '';
@@ -278,7 +301,7 @@ function fillOperationsSelect(operationInput, defaultOperationsIds) {
             });
             $(operationInput).append(options);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(xhr.responseText);
         }
     });

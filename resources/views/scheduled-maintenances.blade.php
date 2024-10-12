@@ -1,3 +1,4 @@
+@php use App\Models\ServiceCharacteristics; @endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,18 +20,23 @@
         <thead class="table-dark">
         <tr>
             <th>Id</th>
-            <th>Item Id</th>
-            <th>Component</th>
+            <th>Serviceable Id</th>
+            <th>Serviceable name</th>
             <th>Datetime of next service</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($scheduledMaintenances as $m)
+        @php/** @var ServiceCharacteristics $s */@endphp
+        @foreach($serviceCharacteristics as $s)
             <tr>
-                <td>{{$m->id}}</td>
-                <td>{{$m->item->id}}</td>
-                <td>{{$m->item->component}}</td>
-                <td>{{$m->item->datetime_of_next_service}}</td>
+                <td>{{$s->id}}</td>
+                <td>{{$s->serviceable->id}}</td>
+                <td>
+                    <a href="{{$s->serviceable->url}}">
+                        {{$s->serviceable->name}}
+                    </a>
+                </td>
+                <td>{{$s->datetime_of_next_service}}</td>
             </tr>
         @endforeach
         </tbody>

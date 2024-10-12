@@ -5,6 +5,8 @@ namespace App\Interfaces;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
+ * @property-read non-negative-int $id
+ * @property string $name
  * @property non-negative-int $service_duration_in_seconds
  * @property int $service_period_in_days
  * @property non-negative-int $service_period_in_engine_hours
@@ -13,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property non-negative-int $mileage_by_the_datetime_of_last_service
  * @property string $datetime_of_last_service
  * @property string $datetime_of_next_service
+ * @property-read string $url
  */
 interface ServiceableInterface
 {
@@ -60,4 +63,9 @@ interface ServiceableInterface
      * @return string|null
      */
     public function getDateTimeOfNextServiceAttribute(): ?string;
+
+    /**
+     * @return string
+     */
+    public function getUrlAttribute(): string;
 }

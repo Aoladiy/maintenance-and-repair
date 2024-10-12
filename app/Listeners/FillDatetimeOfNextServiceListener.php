@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\AlertPossibleChangeEvent;
+use App\Events\FillDatetimeOfNextServiceEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Artisan;
 
-class AlertPossibleChangeListener implements ShouldQueue
+class FillDatetimeOfNextServiceListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -19,8 +19,8 @@ class AlertPossibleChangeListener implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(AlertPossibleChangeEvent $event): void
+    public function handle(FillDatetimeOfNextServiceEvent $event): void
     {
-        Artisan::call('alerts');
+        Artisan::call('fill-next-services');
     }
 }

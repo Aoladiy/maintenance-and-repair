@@ -107,4 +107,12 @@ class Node extends Model implements ServiceableInterface, AlertableInterface
     {
         return $this->equipment();
     }
+
+    /**
+     * @return string
+     */
+    public function getUrlAttribute(): string
+    {
+        return sprintf(route('nodes.byEquipment', $this->equipment->id) . '?name=%s', $this->name);
+    }
 }

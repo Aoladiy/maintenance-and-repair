@@ -36,10 +36,6 @@
                                name="engine_hours_by_the_datetime_of_last_service">
                     </div>
                     <div class="mb-3">
-                        <label for="edit_mileage_input" class="form-label">Пробег</label>
-                        <input type="number" class="form-control" id="edit_mileage_input" name="mileage">
-                    </div>
-                    <div class="mb-3">
                         <label for="edit_mileage_by_the_datetime_of_last_service_input" class="form-label">Пробег на момент последнего обслуживания</label>
                         <input type="number" class="form-control" id="edit_mileage_by_the_datetime_of_last_service_input" name="mileage_by_the_datetime_of_last_service">
                     </div>

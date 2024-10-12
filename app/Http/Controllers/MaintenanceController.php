@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\AlertChangedEvent;
 use App\Events\AlertPossibleChangeEvent;
+use App\Events\FillDatetimeOfNextServiceEvent;
 use App\Models\Item;
 use App\Models\Maintenance;
 use App\Models\ServiceCharacteristics;
@@ -73,6 +74,7 @@ class MaintenanceController extends Controller
         $serviceCharacteristicsIdInput->save();
         $data['service_characteristics_id'] = $serviceCharacteristicsIdInput->id;
         AlertPossibleChangeEvent::dispatch();
+        FillDatetimeOfNextServiceEvent::dispatch();
         return Maintenance::query()->create($data);
     }
 

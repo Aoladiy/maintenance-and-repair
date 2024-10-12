@@ -108,4 +108,12 @@ class Equipment extends Model implements ServiceableInterface, AlertableInterfac
     {
         return $this->site();
     }
+
+    /**
+     * @return string
+     */
+    public function getUrlAttribute(): string
+    {
+        return sprintf(route('equipment.bySite', $this->site->id) . '?name=%s&inventory_number=%s', $this->name, $this->inventory_number);
+    }
 }

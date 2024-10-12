@@ -127,8 +127,8 @@ function editServiceable() {
         success: function (response) {
             // Обработка успешного редактирования элемента, если необходимо
             $('#editServiceableModal').modal('hide');
-            $('#edit_serviceable_id_input').val(serviceable_id);
-            $('#edit_serviceable_type_input').val(serviceable_type);
+            $('#edit_serviceable_id_input').val(response.serviceable_id);
+            $('#edit_serviceable_type_input').val(response.serviceable_type);
             $('#edit_service_duration_in_seconds_input').val(response.service_duration_in_seconds);
             $('#edit_service_period_in_days_input').val(response.service_period_in_days);
             $('#edit_service_period_in_engine_hours_input').val(response.service_period_in_engine_hours);
@@ -159,7 +159,6 @@ function createMaintenance() {
         data: formData,
         success: function (response) {
             $('#createMaintenanceModal').modal('hide'); // Закрываем модальное окно
-            displayAlerts();
         },
         error: function (xhr, status, error) {
             if (xhr.status === 422) {

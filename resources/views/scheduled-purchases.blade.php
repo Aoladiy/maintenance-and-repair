@@ -1,3 +1,4 @@
+@php use App\Models\ServiceCharacteristics; @endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,18 +20,21 @@
         <thead class="table-dark">
         <tr>
             <th>Id</th>
-            <th>Component</th>
+            <th>Serviceable Id</th>
+            <th>Serviceable name</th>
             <th>Unit name</th>
             <th>Number</th>
         </tr>
         </thead>
         <tbody>
+        @php/** @var ServiceCharacteristics $p */@endphp
         @foreach($scheduledPurchases as $p)
             <tr>
                 <td>{{$p->id}}</td>
-                <td>{{$p->component}}</td>
-                <td>{{$p->unit->name}}</td>
-                <td>{{$p->number}}</td>
+                <td>{{$p->serviceable->id}}</td>
+                <td>{{$p->serviceable->name}}</td>
+                <td>{{$p->serviceable->unit}}</td>
+                <td>{{$p->serviceable->amount}}</td>
             </tr>
         @endforeach
         </tbody>
