@@ -8,7 +8,6 @@
             </div>
             <div class="modal-body">
                 <form id="createMaintenanceForm">
-                    <input type="hidden" name="item_id" id="item_id_input" value="1"> @php//TODO убрать заглушку value="1"@endphp
                     <input type="hidden" name="serviceable_id" id="serviceable_id_input">
                     <input type="hidden" name="serviceable_type" id="serviceable_type_input">
                     <input type="hidden" name="username" id="username" value="will be accessed through get parameters">

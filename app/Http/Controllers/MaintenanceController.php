@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Events\AlertChangedEvent;
 use App\Events\AlertPossibleChangeEvent;
 use App\Events\FillDatetimeOfNextServiceEvent;
-use App\Models\Item;
 use App\Models\Maintenance;
 use App\Models\ServiceCharacteristics;
 use DateTime;
@@ -43,7 +42,6 @@ class MaintenanceController extends Controller
     {
         $data = [
             'comment' => $request->comment,
-            'item_id' => $request->item_id,
             'serviceable_id' => $request->serviceable_id,
             'serviceable_type' => $request->serviceable_type,
             'username' => $request->username,

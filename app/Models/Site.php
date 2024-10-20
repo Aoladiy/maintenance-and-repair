@@ -60,6 +60,4 @@ class Site extends Model
 
         return $this->alerts_number + $alertsFromComponents;
     }
-
-    //TODO что я понял - нужно чтобы при любом изменении alert срабатывал event, который запустит job, которая рекурсивно обсчитает all_alerts_number (новый столбец в alert_characteristics) пока нашел 2 места куда влепить event: AlertCharacteristicsController и getCurrentEngineHoursAndMileAge
 }

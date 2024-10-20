@@ -17,8 +17,6 @@ return new class extends Migration
             $table->dateTime('datetime_of_service');
             $table->date('deadline_date')->nullable();
             $table->text('comment')->nullable();
-            $table->unsignedBigInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items')->noActionOnDelete();
             $table->timestamps();
         });
     }
