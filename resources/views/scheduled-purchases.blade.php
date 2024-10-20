@@ -1,5 +1,5 @@
-@php use App\Models\ServiceCharacteristics; @endphp
-<!DOCTYPE html>
+<?php use App\Models\ServiceCharacteristics; ?>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        @php/** @var ServiceCharacteristics $p */@endphp
+        <?php /** @var ServiceCharacteristics $p */ ?>
         @foreach($scheduledPurchases as $p)
             <tr>
                 <td>{{$p->id}}</td>
@@ -44,7 +44,7 @@
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#scheduled-maintenances-table').DataTable({
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
