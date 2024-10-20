@@ -8,14 +8,8 @@ xl = pd.ExcelFile('db.xlsx')
 sheet_name = xl.sheet_names[5]
 df = xl.parse(sheet_name)
 
-
-# Функция для замены NaN на None
-def replace_nan_with_none(x):
-    return None if pd.isna(x) else x
-
-
 # Заменяем NaN на None
-df = df.map(replace_nan_with_none)
+df = df.replace({pd.NA: None})
 
 # Инициализация списков для каждой таблицы
 sites = []
@@ -41,7 +35,7 @@ last_node_id = 0
 # Проходим по строкам DataFrame
 for index, row in df.iterrows():
     # Преобразуем строку в словарь и заменяем NaN на None
-    row = {k: replace_nan_with_none(v) for k, v in row.items()}
+    row = {k: None if pd.isna(v) else v for k, v in row.items()}
 
     if isinstance(row['Участок'], str):
         if row['Участок'] not in site_ids:
@@ -104,7 +98,6 @@ try:
     )
     cursor = connection.cursor()
 
-
     # Функция для вставки данных в таблицы
     def insert_data(table_name, data):
         if not data:
@@ -116,7 +109,6 @@ try:
         for row in data:
             values = tuple(row[key] for key in keys)
             cursor.execute(sql_query, values)
-
 
     # Вставляем данные в таблицы
     insert_data('sites', sites)
