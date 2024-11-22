@@ -36,6 +36,10 @@ return new class extends Migration {
             $table->unsignedBigInteger('serviceable_id')->index();
             $table->string('serviceable_type')->index();
             $table->unique(['serviceable_id', 'serviceable_type']);
+
+            $table->foreign('serviceable_id')
+                ->references('id')->on('components') // replace with your actual table name
+                ->onDelete('cascade');
         });
     }
 
